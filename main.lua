@@ -73,32 +73,67 @@ end
 
 function saveCourse()
   log("saveCourse()...")
-  -- TODO: 
-  --  > grab pixels for each layer
-  --  > store them in tables of Castle user storage (for now)
-  local coursePixels = {}
-  -- refresh latest pixel data
-  target("courseCanvas")
-  scan_surface("courseCanvas")
-  for x=0,GAME_WIDTH do
-    --coursePixels[x] = {}
-    y=0
-    log("setting "..x..","..y.."="..pget(x,y))
-    --for y=0,GAME_HEIGHT do
-      coursePixels[x] = pget(x,y)
-      --coursePixels[x][y] = pget(x,y)
-    --end
-  end
+
+  local testTable = {}
+  testTable[0]="hello"
+  testTable[1]=1123
 
   network.async(function()
     -- local lastHighScore = castle.storage.getGlobal('highscore')
     -- if not lastHighScore or lastHighScore < score then
       castle.storage.set("pntest", "hello!")
-      castle.storage.set("courseData", coursePixels)
+      castle.storage.set("testTable", testTable)
     --end
   end)
-  target()
 end
+
+function loadCourse()
+  log("loadCourse()...")
+  
+  local testTable = {}
+
+  network.async(function()    
+    test = castle.storage.get("pntest")
+    testTable = castle.storage.get("testTable")
+    log("test = "..tostring(test))
+    log("testTable = "..tostring(testTable[0]))
+  end)
+
+end
+
+-- function saveCourse()
+--   log("saveCourse()...")
+--   -- TODO: 
+--   --  > grab pixels for each layer
+--   --  > store them in tables of Castle user storage (for now)
+--   local coursePixels = {}
+--   local testTable = {}
+--   testTable[0]="hello"
+--   testTable[1]=1123
+
+--   -- refresh latest pixel data
+--   target("courseCanvas")
+--   scan_surface("courseCanvas")
+--   for x=0,GAME_WIDTH do
+--     --coursePixels[x] = {}
+--     y=0
+--     log("setting "..x..","..y.."="..pget(x,y))
+--     --for y=0,GAME_HEIGHT do
+--       coursePixels[x] = pget(x,y)
+--       --coursePixels[x][y] = pget(x,y)
+--     --end
+--   end
+
+--   network.async(function()
+--     -- local lastHighScore = castle.storage.getGlobal('highscore')
+--     -- if not lastHighScore or lastHighScore < score then
+--       castle.storage.set("pntest", "hello!")
+--       castle.storage.set("courseData", coursePixels)
+--       castle.storage.set("testTable", testTable)
+--     --end
+--   end)
+--   target()
+-- end
 
 function loadCourse()
   log("loadCourse()...")
@@ -106,12 +141,17 @@ function loadCourse()
   --  > get data from tables of Castle user storage (for now)
   --  > draw pixels for each layer
   local coursePixels = {}
+  local testTable = {}
 
   network.async(function()
     -- get saved pixel data
     coursePixels = castle.storage.get("courseData")
+    
     test = castle.storage.get("pntest")
     log("test = "..tostring(test))
+    testTable = castle.storage.get("testTable")
+    log("testTable = "..tostring(testTable[0]))
+
     log("coursePixels = "..tostring(coursePixels))
     -- switch to "paint" canvas
     target("courseCanvas")
