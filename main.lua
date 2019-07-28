@@ -135,37 +135,37 @@ end
 --   target()
 -- end
 
-function loadCourse()
-  log("loadCourse()...")
-  -- TODO: 
-  --  > get data from tables of Castle user storage (for now)
-  --  > draw pixels for each layer
-  local coursePixels = {}
-  local testTable = {}
+-- function loadCourse()
+--   log("loadCourse()...")
+--   -- TODO: 
+--   --  > get data from tables of Castle user storage (for now)
+--   --  > draw pixels for each layer
+--   local coursePixels = {}
+--   local testTable = {}
 
-  network.async(function()
-    -- get saved pixel data
-    coursePixels = castle.storage.get("courseData")
+--   network.async(function()
+--     -- get saved pixel data
+--     coursePixels = castle.storage.get("courseData")
     
-    test = castle.storage.get("pntest")
-    log("test = "..tostring(test))
-    testTable = castle.storage.get("testTable")
-    log("testTable = "..tostring(testTable[0]))
+--     test = castle.storage.get("pntest")
+--     log("test = "..tostring(test))
+--     testTable = castle.storage.get("testTable")
+--     log("testTable = "..tostring(testTable[0]))
 
-    log("coursePixels = "..tostring(coursePixels))
-    -- switch to "paint" canvas
-    target("courseCanvas")
-    log("size = "..#coursePixels)
-    for x=0,GAME_WIDTH do
-      y=0
-      --for y=0,GAME_HEIGHT do
-        --log(tostring(x)..","..tostring(y).."="..tostring(coursePixels[x][y]))
-        log("getting "..x..","..y.."="..tostring(coursePixels[x]))
-        pset(x, y, coursePixels[x])
-        --log(tostring(x)..","..tostring(y).."="..tostring(coursePixels[x][y]))
-        --pset(x, y, coursePixels[x][y])
-      --end
-    end
-  end)
+--     log("coursePixels = "..tostring(coursePixels))
+--     -- switch to "paint" canvas
+--     target("courseCanvas")
+--     log("size = "..#coursePixels)
+--     for x=0,GAME_WIDTH do
+--       y=0
+--       --for y=0,GAME_HEIGHT do
+--         --log(tostring(x)..","..tostring(y).."="..tostring(coursePixels[x][y]))
+--         log("getting "..x..","..y.."="..tostring(coursePixels[x]))
+--         pset(x, y, coursePixels[x])
+--         --log(tostring(x)..","..tostring(y).."="..tostring(coursePixels[x][y]))
+--         --pset(x, y, coursePixels[x][y])
+--       --end
+--     end
+--   end)
 
 end
