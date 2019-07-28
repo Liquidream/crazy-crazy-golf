@@ -16,10 +16,12 @@ The craziest crazy golf! 🤪
 
 if ui.button('Save Course') then
     -- TODO: save course to Castle storage
+    saveCourse()
 end
 
 if ui.button('Load Course') then
     -- TODO: load course to Castle storage
+    loadCourse()
 end
 
 if ui.button('Reset Course') then

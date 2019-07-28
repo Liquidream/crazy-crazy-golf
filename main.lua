@@ -69,3 +69,63 @@ function love.draw()
   circfill(mx, my, brushSize, 8)
   
 end
+
+
+function saveCourse()
+  log("saveCourse()...")
+  -- TODO: 
+  --  > grab pixels for each layer
+  --  > store them in tables of Castle user storage (for now)
+  local coursePixels = {}
+  -- refresh latest pixel data
+  target("courseCanvas")
+  scan_surface("courseCanvas")
+  for x=0,GAME_WIDTH do
+    --coursePixels[x] = {}
+    y=0
+    log("setting "..x..","..y.."="..pget(x,y))
+    --for y=0,GAME_HEIGHT do
+      coursePixels[x] = pget(x,y)
+      --coursePixels[x][y] = pget(x,y)
+    --end
+  end
+
+  network.async(function()
+    -- local lastHighScore = castle.storage.getGlobal('highscore')
+    -- if not lastHighScore or lastHighScore < score then
+      castle.storage.set("pntest", "hello!")
+      castle.storage.set("courseData", coursePixels)
+    --end
+  end)
+  target()
+end
+
+function loadCourse()
+  log("loadCourse()...")
+  -- TODO: 
+  --  > get data from tables of Castle user storage (for now)
+  --  > draw pixels for each layer
+  local coursePixels = {}
+
+  network.async(function()
+    -- get saved pixel data
+    coursePixels = castle.storage.get("courseData")
+    test = castle.storage.get("pntest")
+    log("test = "..tostring(test))
+    log("coursePixels = "..tostring(coursePixels))
+    -- switch to "paint" canvas
+    target("courseCanvas")
+    log("size = "..#coursePixels)
+    for x=0,GAME_WIDTH do
+      y=0
+      --for y=0,GAME_HEIGHT do
+        --log(tostring(x)..","..tostring(y).."="..tostring(coursePixels[x][y]))
+        log("getting "..x..","..y.."="..tostring(coursePixels[x]))
+        pset(x, y, coursePixels[x])
+        --log(tostring(x)..","..tostring(y).."="..tostring(coursePixels[x][y]))
+        --pset(x, y, coursePixels[x][y])
+      --end
+    end
+  end)
+
+end
