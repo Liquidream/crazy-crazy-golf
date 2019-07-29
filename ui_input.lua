@@ -26,6 +26,7 @@ end
 
 if ui.button('Reset Course') then
     -- TODO: reset current course data
+    resetCourse()
 end
 
 -- ui.section("Controls", function()
