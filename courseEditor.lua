@@ -50,7 +50,7 @@ function resetCourse()
   log("resetCourse()...")
 
   target("courseCanvas")
-  
+  cls()
   -- todo: draw default course here!
   spr_sheet("defaultCourse")
 

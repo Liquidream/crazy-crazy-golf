@@ -66,7 +66,7 @@ function love.update()
 end
 
 function love.draw()
-  cls()
+  cls(27)
   -- draw current course data
   spr_sheet("courseCanvas", 0, 0)
   -- draw "cursor"
