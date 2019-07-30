@@ -19,6 +19,18 @@ if ui.button('Save Course') then
     saveCourse()
 end
 
+if DEBUG_MODE then
+    if ui.button('Export Course') then
+        -- TODO: export course to local storage (disk)
+        exportCourse()
+    end
+end
+
+if ui.button('Share Course') then
+    -- TODO: share course to via Castle post
+    --shareCourse()
+end
+
 if ui.button('Load Course') then
     -- TODO: load course to Castle storage
     loadCourse()
@@ -28,6 +40,11 @@ if ui.button('Reset Course') then
     -- TODO: reset current course data
     resetCourse()
 end
+
+-- if ui.button('Copy Course') then
+--     -- TODO: save course to Castle storage
+--     copyCourse()
+-- end
 
 -- ui.section("Controls", function()
 

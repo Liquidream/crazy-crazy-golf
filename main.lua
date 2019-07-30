@@ -105,19 +105,7 @@ function saveCourse()
   -- TODO: 
   --  > grab pixels for each layer
   --  > store them in tables of Castle user storage (for now)
-  local coursePixels = {}
-
-  -- refresh latest pixel data
-  target("courseCanvas")
-  scan_surface("courseCanvas")
-  -- data stored as 1-index (so shift by 1 pixel)
-  for x=1,GAME_WIDTH+1 do
-    coursePixels[x] = {}    
-    for y=1,GAME_HEIGHT+1 do
-      coursePixels[x][y] = pget(x-1,y-2)
-    end
-  end
-  target()
+  local coursePixels = getCourseDataTable()
 
   -- now store it
   network.async(function()
@@ -157,8 +145,60 @@ end
 function resetCourse()
   log("resetCourse()...")
 
-  -- clear pixel data
+end
+
+
+function resetCourse()
+  log("resetCourse()...")
+
+  -- restore pixel data to pre-made level
   target("courseCanvas")
-  cls()
+  
   target()
+
+  -- clear pixel data
+  -- target("courseCanvas")
+  -- cls()
+  -- target()
+end
+
+
+-- function copyCourse()
+--   log("copyCourse()...")
+
+--   local data = getCourseDataTable()
+
+--   -- todo: dump course data to clipboard 
+--   -- (so can be hard-coded as default course to play/edit)
+--   local text = "defaultCourse = {\n"
+--   for k, col in pairs(data) do
+--     text = text + "  {"
+--   end
+--   text = text + "}"
+
+--   love.system.setClipboardText( text )
+--end
+
+
+function getCourseDataTable()
+  log("getCourseDataTable()...")
+  -- TODO: 
+  --  > grab pixels for each layer
+  --  > return them as multiple table values
+  local coursePixels = {}
+
+  -- refresh latest pixel data
+  target("courseCanvas")
+  scan_surface("courseCanvas")
+  -- data stored as 1-index (so shift by 1 pixel)
+  for x=1,GAME_WIDTH+1 do
+    coursePixels[x] = {}    
+    for y=1,GAME_HEIGHT+1 do
+      coursePixels[x][y] = pget(x-1,y-2)
+    end
+  end
+  target()
+
+  -- todo: return all layers as multiple values
+  return coursePixels
 end
