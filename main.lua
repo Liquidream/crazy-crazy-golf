@@ -1,6 +1,7 @@
 require("sugarcoat/sugarcoat")
 sugar.utility.using_package(sugar.S, true)
 require("common")
+require("game")
 require("courseEditor")
 require("ui_input")
 
@@ -42,6 +43,8 @@ function love.load()
   register_btn(7, 0, input_id("mouse_position", "y"))
   register_btn(8, 0, input_id("mouse_button", "lb"))
 
+  -- init game
+  initGame()
 end
 
 function love.update()
@@ -49,6 +52,9 @@ function love.update()
   -- if btn(1) then x = x + 2 end
   -- if btn(2) then y = y - 2 end
   -- if btn(3) then y = y + 2 end
+
+  -- update game elements
+  updateGame(dt)
 
   -- mouse moved?
   if btnv(6) or btnv(7) then
@@ -69,6 +75,10 @@ function love.draw()
   cls(27)
   -- draw current course data
   spr_sheet("courseCanvas", 0, 0)
+
+  -- draw game elements
+  drawGame()
+
   -- draw "cursor"
   circfill(mx, my, brushSize, 8)
 end
