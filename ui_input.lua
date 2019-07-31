@@ -24,6 +24,10 @@ if DEBUG_MODE then
         -- TODO: export course to local storage (disk)
         exportCourse()
     end
+    if ui.button('Import Course') then
+        -- TODO: export course to local storage (disk)
+        importCourse()
+    end
 end
 
 if ui.button('Share Course') then

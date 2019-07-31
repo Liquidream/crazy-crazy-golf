@@ -84,7 +84,29 @@ function exportCourse()
   log("exportCourse()...")
 
   --target("courseCanvas")
-  surfshot("courseCanvas", 1, "exported_course_"..love.timer.getTime()..".png")
+  surfshot("courseCanvas", 1, "exported_course.png")
+  --surfshot("courseCanvas", 1, "exported_course_"..love.timer.getTime()..".png")
+
+end
+
+-- export current course to local image file
+function importCourse()
+  log("importCourse()...")
+
+  network.async(function()
+    log("loading images...")        
+
+    load_png("importedCourse", "assets/exported_course.png")
+    --load_png("importedCourse", "/"..love.filesystem.getUserDirectory().."\\exported_course.png")
+
+    target("courseCanvas")
+    cls()
+    -- todo: draw default course here!
+    spr_sheet("importedCourse")
+
+    target()
+
+  end)
 
 end
 
@@ -104,7 +126,7 @@ function getCourseDataTable()
   for x=1,GAME_WIDTH+1 do
     coursePixels[x] = {}    
     for y=1,GAME_HEIGHT+1 do
-      coursePixels[x][y] = pget(x-1,y-2)
+      coursePixels[x][y] = pget(x-2,y-2)
     end
   end
   target()
