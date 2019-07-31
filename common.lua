@@ -51,6 +51,7 @@ GAME_WIDTH = 512  -- 16:9 aspect ratio that fits nicely
 GAME_HEIGHT = 288 -- within the default Castle window size
 GAME_SCALE = 3
 GAME_STATE = { SPLASH=0, TITLE=1, INFO=2, LVL_INTRO=3, LVL_PLAY=4, LVL_END=5, LOSE_LIFE=6, GAME_OVER=7 }
+GAME_MODE = { GAME=0, EDITOR=1 }
 
 PLAYER_MAX_SPEED = 100
 

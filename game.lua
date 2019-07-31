@@ -17,7 +17,7 @@ function initGame(levelData)
 
   -- capture course image data (cols for terrain types)
 
-  player = Player:new(50,50)
+  player = Player:new(100,200)
 end
 
 

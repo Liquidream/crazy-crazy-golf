@@ -2,6 +2,35 @@
 -- local vars
 local courseCanvas
 
+
+function initEditor()
+end
+
+function updateEditor(dt)
+  -- mouse moved?
+  if btnv(6) or btnv(7) then
+    mx, my = btnv(6), btnv(7)
+  end
+  -- mouse clicked? paint at current position
+  if btnv(8) > 0 then
+    -- switch to "paint" canvas
+    target("courseCanvas")
+    -- draw 
+    circfill(mx, my, brushSize, 8)
+    -- reset to "screen" again
+    target()
+  end
+end
+
+
+function drawEditor()
+  -- draw "cursor"
+  circfill(mx, my, brushSize, 8)
+end
+
+
+
+
 -- save course to user's castle storage
 function saveCourse()
   log("saveCourse()...")

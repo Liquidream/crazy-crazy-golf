@@ -5,10 +5,13 @@ require("game")
 require("courseEditor")
 require("ui_input")
 
-
+-- global vars
+gameMode = GAME_MODE.GAME
 
 -- UI-bound/global vars
+uiEditorMode = false
 brushSize = 10
+
 
 -- local vars
 local mx = 0
@@ -43,32 +46,26 @@ function love.load()
   register_btn(7, 0, input_id("mouse_position", "y"))
   register_btn(8, 0, input_id("mouse_button", "lb"))
 
+
+  -- todo: load course data
+  -- (TEMP - just import first level)  
+  importCourse()
+
   -- init game
   initGame()
 end
 
 function love.update()
-  -- if btn(0) then x = x - 2 end
-  -- if btn(1) then x = x + 2 end
-  -- if btn(2) then y = y - 2 end
-  -- if btn(3) then y = y + 2 end
-
-  -- update game elements
-  updateGame(dt)
-
-  -- mouse moved?
-  if btnv(6) or btnv(7) then
-    mx, my = btnv(6), btnv(7)
+  
+  -- are we in editor mode?
+  if gameMode == GAME_MODE.GAME then
+    -- update game elements
+    updateGame(dt)
+  else
+    -- update game editor
+    updateEditor(dt)
   end
-  -- mouse clicked? paint at current position
-  if btnv(8) > 0 then
-    -- switch to "paint" canvas
-    target("courseCanvas")
-    -- draw 
-    circfill(mx, my, brushSize, 8)
-    -- reset to "screen" again
-    target()
-  end
+  -- 
 end
 
 function love.draw()
@@ -76,11 +73,14 @@ function love.draw()
   -- draw current course data
   spr_sheet("courseCanvas", 0, 0)
 
-  -- draw game elements
-  drawGame()
-
-  -- draw "cursor"
-  circfill(mx, my, brushSize, 8)
+  -- are we in editor mode?
+  if gameMode == GAME_MODE.GAME then
+    -- draw game elements
+    drawGame()
+  else
+    -- draw game editor
+    drawEditor()
+  end
 end
 
 

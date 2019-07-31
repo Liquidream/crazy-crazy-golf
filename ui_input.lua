@@ -13,6 +13,9 @@ function castle.uiupdate()
 The craziest crazy golf! 🤪
 ]])
 
+uiEditorMode = ui.toggle("Editor OFF", "Editor ON", uiEditorMode)
+gameMode = uiEditorMode and GAME_MODE.EDITOR or GAME_MODE.GAME
+
 
 if ui.button('Save Course') then
     -- TODO: save course to Castle storage

@@ -23,7 +23,7 @@ end
 
 -- draw 
 function Player:draw()
-  circfill(self.x, self.y, 5, 1)
+  circfill(self.x, self.y, 2, 46)
 end
 
 
