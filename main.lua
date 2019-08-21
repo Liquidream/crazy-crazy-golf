@@ -20,7 +20,7 @@ local courseCanvas
 
 
 function love.load()
-  init_sugar("Hello world!", GAME_WIDTH, GAME_HEIGHT, GAME_SCALE)
+  init_sugar("Crazy Crazy Golf!", GAME_WIDTH, GAME_HEIGHT, GAME_SCALE)
   
   use_palette(ak54)
   screen_render_stretch(false)
@@ -86,7 +86,9 @@ end
 
 function preloadImages()
   network.async(function()
-    log("loading images...")        
+    log("loading images...")    
+    
+    --TODO: Finish this
 
     load_png("defaultCourse", "assets/course1.png")
 

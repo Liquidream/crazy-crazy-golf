@@ -23,7 +23,9 @@ end
 
 -- draw 
 function Player:draw()
-  circfill(self.x, self.y, 2, 46)
+  -- TODO: Needs to be a sprite!
+  circfill(self.x, self.y,2, 46)
+  --circ(self.x+20, self.y, 2, 46) --11
 end
 
 
