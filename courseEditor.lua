@@ -33,29 +33,37 @@ end
 
 -- save course to user's castle storage
 function saveCourse()
-  log("saveCourse()...")
-  -- TODO: 
+  log("saveCourse()...")  
   --  > grab pixels for each layer
   --  > store them in tables of Castle user storage (for now)
   local coursePixels = getCourseDataTable()
 
   -- now store it
   network.async(function()
-      castle.storage.set("courseData", coursePixels)
+    log("before storage set")
+    castle.storage.set("courseData", coursePixels)
+    log("after storage set")
   end)
 end
 
 function loadCourse()
   log("loadCourse()...")
-  -- TODO: 
-  --  > get data from tables of Castle user storage (for now)
-  --  > draw pixels for each layer
-  local coursePixels = {}
-  local testTable = {}
-
+  -- TODO: get data from tables of Castle user storage (for now)
+    
   -- get saved pixel data
   network.async(function()
 
+    -- (Version 2 - Saved ok, but couldn't restore & took WAY more data!)
+    -- local coursePixels = castle.storage.get("courseData-v2")
+    -- log("#coursePixels = "..#coursePixels)
+    -- local imgData = love.image.newImageData(GAME_WIDTH, GAME_HEIGHT, "rgba8", coursePixels)
+    -- load_png("courseCanvas", imgData) -- palette, use_as_spritesheet)
+    -- target()
+
+    -- (Version 1)---------------------------
+    -- read table of color info and draw a pixel at a time
+    local coursePixels = {}
+    local testTable = {}
     local coursePixels = castle.storage.get("courseData")
     if coursePixels then
       -- switch to "paint" canvas
@@ -143,9 +151,21 @@ end
 -- helper function to convert course layered pixel data to table(s)
 function getCourseDataTable()
   log("getCourseDataTable()...")
-  -- TODO: 
-  --  > grab pixels for each layer
-  --  > return them as multiple table values
+  
+  -- (Version 2 - Saved ok, but couldn't restore & took WAY more data!)
+  -- local holeData = surfshot_data("courseCanvas", 1)
+  -- log("img format = "..holeData:getFormat())
+  -- log("img width = "..holeData:getWidth())
+  -- log("img height = "..holeData:getHeight())
+  -- log("game width = "..GAME_WIDTH)
+  -- log("game height = "..GAME_HEIGHT)
+  -- local strData = holeData:getString()
+
+  -- log("#strData = "..#strData)
+  -- return strData
+
+  -- (Version 1) ----------------------------
+  -- grab pixels as table of colour values
   local coursePixels = {}
 
   -- refresh latest pixel data
@@ -160,6 +180,6 @@ function getCourseDataTable()
   end
   target()
 
-  -- todo: return all layers as multiple values
+  --todo: return all layers as multiple values?
   return coursePixels
 end
