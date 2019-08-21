@@ -175,7 +175,7 @@ function getCourseDataTable()
   for x=1,GAME_WIDTH+1 do
     coursePixels[x] = {}    
     for y=1,GAME_HEIGHT+1 do
-      coursePixels[x][y] = pget(x-2,y-2)
+      coursePixels[x][y] = pget(x-1,y-2)
     end
   end
   target()
