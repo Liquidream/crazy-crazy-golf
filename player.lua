@@ -34,9 +34,6 @@ function Player:update(dt)
     local speed = 10
     self.dx = cos(self.aim) * speed
     self.dy = sin(self.aim) * speed
-
-    log("self.dx = "..self.dx)
-    log("self.dy = "..self.dy)
   end
 
   -- ---------------------------------------
@@ -47,9 +44,10 @@ function Player:update(dt)
   self.y = self.y + self.dy
   
   -- apply drag
-  self.dx = self.dx * 0.9
+  local drag = 0.95
+  self.dx = self.dx * drag
   if abs(self.dx)<0.001 then self.dx = 0 end
-  self.dy = self.dy * 0.9
+  self.dy = self.dy * drag
   if abs(self.dy)<0.001 then self.dy = 0 end
 end
 
