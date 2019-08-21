@@ -40,6 +40,7 @@ function love.load()
   register_btn(1, 0, input_id("keyboard", "right"))
   register_btn(2, 0, input_id("keyboard", "up"))
   register_btn(3, 0, input_id("keyboard", "down"))
+  register_btn(4, 0, input_id("keyboard", "space"))
 
   -- mouse input
   register_btn(6, 0, input_id("mouse_position", "x"))
