@@ -139,7 +139,11 @@ function importCourse()
     target("courseCanvas")
     cls()
     -- todo: draw default course here!
-    spr_sheet("importedCourse")
+    spr_sheet("importedCourse")    
+    
+    -- TODO: Update pixel data?
+    target("courseCanvas")
+    scan_surface("courseCanvas")
 
     target()
 

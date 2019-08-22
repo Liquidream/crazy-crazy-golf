@@ -45,10 +45,27 @@ function Player:update(dt)
   
   -- apply drag
   local drag = 0.95
+  -- (check terrain)
+  local col = sget(self.x,self.y,"courseCanvas")
+  
+  if col == 7 then 
+    -- rough
+    drag = 0.85
+  elseif col == 45 then 
+    -- sand
+    drag = 0.65
+  end
   self.dx = self.dx * drag
   if abs(self.dx)<0.001 then self.dx = 0 end
   self.dy = self.dy * drag
   if abs(self.dy)<0.001 then self.dy = 0 end
+
+  -- check for water
+  if col == 0 then
+    -- restart level
+    self.x, self.y = PLAYER_STARTX, PLAYER_STARTY
+    self.dx, self.dy = 0,0
+  end
 end
 
 -- draw 
