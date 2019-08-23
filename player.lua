@@ -13,6 +13,10 @@ function Player:new(x,y)
   o.dx = 0;
   o.dy = 0;
 
+  -- physics related
+  o.collider = bf.Collider.new(world, "Circle", x, y, 20)
+  o.collider:setRestitution(0.8) -- make bounce? (any function of shape/body/fixture works)
+
   -- object related
   self.__index = self;
   setmetatable(o, self);
@@ -31,17 +35,20 @@ function Player:update(dt)
 
   -- taking a shot
   if btnp(4) then 
-    local speed = 10
-    self.dx = cos(self.aim) * speed
-    self.dy = sin(self.aim) * speed
+    local speed = 4000
+    self.collider:applyForce(
+      cos(self.aim) * speed,
+      sin(self.aim) * speed)
+    -- self.dx = cos(self.aim) * speed
+    -- self.dy = sin(self.aim) * speed
   end
 
   -- ---------------------------------------
   -- Physics updates
   -- ---------------------------------------
   -- Move ball based on current inertia
-  self.x = self.x + self.dx
-  self.y = self.y + self.dy
+  -- self.x = self.x + self.dx
+  -- self.y = self.y + self.dy
   
   -- apply drag
   local drag = 0.95
@@ -55,16 +62,16 @@ function Player:update(dt)
     -- sand
     drag = 0.65
   end
-  self.dx = self.dx * drag
-  if abs(self.dx)<0.001 then self.dx = 0 end
-  self.dy = self.dy * drag
-  if abs(self.dy)<0.001 then self.dy = 0 end
+  -- self.dx = self.dx * drag
+  -- if abs(self.dx)<0.001 then self.dx = 0 end
+  -- self.dy = self.dy * drag
+  -- if abs(self.dy)<0.001 then self.dy = 0 end
 
   -- check for water
   if col == 0 then
     -- restart level
     self.x, self.y = PLAYER_STARTX, PLAYER_STARTY
-    self.dx, self.dy = 0,0
+    --self.dx, self.dy = 0,0
   end
 end
 
@@ -84,8 +91,10 @@ function Player:draw()
   end
 
   -- TODO: Needs to be a sprite!
-  circfill(self.x, self.y+1,2, 0)
-  circfill(self.x, self.y,2, 46)
+  circfill(self.collider:getX(), self.collider:getY()+1,2, 0)
+  circfill(self.collider:getX(), self.collider:getY(),2, 46)
+  -- circfill(self.x, self.y+1,2, 0)
+  -- circfill(self.x, self.y,2, 46)
   
 end
 

@@ -5,6 +5,8 @@ require("game")
 require("courseEditor")
 require("ui_input")
 
+bf = require("breezefield")
+
 -- global vars
 gameMode = GAME_MODE.GAME
 
@@ -54,9 +56,10 @@ function love.load()
 
   -- init game
   initGame()
+
 end
 
-function love.update()
+function love.update(dt)
   
   -- are we in editor mode?
   if gameMode == GAME_MODE.GAME then
