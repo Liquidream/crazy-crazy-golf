@@ -15,6 +15,9 @@ function Player:new(x,y)
 
   -- physics related
   o.collider = bf.Collider.new(world, "Circle", x, y, 20)
+  o.collider.draw = function(alpha)
+    -- do nothing - draw done elsewhere
+  end
   o.collider:setRestitution(0.8) -- make bounce? (any function of shape/body/fixture works)
 
   -- object related
@@ -25,6 +28,8 @@ end
 
 
 function Player:update(dt)
+  self.x = self.collider:getX()
+  self.y = self.collider:getY()
   -- ---------------------------------------
   -- Input handling
   -- ---------------------------------------
@@ -35,10 +40,10 @@ function Player:update(dt)
 
   -- taking a shot
   if btnp(4) then 
-    local speed = 4000
-    self.collider:applyForce(
+    local speed = 300
+    self.collider:applyLinearImpulse(
       cos(self.aim) * speed,
-      sin(self.aim) * speed)
+      sin(self.aim) * speed)     
     -- self.dx = cos(self.aim) * speed
     -- self.dy = sin(self.aim) * speed
   end
@@ -51,17 +56,26 @@ function Player:update(dt)
   -- self.y = self.y + self.dy
   
   -- apply drag
-  local drag = 0.95
+  local drag = 2
   -- (check terrain)
   local col = sget(self.x,self.y,"courseCanvas")
   
   if col == 7 then 
     -- rough
-    drag = 0.85
+    drag = 5
   elseif col == 45 then 
     -- sand
-    drag = 0.65
+    drag = 10
   end
+
+  -- TODO: Use applyForce here (apply drag / to adjust direction)
+
+  local sx, sy = self.collider:getLinearVelocity()  
+  local dx = -sx * drag
+  local dy = -sy * drag
+  --local fx = -sx * self.collider.worldAirResistance -- the drag *force* is opposite and proportional to the velocity
+  self.collider:applyForce(dx, dy)
+
   -- self.dx = self.dx * drag
   -- if abs(self.dx)<0.001 then self.dx = 0 end
   -- self.dy = self.dy * drag
@@ -70,7 +84,8 @@ function Player:update(dt)
   -- check for water
   if col == 0 then
     -- restart level
-    self.x, self.y = PLAYER_STARTX, PLAYER_STARTY
+    self:setPos(PLAYER_STARTX, PLAYER_STARTY)
+    --self.x, self.y = PLAYER_STARTX, PLAYER_STARTY
     --self.dx, self.dy = 0,0
   end
 end
@@ -91,12 +106,17 @@ function Player:draw()
   end
 
   -- TODO: Needs to be a sprite!
-  circfill(self.collider:getX(), self.collider:getY()+1,2, 0)
-  circfill(self.collider:getX(), self.collider:getY(),2, 46)
+  circfill(self.x, self.y+1,2, 0)
+  circfill(self.x, self.y,2, 46)
   -- circfill(self.x, self.y+1,2, 0)
   -- circfill(self.x, self.y,2, 46)
   
 end
 
+
+function Player:setPos(x,y)
+  self.collider:setPosition(PLAYER_STARTX, PLAYER_STARTY)
+  self.collider:setLinearVelocity(0,0)
+end
 
 return Player

@@ -20,7 +20,7 @@ function initGame(levelData)
   -- -------------------------------------------------------
   -- init physics
   -- -------------------------------------------------------
-  world = bf.newWorld(0, 9.81, true)
+  world = bf.newWorld(0, 0, true)
   --world = bf.newWorld(0, 90.81, true)
   -- bf.World:new also works
   -- any function of love.physics.world should work on World
