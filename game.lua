@@ -35,12 +35,23 @@ function initGame(levelData)
 
   -- add a temp physics obstacle
   block1 = bf.Collider.new(world, "Polygon", 
-                {150, 375, 250, 375,
-					       250, 425, 150, 425})
+             {0, 100, 150, 100 , 150, 105, 0, 105})
+  --block1:setType("static")
+  block1:setPosition(50, 120)
+  block1:setAngle(math.rad(-45))
+  block1:setAngularVelocity(-2) -- Make it spin!
+  block1:setLinearDamping(1000) -- Make it so it doesn't "move"
+                 
+  -- ground = bf.Collider.new(world, "Polygon",
+  --               {0, 150, 250, 150 , 250, 250, 0, 250})
+  -- ground:setType("static")
 end
 
 
 function updateGame(dt)
+
+  block1:setAngularVelocity(-2) -- Make it spin!
+
   world:update(dt)
   player:update(dt)
 end

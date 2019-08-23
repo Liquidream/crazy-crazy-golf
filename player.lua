@@ -14,7 +14,7 @@ function Player:new(x,y)
   o.dy = 0;
 
   -- physics related
-  o.collider = bf.Collider.new(world, "Circle", x, y, 20)
+  o.collider = bf.Collider.new(world, "Circle", x, y, 2)
   o.collider.draw = function(alpha)
     -- do nothing - draw done elsewhere
   end
@@ -39,8 +39,8 @@ function Player:update(dt)
   if btn(1) then self.aim = self.aim + rotateSpeed end
 
   -- taking a shot
+  local speed = 5
   if btnp(4) then 
-    local speed = 300
     self.collider:applyLinearImpulse(
       cos(self.aim) * speed,
       sin(self.aim) * speed)     
@@ -71,8 +71,8 @@ function Player:update(dt)
   -- TODO: Use applyForce here (apply drag / to adjust direction)
 
   local sx, sy = self.collider:getLinearVelocity()  
-  local dx = -sx * drag
-  local dy = -sy * drag
+  local dx = -sx * (drag/100)
+  local dy = -sy * (drag/100)
   --local fx = -sx * self.collider.worldAirResistance -- the drag *force* is opposite and proportional to the velocity
   self.collider:applyForce(dx, dy)
 
@@ -106,8 +106,8 @@ function Player:draw()
   end
 
   -- TODO: Needs to be a sprite!
-  circfill(self.x, self.y+1,2, 0)
-  circfill(self.x, self.y,2, 46)
+  circfill(self.x, self.y+1, 2, 0)
+  circfill(self.x, self.y,   2, 46)
   -- circfill(self.x, self.y+1,2, 0)
   -- circfill(self.x, self.y,2, 46)
   
