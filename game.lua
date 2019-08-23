@@ -50,3 +50,5 @@ function drawGame()
   world:draw()
   player:draw()
 end
+
+
