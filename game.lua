@@ -37,11 +37,13 @@ function initGame(levelData)
   block1 = bf.Collider.new(world, "Polygon", 
              {0, 100, 150, 100 , 150, 105, 0, 105})
   --block1:setType("static")
-  block1:setPosition(50, 120)
+  block1:setPosition(150, 150)
   block1:setAngle(math.rad(-45))
   block1:setAngularVelocity(-2) -- Make it spin!
   block1:setLinearDamping(1000) -- Make it so it doesn't "move"
-                 
+  -- block1.draw = function(alpha)
+  --   -- do nothing - draw done elsewhere
+  -- end                 
   -- ground = bf.Collider.new(world, "Polygon",
   --               {0, 150, 250, 150 , 250, 250, 0, 250})
   -- ground:setType("static")
