@@ -24,6 +24,10 @@ end
 
 
 function drawEditor()
+  
+  -- draw current course data
+  spr_sheet("courseCanvas", 0, 0)
+  
   -- draw "cursor"
   circfill(mx, my, brushSize, 8)
 end
