@@ -15,18 +15,14 @@ local terrain={}      -- slopes?
 function initGame(levelData)  
   -- todo: construct level objects from data passed
 
-
-  
   -- -------------------------------------------------------
   -- init physics
   -- -------------------------------------------------------
   world = bf.newWorld(0, 0, true)
-  --world = bf.newWorld(0, 90.81, true)
   -- bf.World:new also works
   -- any function of love.physics.world should work on World
   local gx,gy = world:getGravity()
   log("gravity = "..gx..","..gy)
-
 
 
   -- capture course image data (cols for terrain types)
@@ -52,15 +48,26 @@ end
 
 function updateGame(dt)
 
-  block1:setAngularVelocity(-2) -- Make it spin!
+  -- TEST: Make block spin!
+  block1:setAngularVelocity(-2) 
 
+  -- update physics objects
   world:update(dt)
+
+  -- update player (controls, movement/pos, state, etc.)
   player:update(dt)
 end
 
--- draw 
+-- draw game/current hole
 function drawGame()
+  
+  -- draw current course data
+  spr_sheet("courseCanvas", 0, 0)
+
+  -- draw all physics objects
   world:draw()
+
+  -- draw player
   player:draw()
 end
 

@@ -24,6 +24,13 @@ uiEditorMode = ui.toggle("Editor OFF", "Editor ON", uiEditorMode, {onToggle = fu
 end})
 gameMode = uiEditorMode and GAME_MODE.EDITOR or GAME_MODE.GAME
 
+if ui.button('Wall', { icon = 'assets/ico-wall.png', iconOnly = true, big=true }) then
+  log('set tool to WALL')
+end
+
+if ui.button('Wall', { icon = 'assets/ico-bridge.png', iconOnly = true }) then
+  log('set tool to WALL')
+end
 
 if ui.button('Save Course') then
     -- TODO: save course to Castle storage

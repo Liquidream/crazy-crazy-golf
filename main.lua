@@ -1,3 +1,19 @@
+-- Welcome to your new Castle project!
+-- https://castle.games/get-started
+-- Castle uses Love2D 11.1 for rendering and input: https://love2d.org/
+-- See here for some useful Love2D documentation:
+-- https://love2d-community.github.io/love-api/
+
+if CASTLE_PREFETCH then
+  CASTLE_PREFETCH({
+    "assets/ico-wall.png",
+    "assets/ico-bridge.png",
+    -- "assets/level-1-bg.png",
+    -- "assets/level-1-data.png",
+  })
+end
+
+
 require("sugarcoat/sugarcoat")
 sugar.utility.using_package(sugar.S, true)
 require("common")
@@ -22,12 +38,8 @@ local courseCanvas
 
 
 function love.load()
-  init_sugar("Crazy Crazy Golf!", GAME_WIDTH, GAME_HEIGHT, GAME_SCALE)
-  
-  use_palette(ak54)
-  screen_render_stretch(false)
-  screen_render_integer_scale(false)
-  set_frame_waiting(60)
+  -- init Sugarcoat engine
+  initSugarcoat()
   
   -- course gfx setup
   courseCanvas = new_surface(GAME_WIDTH, GAME_HEIGHT, "courseCanvas")
@@ -35,19 +47,6 @@ function love.load()
   -- preload images
   preloadImages()
 
-  -- control setup
-  player_assign_ctrlr(0, 0)
-
-  register_btn(0, 0, input_id("keyboard", "left"))
-  register_btn(1, 0, input_id("keyboard", "right"))
-  register_btn(2, 0, input_id("keyboard", "up"))
-  register_btn(3, 0, input_id("keyboard", "down"))
-  register_btn(4, 0, input_id("keyboard", "space"))
-
-  -- mouse input
-  register_btn(6, 0, input_id("mouse_position", "x"))
-  register_btn(7, 0, input_id("mouse_position", "y"))
-  register_btn(8, 0, input_id("mouse_button", "lb"))
 
 
   -- todo: load course data
@@ -74,8 +73,6 @@ end
 
 function love.draw()
   cls(27)
-  -- draw current course data
-  spr_sheet("courseCanvas", 0, 0)
 
   -- are we in editor mode?
   if gameMode == GAME_MODE.GAME then
@@ -85,6 +82,32 @@ function love.draw()
     -- draw game editor
     drawEditor()
   end
+end
+
+
+
+function initSugarcoat()
+  init_sugar("Crazy Crazy Golf!", GAME_WIDTH, GAME_HEIGHT, GAME_SCALE)
+  
+  use_palette(ak54)
+  screen_render_stretch(false)
+  screen_render_integer_scale(false)
+  set_frame_waiting(60)
+
+
+  -- control setup
+  player_assign_ctrlr(0, 0)
+
+  register_btn(0, 0, input_id("keyboard", "left"))
+  register_btn(1, 0, input_id("keyboard", "right"))
+  register_btn(2, 0, input_id("keyboard", "up"))
+  register_btn(3, 0, input_id("keyboard", "down"))
+  register_btn(4, 0, input_id("keyboard", "space"))
+
+  -- mouse input
+  register_btn(6, 0, input_id("mouse_position", "x"))
+  register_btn(7, 0, input_id("mouse_position", "y"))
+  register_btn(8, 0, input_id("mouse_button", "lb"))
 end
 
 
