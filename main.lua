@@ -35,6 +35,7 @@ brushSize = 10
 local mx = 0
 local my = 0
 local courseCanvas
+local courseCanvasTemp
 
 
 function love.load()
@@ -43,6 +44,7 @@ function love.load()
   
   -- course gfx setup
   courseCanvas = new_surface(GAME_WIDTH, GAME_HEIGHT, "courseCanvas")
+  courseCanvasTemp = new_surface(GAME_WIDTH, GAME_HEIGHT, "courseCanvasTemp")
 
   -- preload images
   preloadImages()
@@ -56,6 +58,8 @@ function love.load()
   -- init game
   initGame()
 
+  -- init editor
+  initEditor()
 end
 
 function love.update(dt)
@@ -81,6 +85,10 @@ function love.draw()
   else
     -- draw game editor
     drawEditor()
+  end
+
+  if DEBUG_MODE then
+    print('FPS: ' .. love.timer.getFPS(), 85, GAME_HEIGHT-36, 49)
   end
 end
 

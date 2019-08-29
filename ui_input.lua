@@ -30,17 +30,21 @@ The craziest crazy golf! 🤪
       ui.section("Terrain Landscape", { defaultOpen = true }, function()
         ui.markdown([[Choose Terrain to paint:]])
         
+        if ui.button('Sand Trap', { icon = 'assets/ico-terrain-sand.png', iconOnly = false }) then
+          log('set tool to sand')
+          currTerrainLayer = 3
+        end
+        
         if ui.button('Fairway/Green', { icon = 'assets/ico-terrain-green.png', iconOnly = false }) then
           log('set tool to grass')
+          currTerrainLayer = 2
         end
         
         if ui.button('Rough', { icon = 'assets/ico-terrain-rough.png', iconOnly = false }) then
           log('set tool to rough')
+          currTerrainLayer = 1
         end
         
-        if ui.button('Sand Trap', { icon = 'assets/ico-terrain-sand.png', iconOnly = false }) then
-          log('set tool to sand')
-        end
       end) -- terrain painter section
 
 

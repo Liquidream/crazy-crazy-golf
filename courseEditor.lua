@@ -1,9 +1,21 @@
 
 -- local vars
-local courseCanvas
+currTerrainLayer = 2
+-- 0 = water (no terrain)
+-- 1 = rough
+-- 2 = fairway/green
+-- 3 = sand trap
+
+local terrainLayerCols = {}
 
 
 function initEditor()
+  terrainLayerCols = {
+    [2] = 8,
+    [1] = 7,
+    [3] = 45
+  }
+  log("terrainLayerCols >> "..terrainLayerCols[3])
 end
 
 function updateEditor(dt)
@@ -14,9 +26,49 @@ function updateEditor(dt)
   -- mouse clicked? paint at current position
   if btnv(8) > 0 then
     -- switch to "paint" canvas
+    target("courseCanvasTemp")
+
+    -- log("currTerrainLayer >> "..currTerrainLayer)
+    -- log("terrainLayerCols[currTerrainLayer] >> "..terrainLayerCols[currTerrainLayer])
+
+    -- draw "rough" layer
+    palt(7, false) -- show rough
+    palt(8, true)  -- hide green
+    palt(45, true) -- hide sand
+    spr_sheet("courseCanvas", 0, 0)
+
+    -- paint "rough"?
+    if currTerrainLayer == 1 then
+      circfill(mx, my, brushSize, 7)
+    end    
+
+    -- draw "green" layer
+    palt(7, true)  -- hide rough
+    palt(8, false) -- show green
+    palt(45, true) -- hide sand
+    spr_sheet("courseCanvas", 0, 0)
+
+    -- paint "green"?
+    if currTerrainLayer == 2 then
+      circfill(mx, my, brushSize, 8)
+    end  
+    
+    -- draw "sand" layer
+    palt(7, true)  -- hide rough
+    palt(8, true)  -- hide green
+    palt(45, false)-- show sand
+    spr_sheet("courseCanvas", 0, 0)
+
+    -- paint "sand"?
+    if currTerrainLayer == 3 then
+      circfill(mx, my, brushSize, 45)
+    end  
+    
+    -- now paint the final thing back to main data canvas
+    palt()
     target("courseCanvas")
-    -- draw 
-    circfill(mx, my, brushSize, 8)
+    spr_sheet("courseCanvasTemp", 0, 0)
+
     -- reset to "screen" again
     target()
   end
@@ -27,12 +79,30 @@ function drawEditor()
   
   -- draw current course data
   spr_sheet("courseCanvas", 0, 0)
-  
-  -- draw "cursor"
-  circfill(mx, my, brushSize, 8)
+
+  -- draw "cursor" (only if not "painting")
+  if btnv(8) == 0 then 
+    circfill(mx, my, brushSize, terrainLayerCols[currTerrainLayer])
+  else
+    -- draw brush outline
+    circ(mx, my, brushSize, 46)
+  end
 end
 
 
+
+-- take the source course data (single image)
+-- and split it up into separate canvas layers
+-- (so user can "paint" on each layer independently)
+-- function createTerrainLayers()
+
+-- end
+
+-- -- combine all the separate terrain canvas layers
+-- -- into one final data layer (for gameplay/saving)
+-- function mergeTerrainLayers()
+
+-- end
 
 
 -- save course to user's castle storage
