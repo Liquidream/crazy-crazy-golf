@@ -11,9 +11,9 @@ local terrainLayerCols = {}
 
 function initEditor()
   terrainLayerCols = {
+    [3] = 45,
     [2] = 8,
     [1] = 7,
-    [3] = 45
   }
   log("terrainLayerCols >> "..terrainLayerCols[3])
 end
@@ -25,77 +25,37 @@ function updateEditor(dt)
   end
   -- mouse clicked? paint at current position
   if btnv(8) > 0 
-   or btnv(9) > 0 then    
-    -- ----------------
-    -- rough
-    -- ----------------
-    palt()
-    -- switch to "layer paint" canvas
-    target("courseCanvasLayerTemp")
+   or btnv(9) > 0 then
+
+    -- clear the temp canvas (once!)
+    target("courseCanvasTemp")
     cls()
-    -- draw "rough" layer
-    palt(7, false) -- show rough
-    palt(8, true)  -- hide green
-    palt(45, true) -- hide sand
-    spr_sheet("courseCanvas", 0, 0)
-    -- paint "rough"?
-    if currTerrainLayer == 1 then
-      -- if btnv(9)>0 then
-      --   palt(0,false)
-      --   circfill(mx, my, brushSize, 0)        
-      -- else
-        circfill(mx, my, brushSize,  btnv(8)>0 and 7 or 37)
-      --end
+
+    -- go through each terrain layer,
+    -- "drawing" each layer's content to a canvas
+    -- (or erasing it from current one)
+    -- building up each layer and finally,
+    -- copying it back to the game's data canvas
+    for l=1,3 do
+      palt()
+      -- switch to "layer paint" canvas
+      target("courseCanvasLayerTemp")
+      cls()
+      -- only make current layer's col visible
+      for i, col in ipairs(terrainLayerCols) do
+        palt(terrainLayerCols[i], i~=l)
+      end
+      spr_sheet("courseCanvas", 0, 0)
+      -- paint "rough"?
+      if currTerrainLayer == l then
+        circfill(mx, my, brushSize,  btnv(8)>0 and terrainLayerCols[currTerrainLayer] or 37)
+      end
+      -- now commit layer to temp canvas
+      palt()
+      target("courseCanvasTemp")
+      palt(37, true) -- hide eraser "painting"
+      spr_sheet("courseCanvasLayerTemp", 0, 0)
     end
-    -- now commit layer to temp canvas
-    target("courseCanvasTemp")
-    cls()
-    palt(37, true) -- hide eraser "painting"
-    spr_sheet("courseCanvasLayerTemp", 0, 0)
-
-    -- ----------------
-    -- fairway/green
-    -- ----------------
-    palt()
-    -- switch to "layer paint" canvas
-    target("courseCanvasLayerTemp")
-    cls()
-    -- draw "green" layer
-    palt(7, true)  -- hide rough
-    palt(8, false) -- show green
-    palt(45, true) -- hide sand
-    spr_sheet("courseCanvas", 0, 0)
-    -- paint "green"?
-    if currTerrainLayer == 2 then
-      circfill(mx, my, brushSize, 8)
-    end  
-    -- now commit layer to temp canvas
-    target("courseCanvasTemp")
-    spr_sheet("courseCanvasLayerTemp", 0, 0)
-
-    -- ----------------
-    -- sand
-    -- ----------------
-    palt()
-    -- switch to "layer paint" canvas
-    target("courseCanvasLayerTemp")
-    cls()
-    -- draw "sand" layer
-    palt(7, true)  -- hide rough
-    palt(8, true)  -- hide green
-    palt(45, false)-- show sand
-    spr_sheet("courseCanvas", 0, 0)
-    -- paint "sand"?
-    if currTerrainLayer == 3 then
-      circfill(mx, my, brushSize, 45)
-    end      
-    -- now paint the final thing back to main data canvas
-    palt()
-    target("courseCanvas")
-    spr_sheet("courseCanvasTemp", 0, 0)
-    -- now commit layer to temp canvas
-    target("courseCanvasTemp")
-    spr_sheet("courseCanvasLayerTemp", 0, 0)
 
     -- finally, commit temp canvas to real data canvas
     target("courseCanvas")
@@ -114,7 +74,7 @@ function drawEditor()
   spr_sheet("courseCanvas", 0, 0)
 
   -- draw "cursor" (only if not "painting")
-  if btnv(8) == 0 then 
+  if btnv(8) == 0 and btnv(9) == 0 then 
     circfill(mx, my, brushSize, terrainLayerCols[currTerrainLayer])
   else
     -- draw brush outline
