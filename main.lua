@@ -34,8 +34,6 @@ brushSize = 10
 -- local vars
 local mx = 0
 local my = 0
-local courseCanvas
-local courseCanvasTemp
 
 
 function love.load()
@@ -43,8 +41,9 @@ function love.load()
   initSugarcoat()
   
   -- course gfx setup
-  courseCanvas = new_surface(GAME_WIDTH, GAME_HEIGHT, "courseCanvas")
-  courseCanvasTemp = new_surface(GAME_WIDTH, GAME_HEIGHT, "courseCanvasTemp")
+  new_surface(GAME_WIDTH, GAME_HEIGHT, "courseCanvas")
+  new_surface(GAME_WIDTH, GAME_HEIGHT, "courseCanvasTemp")
+  new_surface(GAME_WIDTH, GAME_HEIGHT, "courseCanvasLayerTemp")
 
   -- preload images
   preloadImages()
@@ -116,6 +115,7 @@ function initSugarcoat()
   register_btn(6, 0, input_id("mouse_position", "x"))
   register_btn(7, 0, input_id("mouse_position", "y"))
   register_btn(8, 0, input_id("mouse_button", "lb"))
+  register_btn(9, 0, input_id("mouse_button", "rb"))
 end
 
 

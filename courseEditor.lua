@@ -24,49 +24,82 @@ function updateEditor(dt)
     mx, my = btnv(6), btnv(7)
   end
   -- mouse clicked? paint at current position
-  if btnv(8) > 0 then
-    -- switch to "paint" canvas
-    target("courseCanvasTemp")
-
-    -- log("currTerrainLayer >> "..currTerrainLayer)
-    -- log("terrainLayerCols[currTerrainLayer] >> "..terrainLayerCols[currTerrainLayer])
-
+  if btnv(8) > 0 
+   or btnv(9) > 0 then    
+    -- ----------------
+    -- rough
+    -- ----------------
+    palt()
+    -- switch to "layer paint" canvas
+    target("courseCanvasLayerTemp")
+    cls()
     -- draw "rough" layer
     palt(7, false) -- show rough
     palt(8, true)  -- hide green
     palt(45, true) -- hide sand
     spr_sheet("courseCanvas", 0, 0)
-
     -- paint "rough"?
     if currTerrainLayer == 1 then
-      circfill(mx, my, brushSize, 7)
-    end    
+      -- if btnv(9)>0 then
+      --   palt(0,false)
+      --   circfill(mx, my, brushSize, 0)        
+      -- else
+        circfill(mx, my, brushSize,  btnv(8)>0 and 7 or 37)
+      --end
+    end
+    -- now commit layer to temp canvas
+    target("courseCanvasTemp")
+    cls()
+    palt(37, true) -- hide eraser "painting"
+    spr_sheet("courseCanvasLayerTemp", 0, 0)
 
+    -- ----------------
+    -- fairway/green
+    -- ----------------
+    palt()
+    -- switch to "layer paint" canvas
+    target("courseCanvasLayerTemp")
+    cls()
     -- draw "green" layer
     palt(7, true)  -- hide rough
     palt(8, false) -- show green
     palt(45, true) -- hide sand
     spr_sheet("courseCanvas", 0, 0)
-
     -- paint "green"?
     if currTerrainLayer == 2 then
       circfill(mx, my, brushSize, 8)
     end  
-    
+    -- now commit layer to temp canvas
+    target("courseCanvasTemp")
+    spr_sheet("courseCanvasLayerTemp", 0, 0)
+
+    -- ----------------
+    -- sand
+    -- ----------------
+    palt()
+    -- switch to "layer paint" canvas
+    target("courseCanvasLayerTemp")
+    cls()
     -- draw "sand" layer
     palt(7, true)  -- hide rough
     palt(8, true)  -- hide green
     palt(45, false)-- show sand
     spr_sheet("courseCanvas", 0, 0)
-
     -- paint "sand"?
     if currTerrainLayer == 3 then
       circfill(mx, my, brushSize, 45)
-    end  
-    
+    end      
     -- now paint the final thing back to main data canvas
     palt()
     target("courseCanvas")
+    spr_sheet("courseCanvasTemp", 0, 0)
+    -- now commit layer to temp canvas
+    target("courseCanvasTemp")
+    spr_sheet("courseCanvasLayerTemp", 0, 0)
+
+    -- finally, commit temp canvas to real data canvas
+    target("courseCanvas")
+    cls()
     spr_sheet("courseCanvasTemp", 0, 0)
 
     -- reset to "screen" again
