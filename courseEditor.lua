@@ -41,16 +41,26 @@ function updateEditor(dt)
       -- switch to "layer paint" canvas
       target("courseCanvasLayerTemp")
       cls()
-      -- only make current layer's col visible
-      for i, col in ipairs(terrainLayerCols) do
-        palt(terrainLayerCols[i], i~=l)
+
+      -- rough layer = (make everything "rough")
+      if l==1 then
+        -- 
+        pal(terrainLayerCols[3], terrainLayerCols[1])
+        pal(terrainLayerCols[2], terrainLayerCols[1])
+      else
+        -- only draw the colours for THIS layer
+        for i, col in ipairs(terrainLayerCols) do
+          palt(terrainLayerCols[i], i~=l)
+        end
       end
+      
       spr_sheet("courseCanvas", 0, 0)
       -- paint "rough"?
       if currTerrainLayer == l then
         circfill(mx, my, brushSize,  btnv(8)>0 and terrainLayerCols[currTerrainLayer] or 37)
       end
       -- now commit layer to temp canvas
+      pal()
       palt()
       target("courseCanvasTemp")
       palt(37, true) -- hide eraser "painting"
