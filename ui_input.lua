@@ -34,17 +34,23 @@ The craziest crazy golf! 🤪
           log('set tool to sand')
           currTerrainLayer = 3
         end
-        
-        if ui.button('Fairway/Green', { icon = 'assets/ico-terrain-green.png', iconOnly = false }) then
-          log('set tool to grass')
-          currTerrainLayer = 2
-        end
+                
+        ui.box("terrain2Box", { border="5px solid", flexGrow="1" }, function()
+          if ui.button('Fairway/Green', { icon = 'assets/ico-terrain-green.png', iconOnly = false }) then
+            log('set tool to grass')
+            currTerrainLayer = 2
+          end
+        end)
+
         
         if ui.button('Rough', { icon = 'assets/ico-terrain-rough.png', iconOnly = false }) then
           log('set tool to rough')
           currTerrainLayer = 1
         end
-        
+
+        -- Size
+        terrainBrushSize = ui.slider("Size", terrainBrushSize, 1, 50, { })
+
       end) -- terrain painter section
 
 

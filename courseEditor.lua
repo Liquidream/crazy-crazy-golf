@@ -57,7 +57,7 @@ function updateEditor(dt)
       spr_sheet("courseCanvas", 0, 0)
       -- paint "rough"?
       if currTerrainLayer == l then
-        circfill(mx, my, brushSize,  btnv(8)>0 and terrainLayerCols[currTerrainLayer] or 37)
+        circfill(mx, my, terrainBrushSize,  btnv(8)>0 and terrainLayerCols[currTerrainLayer] or 37)
       end
       -- now commit layer to temp canvas
       pal()
@@ -85,10 +85,10 @@ function drawEditor()
 
   -- draw "cursor" (only if not "painting")
   if btnv(8) == 0 and btnv(9) == 0 then 
-    circfill(mx, my, brushSize, terrainLayerCols[currTerrainLayer])
+    circfill(mx, my, terrainBrushSize, terrainLayerCols[currTerrainLayer])
   else
     -- draw brush outline
-    circ(mx, my, brushSize, 46)
+    circ(mx, my, terrainBrushSize, 46)
   end
 end
 

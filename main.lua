@@ -28,7 +28,7 @@ gameMode = GAME_MODE.GAME
 
 -- UI-bound/global vars
 uiEditorMode = false
-brushSize = 10
+terrainBrushSize = 10
 
 
 -- local vars
@@ -112,10 +112,11 @@ function initSugarcoat()
   register_btn(4, 0, input_id("keyboard", "space"))
 
   -- mouse input
-  register_btn(6, 0, input_id("mouse_position", "x"))
-  register_btn(7, 0, input_id("mouse_position", "y"))
-  register_btn(8, 0, input_id("mouse_button", "lb"))
-  register_btn(9, 0, input_id("mouse_button", "rb"))
+  register_btn(6,  0, input_id("mouse_position", "x"))
+  register_btn(7,  0, input_id("mouse_position", "y"))
+  register_btn(8,  0, input_id("mouse_button", "lb"))
+  register_btn(9,  0, input_id("mouse_button", "rb"))
+  register_btn(10, 0, input_id("mouse_button", "scroll_y"))
 end
 
 
