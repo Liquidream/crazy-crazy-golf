@@ -1,4 +1,6 @@
 main: main.lua
-title: Crazy Crazy Golf (WIP)
+title: Crazy Crazy Golf ⛳ (WIP)
 owner: liquidream
-
+primaryColor: 00b716
+dimensions: full
+description: It's like a Crazy... Crazy Golf! 🤪

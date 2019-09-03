@@ -6,10 +6,11 @@
 
 if CASTLE_PREFETCH then
   CASTLE_PREFETCH({
+    "assets/Awesome.ttf",
+    "assets/ico-start.png",
+    "assets/ico-hole.png",
     "assets/ico-wall.png",
     "assets/ico-bridge.png",
-    -- "assets/level-1-bg.png",
-    -- "assets/level-1-data.png",
   })
 end
 
@@ -87,7 +88,14 @@ function love.draw()
   end
 
   if DEBUG_MODE then
-    print('FPS: ' .. love.timer.getFPS(), 85, GAME_HEIGHT-36, 49)
+      -- Make text more "readable"
+  printp(0x2222, 
+  0x2122, 
+  0x2222, 
+  0x0)
+printp_color(0, 0, 0)
+
+    print('FPS: ' .. love.timer.getFPS(), 4, GAME_HEIGHT-24, 16)
   end
 end
 
@@ -100,6 +108,10 @@ function initSugarcoat()
   screen_render_stretch(false)
   screen_render_integer_scale(false)
   set_frame_waiting(60)
+
+  -- new font!
+  load_font('assets/Awesome.ttf', 36, 'corefont-big', true)
+  load_font('assets/Awesome.ttf', 18, 'corefont', true)
 
 
   -- control setup

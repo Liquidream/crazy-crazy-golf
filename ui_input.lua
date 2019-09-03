@@ -57,9 +57,17 @@ The craziest crazy golf! 🤪
       end) -- terrain painter section
 
 
-      ui.section("Obstacles", { defaultOpen = true }, function()
-        ui.markdown([[Select obstacles to create:]])
+      ui.section("Objects / Obstacles", { defaultOpen = true }, function()
+        ui.markdown([[Select objects/obstacles to create:]])
         
+        if ui.button('Tee/Start', { icon = 'assets/ico-start.png', iconOnly = false }) then
+          log('set tool to PLAYER START')
+        end
+
+        if ui.button('Hole', { icon = 'assets/ico-hole.png', iconOnly = false }) then
+          log('set tool to HOLE')
+        end
+
         if ui.button('Wall', { icon = 'assets/ico-wall.png', iconOnly = false }) then
           log('set tool to WALL')
         end

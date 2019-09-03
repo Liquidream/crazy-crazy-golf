@@ -83,3 +83,9 @@ function split(s, delimiter)
     end
     return result;
 end
+
+-- print centered
+function pprintc(text, y, col)
+  local letterWidth = (get_font()=="corefont") and 6 or 12
+  pprint(text, GAME_WIDTH/2-(#text*letterWidth)/2, y, col)
+end

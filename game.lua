@@ -60,6 +60,12 @@ end
 
 -- draw game/current hole
 function drawGame()
+  -- Make text more "readable"
+  printp(0x2222, 
+         0x2122, 
+         0x2222, 
+         0x0)
+  printp_color(0, 0, 0)
   
   -- draw current course data
   spr_sheet("courseCanvas", 0, 0)
