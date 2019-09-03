@@ -30,23 +30,26 @@ The craziest crazy golf! 🤪
       ui.section("Terrain Landscape", { defaultOpen = true }, function()
         ui.markdown([[Choose Terrain to paint:]])
         
-        if ui.button('Sand Trap', { icon = 'assets/ico-terrain-sand.png', iconOnly = false }) then
-          log('set tool to sand')
-          currTerrainLayer = 3
-        end
+        ui.box("terrain2Box", { border=currTerrainLayer==3 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
+          if ui.button('Sand Trap', { icon = 'assets/ico-terrain-sand.png', iconOnly = false }) then
+            log('set tool to sand')
+            currTerrainLayer = 3
+          end
+        end)
                 
-        ui.box("terrain2Box", { border="5px solid", flexGrow="1" }, function()
+        ui.box("terrain2Box", { border=currTerrainLayer==2 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
           if ui.button('Fairway/Green', { icon = 'assets/ico-terrain-green.png', iconOnly = false }) then
             log('set tool to grass')
             currTerrainLayer = 2
           end
         end)
 
-        
-        if ui.button('Rough', { icon = 'assets/ico-terrain-rough.png', iconOnly = false }) then
-          log('set tool to rough')
-          currTerrainLayer = 1
-        end
+        ui.box("terrain2Box", { border=currTerrainLayer==1 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
+          if ui.button('Rough', { icon = 'assets/ico-terrain-rough.png', iconOnly = false }) then
+            log('set tool to rough')
+            currTerrainLayer = 1
+          end
+        end)
 
         -- Size
         terrainBrushSize = ui.slider("Size", terrainBrushSize, 1, 50, { })
