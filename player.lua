@@ -40,7 +40,7 @@ function Player:update(dt)
 
   -- taking a shot
   local speed = 5
-  if btnp(4) then 
+  if btnp(4) and not self.isMoving then 
     self.collider:applyLinearImpulse(
       cos(self.aim) * speed,
       sin(self.aim) * speed)     
@@ -51,11 +51,8 @@ function Player:update(dt)
   -- ---------------------------------------
   -- Physics updates
   -- ---------------------------------------
-  -- Move ball based on current inertia
-  -- self.x = self.x + self.dx
-  -- self.y = self.y + self.dy
   
-  -- apply drag
+  -- determine drag surface
   local drag = 2
   -- (check terrain)
   local col = sget(self.x,self.y,"courseCanvas")
@@ -68,33 +65,35 @@ function Player:update(dt)
     drag = 10
   end
 
-  -- TODO: Use applyForce here (apply drag / to adjust direction)
-
+  
   local sx, sy = self.collider:getLinearVelocity()  
-  local dx = -sx * (drag/100)
-  local dy = -sy * (drag/100)
-  --local fx = -sx * self.collider.worldAirResistance -- the drag *force* is opposite and proportional to the velocity
-  self.collider:applyForce(dx, dy)
+  self.isMoving = abs(sx) > 0 or abs(sy) > 0
+  
 
-  -- self.dx = self.dx * drag
-  -- if abs(self.dx)<0.001 then self.dx = 0 end
-  -- self.dy = self.dy * drag
-  -- if abs(self.dy)<0.001 then self.dy = 0 end
+  -- if moving...
+  if self.isMoving then
+    -- apply drag (based on course surface)
+    local dx = -sx * (drag/100)
+    local dy = -sy * (drag/100)  
+    self.collider:applyForce(dx, dy)
+    
+    -- Come to complete stop
+    if abs(dx)<0.01 and abs(dy)<0.01 then 
+      self.collider:setLinearVelocity(0, 0)
+    end
 
-  -- check for water
-  if col == 0 then
-    -- restart level
-    self:setPos(PLAYER_STARTX, PLAYER_STARTY)
-    --self.x, self.y = PLAYER_STARTX, PLAYER_STARTY
-    --self.dx, self.dy = 0,0
+    -- check for water
+    if col == 0 then
+      -- restart level
+      self:setPos(PLAYER_STARTX, PLAYER_STARTY)
+    end
   end
 end
 
 -- draw 
 function Player:draw()
-  local isMoving = abs(self.dx) > 0 or abs(self.dy) > 0
   
-  if not isMoving then 
+  if not self.isMoving then 
     -- draw aiming dir
     local length = 30
     local aim_dx = cos(self.aim) * length
