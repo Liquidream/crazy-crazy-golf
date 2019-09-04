@@ -27,8 +27,13 @@ function initGame(levelData)
 
   -- capture course image data (cols for terrain types)
   
+  -- Player related
   player = Player(PLAYER_STARTX, PLAYER_STARTY)
-  --player = Player:new(PLAYER_STARTX, PLAYER_STARTY)
+  playerStart = PlayerStart(PLAYER_STARTX, PLAYER_STARTY)  
+  playerStart.r = 0.125 -- TODO: set angle from properties
+  
+  -- Hole related
+  hole = Hole(445,55)
 
   -- add a temp physics obstacle
   block1 = bf.Collider.new(world, "Polygon", 
@@ -44,11 +49,12 @@ function initGame(levelData)
   -- ground = bf.Collider.new(world, "Polygon",
   --               {0, 150, 250, 150 , 250, 250, 0, 250})
   -- ground:setType("static")
+
+
 end
 
 
 function updateGame(dt)
-
   -- TEST: Make block spin!
   block1:setAngularVelocity(-2) 
 
@@ -70,6 +76,10 @@ function drawGame()
   
   -- draw current course data
   spr_sheet("courseCanvas", 0, 0)
+  -- draw player start tee
+  playerStart:draw()
+  -- draw the hole
+  hole:draw()
 
   -- draw all physics objects
   world:draw()

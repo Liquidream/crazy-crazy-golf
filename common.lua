@@ -54,7 +54,7 @@ GAME_STATE = { SPLASH=0, TITLE=1, INFO=2, LVL_INTRO=3, LVL_PLAY=4, LVL_END=5, LO
 GAME_MODE = { GAME=0, EDITOR=1 }
 
 PLAYER_MAX_SPEED = 100
-PLAYER_STARTX,PLAYER_STARTY = 100,200
+PLAYER_STARTX,PLAYER_STARTY = 100,160
 
 --
 -- Global functions
@@ -88,4 +88,13 @@ end
 function pprintc(text, y, col)
   local letterWidth = (get_font()=="corefont") and 6 or 12
   pprint(text, GAME_WIDTH/2-(#text*letterWidth)/2, y, col)
+end
+
+-- draw centered sprite
+function sprc(s, x, y, w, h, flip_x, flip_y)
+  local gx,gy = get_spritesheet_grid()
+  spr(s, 
+    x - (gx*w)/2, 
+    y - (gy*h)/2, 
+    w, h, flip_x, flip_y)
 end

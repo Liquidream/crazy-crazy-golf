@@ -7,8 +7,6 @@ PlayerStart = BaseObject:extend()
 function PlayerStart:new(x,y)
   -- initialise base class/values
   PlayerStart.super.new(self, x, y)
-
-
 end
 
 
@@ -18,5 +16,9 @@ end
 
 function PlayerStart:draw()
   -- TODO: draw the tee "block" sprite(s)
-  rectfill(self.x, self.y, self.x+self.w, self.y+self.h, 11)
+  aspr(0, 
+    self.x, 
+    self.y, 
+    self.r,
+    2, 3)
 end

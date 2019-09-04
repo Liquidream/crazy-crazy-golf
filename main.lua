@@ -18,7 +18,9 @@ end
 require("sugarcoat/sugarcoat")
 sugar.utility.using_package(sugar.S, true)
 Object = require("objects/classic")
-require("objects/BaseObject")
+require("objects/baseObject")
+require("objects/playerStart")
+require("objects/hole")
 require("common")
 require("game")
 require("courseEditor")
@@ -106,6 +108,10 @@ function initSugarcoat()
   -- new font!
   load_font('assets/Awesome.ttf', 36, 'corefont-big', true)
   load_font('assets/Awesome.ttf', 18, 'corefont', true)
+
+  -- init sprites
+  spritesheet_grid(16, 16)
+  load_png ("spritesheet", "assets/spritesheet.png", nil, true)
 
 
   -- control setup
