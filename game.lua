@@ -2,7 +2,7 @@
 -- Core golf game class (movement, collision, etc.)
 --
 
-Player = require "Player"
+require "Player"
 
 
 local player={}
@@ -26,8 +26,9 @@ function initGame(levelData)
 
 
   -- capture course image data (cols for terrain types)
-
-  player = Player:new(PLAYER_STARTX, PLAYER_STARTY)
+  
+  player = Player(PLAYER_STARTX, PLAYER_STARTY)
+  --player = Player:new(PLAYER_STARTX, PLAYER_STARTY)
 
   -- add a temp physics obstacle
   block1 = bf.Collider.new(world, "Polygon", 

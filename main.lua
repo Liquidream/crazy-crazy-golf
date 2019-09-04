@@ -17,11 +17,12 @@ end
 
 require("sugarcoat/sugarcoat")
 sugar.utility.using_package(sugar.S, true)
+Object = require("objects/classic")
+require("objects/BaseObject")
 require("common")
 require("game")
 require("courseEditor")
 require("ui_input")
-
 bf = require("breezefield")
 
 -- global vars
@@ -88,13 +89,6 @@ function love.draw()
   end
 
   if DEBUG_MODE then
-      -- Make text more "readable"
-  printp(0x2222, 
-  0x2122, 
-  0x2222, 
-  0x0)
-printp_color(0, 0, 0)
-
     print('FPS: ' .. love.timer.getFPS(), 4, GAME_HEIGHT-24, 16)
   end
 end

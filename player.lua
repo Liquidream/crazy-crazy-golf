@@ -2,28 +2,41 @@
 -- The player (golf ball + aiming, controls, etc.)
 --
 
-Player = {}
+Player = BaseObject:extend()
+--Player = {}
 
 function Player:new(x,y)
-  -- todo: 
-  local o = {};
-  o.x = x;
-  o.y = y;
-  o.aim = 0; -- aim (in turns-based angles)
-  o.dx = 0;
-  o.dy = 0;
+  Player.super.new(self, x, y)
+
+  self.aim = 0; -- aim (in turns-based angles)
+  self.dx = 0;
+  self.dy = 0;
 
   -- physics related
-  o.collider = bf.Collider.new(world, "Circle", x, y, 2)
-  o.collider.draw = function(alpha)
+  self.collider = bf.Collider.new(world, "Circle", x, y, 2)
+  self.collider.draw = function(alpha)
     -- do nothing - draw done elsewhere
   end
-  o.collider:setRestitution(0.8) -- make bounce? (any function of shape/body/fixture works)
+  self.collider:setRestitution(0.8) -- make bounce? (any function of shape/body/fixture works)
 
-  -- object related
-  self.__index = self;
-  setmetatable(o, self);
-  return o;
+  -- local o = {};
+  -- o.x = x;
+  -- o.y = y;
+  -- o.aim = 0; -- aim (in turns-based angles)
+  -- o.dx = 0;
+  -- o.dy = 0;
+
+  -- -- physics related
+  -- o.collider = bf.Collider.new(world, "Circle", x, y, 2)
+  -- o.collider.draw = function(alpha)
+  --   -- do nothing - draw done elsewhere
+  -- end
+  -- o.collider:setRestitution(0.8) -- make bounce? (any function of shape/body/fixture works)
+
+  -- -- object related
+  -- self.__index = self;
+  -- setmetatable(o, self);
+  -- return o;
 end
 
 
@@ -118,4 +131,4 @@ function Player:setPos(x,y)
   self.collider:setLinearVelocity(0,0)
 end
 
-return Player
+--return Player
