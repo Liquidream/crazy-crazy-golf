@@ -1,6 +1,23 @@
 
 local ui = castle.ui
 
+local function uiRow(id, ...)
+  local nArgs = select('#', ...)
+  local args = { ... }
+  ui.box(id, { flexDirection = 'row', alignItems = 'center' }, function()
+      for i = 1, nArgs do
+          ui.box(tostring(i), { flex = 1 }, args[i])
+          if i < nArgs then
+              ui.box('space', { width = 20 }, function() end)
+          end
+      end
+  end)
+end
+
+local function uiSpacer()
+  ui.box('spacer', { height = 40 }, function() end)
+end
+
 
 -- All the UI-related code is just in this function. Everything below it is normal game code!
 
@@ -24,32 +41,45 @@ The craziest crazy golf! 🤪
     uiEditorMode = ui.tab('🎨 Editor Mode', function()
       -- ================================================
       -- ==  EDITOR MODE
-      -- ================================================
+      -- ================================================      
       ui.markdown([[### Course Editor]])
+      -- 
+      -- PROPERTIES?
+      -- 
+      if selectedObj then
+        ui.section(selectedObj.name.." Properties", { defaultOpen = true }, function()
+          uiRow('position', function()
+            selectedObj.x = ui.numberInput('x', selectedObj.x)
+            end, function()
+              selectedObj.y = ui.numberInput('y', selectedObj.y)
+            end)
+          end) --row
+      end
+
       currTool = 0
       currTool = (ui.section("Terrain Landscape", { defaultOpen = true }, function()
         ui.markdown([[Choose Terrain to paint:]])
         
-        ui.box("terrain2Box", { border=currTerrainLayer==3 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
+        --ui.box("terrain2Box", { border=currTerrainLayer==3 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
           if ui.button('Sand Trap', { icon = 'assets/ico-terrain-sand.png', iconOnly = false }) then
             log('set tool to sand')
             currTerrainLayer = 3
           end
-        end)
+        --end)
                 
-        ui.box("terrain2Box", { border=currTerrainLayer==2 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
+        --ui.box("terrain2Box", { border=currTerrainLayer==2 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
           if ui.button('Fairway/Green', { icon = 'assets/ico-terrain-green.png', iconOnly = false }) then
             log('set tool to grass')
             currTerrainLayer = 2
           end
-        end)
+        --end)
 
-        ui.box("terrain2Box", { border=currTerrainLayer==1 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
+        --ui.box("terrain2Box", { border=currTerrainLayer==1 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
           if ui.button('Rough', { icon = 'assets/ico-terrain-rough.png', iconOnly = false }) then
             log('set tool to rough')
             currTerrainLayer = 1
           end
-        end)
+        --end)
 
         -- Size
         terrainBrushSize = ui.slider("Size", terrainBrushSize, 1, 50, { })

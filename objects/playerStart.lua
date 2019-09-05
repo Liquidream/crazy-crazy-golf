@@ -7,6 +7,7 @@ PlayerStart = BaseObject:extend()
 function PlayerStart:new(x,y)
   -- initialise base class/values
   PlayerStart.super.new(self, x, y)
+  self.name = "Player Start"
 end
 
 

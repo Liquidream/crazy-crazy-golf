@@ -54,7 +54,8 @@ function initGame(levelData)
   --               {0, 150, 250, 150 , 250, 250, 0, 250})
   -- ground:setType("static")
 
-
+  -- DEBUG: Test!!!
+  selectedObj = playerStart
 end
 
 

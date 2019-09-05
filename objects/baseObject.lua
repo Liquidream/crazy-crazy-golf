@@ -10,6 +10,7 @@ function BaseObject:new(x, y,
     self.r = r or 0   -- rotation angle (turn-based, 0=right, 0.25=top, etc.)
     self.w = w or 20  -- width
     self.h = h or 20  -- height
+    self.name = ""
 end
 
 function BaseObject:update(dt)
