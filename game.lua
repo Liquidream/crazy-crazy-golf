@@ -5,15 +5,17 @@
 require "Player"
 
 
-local player={}
-local hole={}
-local obstacles={}    -- walls, bumpers, etc.
-local coursePixels={} -- used to determine greens, rough, water, etc.
-local terrain={}      -- slopes?
-
-
 function initGame(levelData)  
+  player={}
+  hole={}
+  obstacles={}    -- walls, bumpers, etc.
+  coursePixels={} -- used to determine greens, rough, water, etc.
+  terrain={}      -- slopes?
+  
+  
   -- todo: construct level objects from data passed
+
+
 
   -- -------------------------------------------------------
   -- init physics
@@ -43,6 +45,8 @@ function initGame(levelData)
   block1:setAngle(math.rad(-45))
   block1:setAngularVelocity(-2) -- Make it spin!
   block1:setLinearDamping(1000) -- Make it so it doesn't "move"
+  table.insert(obstacles, block1)
+  
   -- block1.draw = function(alpha)
   --   -- do nothing - draw done elsewhere
   -- end                 
@@ -80,10 +84,8 @@ function drawGame()
   playerStart:draw()
   -- draw the hole
   hole:draw()
-
   -- draw all physics objects
   world:draw()
-
   -- draw player
   player:draw()
 end

@@ -83,13 +83,20 @@ function drawEditor()
   -- draw current course data
   spr_sheet("courseCanvas", 0, 0)
 
-  -- draw "cursor" (only if not "painting")
-  if btnv(8) == 0 and btnv(9) == 0 then 
-    circfill(mx, my, terrainBrushSize, terrainLayerCols[currTerrainLayer])
-  else
-    -- draw brush outline
-    circ(mx, my, terrainBrushSize, 46)
-  end
+  -- draw brush outline (cursor)
+  circ(mx, my, terrainBrushSize, 46)
+  
+  -- -------------------------------
+  -- draw objects, etc
+  -- -------------------------------
+  -- draw player start tee
+  playerStart:draw()
+  -- draw the hole
+  hole:draw()
+  -- draw all physics objects
+  world:draw()
+  -- draw player
+  player:draw()
 end
 
 
