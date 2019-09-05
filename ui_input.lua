@@ -27,7 +27,7 @@ The craziest crazy golf! 🤪
       -- ================================================
       ui.markdown([[### Course Editor]])
       currTool = 0
-      currTool = (ui.section("Terrain Landscape", { defaultOpen = true, open = (lastTool~=1) }, function()
+      currTool = (ui.section("Terrain Landscape", { defaultOpen = true }, function()
         ui.markdown([[Choose Terrain to paint:]])
         
         ui.box("terrain2Box", { border=currTerrainLayer==3 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
@@ -56,7 +56,7 @@ The craziest crazy golf! 🤪
 
       end) and 1 or currTool) -- terrain painter section
 
-      currTool = (ui.section("Objects / Obstacles", { defaultOpen = false, open = (lastTool~=3) }, function()
+      currTool = (ui.section("Objects / Obstacles", { defaultOpen = false }, function()
         ui.markdown([[Select objects/obstacles to create:]])
         
         if ui.button('Tee/Start', { icon = 'assets/ico-start.png', iconOnly = false }) then
@@ -77,7 +77,7 @@ The craziest crazy golf! 🤪
 
       end) and 3 or currTool) -- obstacles/objects section
 
-      log("currTool = "..currTool)
+      --log("currTool = "..currTool)
 
       ui.section("Main Menu", { defaultOpen = true }, function()
 
