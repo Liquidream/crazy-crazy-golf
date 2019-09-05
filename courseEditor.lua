@@ -79,6 +79,8 @@ function updateEditor(dt)
 
     -- reset to "screen" again
     target()
+    pal()
+    palt()
   end
 end
 
