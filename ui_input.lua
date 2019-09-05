@@ -119,16 +119,26 @@ The craziest crazy golf! 🤪
 
 
 
-uiEditorMode = ui.toggle("Editor OFF", "Editor ON", uiEditorMode, {onToggle = function(value)
-  log("uiEditorMode = "..tostring(value))
-  if value then
-    -- todo: init editor?
-  else
+  -- uiEditorMode = ui.toggle("Editor OFF", "Editor ON", uiEditorMode, {onToggle = function(value)
+  --   log("uiEditorMode = "..tostring(value))
+  --   if value then
+  --     -- todo: init editor?
+  --   else
+      
+  --   end
+  -- end})
+
+  -- set the game mode
+  gameMode = uiEditorMode and GAME_MODE.EDITOR or GAME_MODE.GAME
+
+  -- changed since last frame
+  if gameMode == GAME_MODE.GAME 
+   and gameMode ~= lastGameMode
+  then
+    -- just switched to game, so refresh level data
     -- TODO: refresh game data?
     scan_surface("courseCanvas")
   end
-end})
-gameMode = uiEditorMode and GAME_MODE.EDITOR or GAME_MODE.GAME
 
-
+  lastGameMode = gameMode
 end
