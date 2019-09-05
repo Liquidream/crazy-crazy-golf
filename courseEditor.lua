@@ -1,10 +1,14 @@
 
--- local vars
+-- editor vars
+currTool = 1
+  -- 1 = terrain painting
+  -- 2 = terrain heightmap
+  -- 3 = objects (placing/moving/properties)
 currTerrainLayer = 2
--- 0 = water (no terrain)
--- 1 = rough
--- 2 = fairway/green
--- 3 = sand trap
+  -- 0 = water (no terrain)
+  -- 1 = rough
+  -- 2 = fairway/green
+  -- 3 = sand trap
 
 local terrainLayerCols = {}
 
@@ -85,7 +89,7 @@ function drawEditor()
 
   -- draw brush outline (cursor)
   circ(mx, my, terrainBrushSize, 46)
-  
+
   -- -------------------------------
   -- draw objects, etc
   -- -------------------------------
