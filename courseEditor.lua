@@ -1,6 +1,7 @@
 
 -- editor vars
 currTool = 1
+lastTool = 1
   -- 1 = terrain painting
   -- 2 = terrain heightmap
   -- 3 = objects (placing/moving/properties)
