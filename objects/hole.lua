@@ -24,3 +24,15 @@ function Hole:draw()
 
   --circfill(self.x, self.y, 3, 20)
 end
+
+--
+-- render object's own properties
+--
+function Hole:uiProperties()
+  -- TODO: Draw this object's property section
+  uiRow('position', function()
+      self.x = ui.numberInput('x', self.x)
+    end, function()
+      self.y = ui.numberInput('y', self.y)
+    end) --row
+end

@@ -23,3 +23,19 @@ function PlayerStart:draw()
     self.r,
     2, 3)
 end
+
+--
+-- render object's own properties
+--
+function PlayerStart:uiProperties()
+  -- TODO: Draw this object's property section
+  uiRow('position', function()
+    self.x = ui.numberInput('x-pos', self.x)
+  end, function()
+    self.y = ui.numberInput('y-pos', self.y)
+  end) --row
+  uiRow('position', function()  
+    self.r = ui.numberInput('rot', self.r, 
+      { min=0, max=1, step=0.1 })
+  end) --row
+end

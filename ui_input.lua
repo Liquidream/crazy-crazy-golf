@@ -1,7 +1,7 @@
 
-local ui = castle.ui
+ui = castle.ui
 
-local function uiRow(id, ...)
+function uiRow(id, ...)
   local nArgs = select('#', ...)
   local args = { ... }
   ui.box(id, { flexDirection = 'row', alignItems = 'center' }, function()
@@ -14,7 +14,7 @@ local function uiRow(id, ...)
   end)
 end
 
-local function uiSpacer()
+function uiSpacer()
   ui.box('spacer', { height = 40 }, function() end)
 end
 
@@ -43,19 +43,6 @@ The craziest crazy golf! 🤪
       -- ==  EDITOR MODE
       -- ================================================      
       ui.markdown([[### Course Editor]])
-      -- 
-      -- PROPERTIES?
-      -- 
-      if selectedObj then
-        ui.section(selectedObj.name.." Properties", { defaultOpen = true }, function()
-          uiRow('position', function()
-            selectedObj.x = ui.numberInput('x', selectedObj.x)
-            end, function()
-              selectedObj.y = ui.numberInput('y', selectedObj.y)
-            end)
-          end) --row
-      end
-
       currTool = 0
       currTool = (ui.section("Terrain Landscape", { defaultOpen = true }, function()
         ui.markdown([[Choose Terrain to paint:]])
@@ -104,6 +91,21 @@ The craziest crazy golf! 🤪
         if ui.button('Bridge', { icon = 'assets/ico-bridge.png', iconOnly = false }) then
           log('set tool to WALL')
         end
+
+        
+      -- 
+      -- PROPERTIES?
+      -- 
+      if selectedObj then
+        ui.section(selectedObj.name.." Properties", { defaultOpen = true }, function()          
+            if selectedObj.uiProperties then
+              -- draw this object's properties
+              selectedObj:uiProperties()
+            else
+              ui.markdown([[#### No properties]])
+            end
+          end) 
+      end
 
       end) and 3 or currTool) -- obstacles/objects section
 
