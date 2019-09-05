@@ -81,22 +81,22 @@ function Player:update(dt)
   
   local sx, sy = self.collider:getLinearVelocity()  
   self.isMoving = abs(sx) > 0 or abs(sy) > 0
-  
 
   -- if moving...
   if self.isMoving then
     -- apply drag (based on course surface)
     local dx = -sx * (drag/100)
     local dy = -sy * (drag/100)  
-    self.collider:applyForce(dx, dy)
-    
+   
     -- Come to complete stop
     if abs(dx)<0.01 and abs(dy)<0.01 then 
       self.collider:setLinearVelocity(0, 0)
     end
 
     -- check for water
-    if col == 0 then
+    if col ~= 0 then
+      self.collider:applyForce(dx, dy)
+    else
       -- restart level
       self:setPos(PLAYER_STARTX, PLAYER_STARTY)
     end
@@ -130,5 +130,3 @@ function Player:setPos(x,y)
   self.collider:setPosition(PLAYER_STARTX, PLAYER_STARTY)
   self.collider:setLinearVelocity(0,0)
 end
-
---return Player
