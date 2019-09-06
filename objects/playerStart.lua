@@ -15,13 +15,18 @@ function PlayerStart:update(dt)
   -- anything here?
 end
 
-function PlayerStart:draw()
+function PlayerStart:draw(inEditMode)
+  if not inEditMode then
+    pal(46,10)
+  end
   -- TODO: draw the tee "block" sprite(s)
   aspr(0, 
     self.x, 
     self.y, 
     self.r,
     2, 3)
+
+    pal()
 end
 
 --
@@ -36,6 +41,6 @@ function PlayerStart:uiProperties()
   end) --row
   uiRow('position', function()  
     self.r = ui.numberInput('rot', self.r, 
-      { min=0, max=1, step=0.1 })
+      { min=0, max=1, step=0.025 })
   end) --row
 end

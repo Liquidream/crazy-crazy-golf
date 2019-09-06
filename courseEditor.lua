@@ -97,13 +97,13 @@ function drawEditor()
   -- draw objects, etc
   -- -------------------------------
   -- draw player start tee
-  playerStart:draw()
+  playerStart:draw(true)
   -- draw the hole
-  hole:draw()
+  hole:draw(true)
   -- draw all physics objects
   world:draw()
   -- draw player
-  player:draw()
+  player:draw(true)
 end
 
 

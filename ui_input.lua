@@ -73,7 +73,7 @@ The craziest crazy golf! 🤪
 
       end) and 1 or currTool) -- terrain painter section
 
-      currTool = (ui.section("Objects / Obstacles", { defaultOpen = false }, function()
+      currTool = (ui.section("Objects / Obstacles", { defaultOpen = true }, function()
         ui.markdown([[Select objects/obstacles to create:]])
         
         if ui.button('Tee/Start', { icon = 'assets/ico-start.png', iconOnly = false }) then

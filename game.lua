@@ -32,7 +32,7 @@ function initGame(levelData)
   -- Player related
   player = Player(PLAYER_STARTX, PLAYER_STARTY)
   playerStart = PlayerStart(PLAYER_STARTX, PLAYER_STARTY)  
-  playerStart.r = 0.125 -- TODO: set angle from properties
+  --playerStart.r = 0.125 -- TODO: set angle from properties
   
   -- Hole related
   hole = Hole(445,55)
