@@ -1,8 +1,10 @@
--- Welcome to your new Castle project!
--- https://castle.games/get-started
--- Castle uses Love2D 11.1 for rendering and input: https://love2d.org/
--- See here for some useful Love2D documentation:
--- https://love2d-community.github.io/love-api/
+--
+-- CRAZY CRAZY GOLF
+--
+
+-- Credits:
+--  "Awesome" font (@somepx)
+
 
 if CASTLE_PREFETCH then
   CASTLE_PREFETCH({
@@ -33,7 +35,7 @@ gameMode = GAME_MODE.GAME
 -- UI-bound/global vars
 uiEditorMode = false
 terrainBrushSize = 10
-
+currTool = 1
 
 -- local vars
 local mx = 0
