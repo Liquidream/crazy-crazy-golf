@@ -29,7 +29,9 @@ function updateEditor(dt)
     mx, my = btnv(6), btnv(7)
   end
 
+  -- ----------------------------------------
   -- terrain "paint" mode
+  -- ----------------------------------------
   if currTool == 1 then
     -- mouse clicked? paint at current position
     if btnv(8) > 0 
@@ -87,6 +89,20 @@ function updateEditor(dt)
     end -- if clicked
   end -- if paint mode
 
+  -- ----------------------------------------
+  -- object/obstacle mode
+  -- ----------------------------------------
+  
+  -- update objects (which needs to be called first?)
+  wall:update(dt)
+
+  if currTool == 2 then
+    local colls = world:queryCircleArea(mx, my, 5)
+    for _, collider in ipairs(colls) do
+      log("collider == block1? "..tostring(collider == block1))
+      --collider.hover
+    end
+  end
 end
 
 

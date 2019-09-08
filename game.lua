@@ -31,42 +31,35 @@ function initGame(levelData)
   
   -- Player related
   player = Player(PLAYER_STARTX, PLAYER_STARTY)
-  playerStart = PlayerStart(PLAYER_STARTX, PLAYER_STARTY)  
-  --playerStart.r = 0.125 -- TODO: set angle from properties
+  playerStart = PlayerStart(PLAYER_STARTX, PLAYER_STARTY)
   
   -- Hole related
   hole = Hole(445,55)
 
-  -- add a temp physics obstacle
-  block1 = bf.Collider.new(world, "Polygon", 
-             {0, 100, 150, 100 , 150, 105, 0, 105})
-  --block1:setType("static")
-  block1:setPosition(150, 150)
-  block1:setAngle(math.rad(-45))
-  block1:setAngularVelocity(-2) -- Make it spin!
-  block1:setLinearDamping(1000) -- Make it so it doesn't "move"
-  table.insert(obstacles, block1)
-  
-  -- block1.draw = function(alpha)
-  --   -- do nothing - draw done elsewhere
-  -- end                 
+  -- Wall temporary test
+  wall = Wall(304,164)
+  table.insert(obstacles, wall)
+                 
   -- ground = bf.Collider.new(world, "Polygon",
   --               {0, 150, 250, 150 , 250, 250, 0, 250})
   -- ground:setType("static")
 
+
   -- DEBUG: Test!!!
-  selectedObj = playerStart
+  selectedObj = wall
 end
 
 
 function updateGame(dt)
-  -- TEST: Make block spin!
-  block1:setAngularVelocity(-2) 
-
+  
   -- update physics objects
   world:update(dt)
-
+  
+  -- update objects (which needs to be called first?)
+  wall:update(dt)
+  -- block1:setAngularVelocity(-2) 
   -- update player (controls, movement/pos, state, etc.)
+  
   player:update(dt)
 end
 
