@@ -28,60 +28,65 @@ function updateEditor(dt)
   if btnv(6) or btnv(7) then
     mx, my = btnv(6), btnv(7)
   end
-  -- mouse clicked? paint at current position
-  if btnv(8) > 0 
-   or btnv(9) > 0 then
 
-    -- clear the temp canvas (once!)
-    target("courseCanvasTemp")
-    cls()
+  -- terrain "paint" mode
+  if currTool == 1 then
+    -- mouse clicked? paint at current position
+    if btnv(8) > 0 
+    or btnv(9) > 0 then
 
-    -- go through each terrain layer,
-    -- "drawing" each layer's content to a canvas
-    -- (or erasing it from current one)
-    -- building up each layer and finally,
-    -- copying it back to the game's data canvas
-    for l=1,3 do
-      palt()
-      -- switch to "layer paint" canvas
-      target("courseCanvasLayerTemp")
+      -- clear the temp canvas (once!)
+      target("courseCanvasTemp")
       cls()
 
-      -- rough layer = (make everything "rough")
-      if l==1 then
-        -- 
-        pal(terrainLayerCols[3], terrainLayerCols[1])
-        pal(terrainLayerCols[2], terrainLayerCols[1])
-      else
-        -- only draw the colours for THIS layer
-        for i, col in ipairs(terrainLayerCols) do
-          palt(terrainLayerCols[i], i~=l)
+      -- go through each terrain layer,
+      -- "drawing" each layer's content to a canvas
+      -- (or erasing it from current one)
+      -- building up each layer and finally,
+      -- copying it back to the game's data canvas
+      for l=1,3 do
+        palt()
+        -- switch to "layer paint" canvas
+        target("courseCanvasLayerTemp")
+        cls()
+
+        -- rough layer = (make everything "rough")
+        if l==1 then
+          -- 
+          pal(terrainLayerCols[3], terrainLayerCols[1])
+          pal(terrainLayerCols[2], terrainLayerCols[1])
+        else
+          -- only draw the colours for THIS layer
+          for i, col in ipairs(terrainLayerCols) do
+            palt(terrainLayerCols[i], i~=l)
+          end
         end
+        
+        spr_sheet("courseCanvas", 0, 0)
+        -- paint "rough"?
+        if currTerrainLayer == l then
+          circfill(mx, my, terrainBrushSize,  btnv(8)>0 and terrainLayerCols[currTerrainLayer] or 37)
+        end
+        -- now commit layer to temp canvas
+        pal()
+        palt()
+        target("courseCanvasTemp")
+        palt(37, true) -- hide eraser "painting"
+        spr_sheet("courseCanvasLayerTemp", 0, 0)
       end
-      
-      spr_sheet("courseCanvas", 0, 0)
-      -- paint "rough"?
-      if currTerrainLayer == l then
-        circfill(mx, my, terrainBrushSize,  btnv(8)>0 and terrainLayerCols[currTerrainLayer] or 37)
-      end
-      -- now commit layer to temp canvas
+
+      -- finally, commit temp canvas to real data canvas
+      target("courseCanvas")
+      cls()
+      spr_sheet("courseCanvasTemp", 0, 0)
+
+      -- reset to "screen" again
+      target()
       pal()
       palt()
-      target("courseCanvasTemp")
-      palt(37, true) -- hide eraser "painting"
-      spr_sheet("courseCanvasLayerTemp", 0, 0)
-    end
+    end -- if clicked
+  end -- if paint mode
 
-    -- finally, commit temp canvas to real data canvas
-    target("courseCanvas")
-    cls()
-    spr_sheet("courseCanvasTemp", 0, 0)
-
-    -- reset to "screen" again
-    target()
-    pal()
-    palt()
-  end
 end
 
 
@@ -91,7 +96,9 @@ function drawEditor()
   spr_sheet("courseCanvas", 0, 0)
 
   -- draw brush outline (cursor)
-  circ(mx, my, terrainBrushSize, 46)
+  if currTool==1 then
+    circ(mx, my, terrainBrushSize, 46)
+  end
 
   -- -------------------------------
   -- draw objects, etc

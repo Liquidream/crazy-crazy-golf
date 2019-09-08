@@ -75,7 +75,7 @@ The craziest crazy golf! 🤪
           
         end) -- terrain painter section
         if outOpen and not inOpen then
-          currTool = 1
+          currTool = 1  -- Terrain "painting" mode
         end
         
         local inOpen = 2 == currTool
@@ -115,7 +115,7 @@ The craziest crazy golf! 🤪
         
       end) -- obstacles/objects section
       if outOpen and not inOpen then
-        currTool = 2
+        currTool = 2 -- Object mode (cursor/select objects)
       end
 
     --log("currTool = "..currTool)

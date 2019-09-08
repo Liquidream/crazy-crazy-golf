@@ -131,6 +131,9 @@ function initSugarcoat()
   register_btn(8,  0, input_id("mouse_button", "lb"))
   register_btn(9,  0, input_id("mouse_button", "rb"))
   register_btn(10, 0, input_id("mouse_button", "scroll_y"))
+
+  -- re-show the mouse cursor
+  love.mouse.setVisible(true)
 end
 
 

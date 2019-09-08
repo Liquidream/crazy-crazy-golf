@@ -40,7 +40,6 @@ function PlayerStart:uiProperties()
     self.y = ui.numberInput('y-pos', self.y)
   end) --row
   uiRow('position', function()  
-    self.r = ui.numberInput('rot', self.r, 
-      { min=0, max=1, step=0.025 })
+    self.r = ui.slider('rot', self.r, 0, 1, { step=0.025 })
   end) --row
 end
