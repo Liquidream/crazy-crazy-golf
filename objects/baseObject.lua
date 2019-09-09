@@ -17,6 +17,11 @@ function BaseObject:update(dt)
     --self.x = self.x + self.speed * dt
 end
 
+function BaseObject:hover()
+  if DEBUG_MODE then
+    --log(self.name.." hovered!")
+  end
+end
 
 function BaseObject:moveTo(x, y)
   self.x = x

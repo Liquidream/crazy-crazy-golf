@@ -1,7 +1,10 @@
 
+-- ---------------------------
 -- editor vars
-currTool = 1
-lastTool = 1
+-- ---------------------------
+terrainBrushSize = 10
+currTool = 2
+lastTool = currTool
   -- 1 = terrain painting
   -- 2 = terrain heightmap
   -- 3 = objects (placing/moving/properties)
@@ -138,7 +141,7 @@ function updateEditor(dt)
     end
     
     -- check for dragging
-    if lmbDown and hoverObj then
+    if lmbDown and hoverObj and not draggingObj then
       -- "move/dragging" mode
       draggingObj = hoverObj
     end

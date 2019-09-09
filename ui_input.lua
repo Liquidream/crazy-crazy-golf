@@ -44,6 +44,9 @@ The craziest crazy golf! 🤪
       -- ================================================
       ui.markdown([[### Course Editor]])
 
+      
+      --log("currTool = "..currTool)
+
       --ui.scrollBox("editScroll", {}, function() 
         local inOpen = 1 == currTool
         local outOpen = ui.section("🌄 Terrain Landscape", { open = inOpen  }, function()
@@ -74,12 +77,13 @@ The craziest crazy golf! 🤪
           terrainBrushSize = ui.slider("Size", terrainBrushSize, 1, 50, { })
           
         end) -- terrain painter section
+        --log("Terrain: > inOpen = "..tostring(inOpen).." | outOpen = "..tostring(outOpen))
         if outOpen and not inOpen then
           currTool = 1  -- Terrain "painting" mode
         end
         
         local inOpen = 2 == currTool
-        local outOpen = ui.section("🧱 Objects / Obstacles", {open = inOpen  }, function()
+        local outOpen = ui.section("🧱 Objects / Obstacles", {open = inOpen }, function()
           ui.markdown([[Select objects/obstacles to create:]])
           
         if ui.button('Tee/Start', { icon = 'assets/ico-start.png', iconOnly = false }) then
@@ -114,11 +118,11 @@ The craziest crazy golf! 🤪
         end
         
       end) -- obstacles/objects section
+      --log("Object: > inOpen = "..tostring(inOpen).." | outOpen = "..tostring(outOpen))
       if outOpen and not inOpen then
         currTool = 2 -- Object mode (cursor/select objects)
       end
 
-    --log("currTool = "..currTool)
 
       
       ui.section("Main Menu", { defaultOpen = true }, function()

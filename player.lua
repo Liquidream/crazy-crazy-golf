@@ -7,6 +7,7 @@ Player = BaseObject:extend()
 
 function Player:new(x,y)
   Player.super.new(self, x, y)
+  self.name = "Player"
 
   self.aim = 0; -- aim (in turns-based angles)
   self.dx = 0;
@@ -14,6 +15,7 @@ function Player:new(x,y)
 
   -- physics related
   self.collider = bf.Collider.new(world, "Circle", x, y, 2)
+  self.collider.parent = self -- important for UI collisions
   self.collider.draw = function(alpha)
     -- do nothing - draw done elsewhere
   end

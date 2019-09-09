@@ -35,8 +35,6 @@ gameMode = GAME_MODE.GAME
 
 -- UI-bound/global vars
 uiEditorMode = false
-terrainBrushSize = 10
-currTool = 1
 
 -- local vars
 local mx = 0

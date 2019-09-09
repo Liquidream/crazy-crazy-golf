@@ -15,7 +15,7 @@ function Wall:new(x,y)
                50, -2.5,
                50,  2.5, 
               -50,  2.5})
-  self.collider.parent = self
+  self.collider.parent = self -- important for UI collisions
   self.collider:setPosition(self.x, self.y)
   self.collider:setLinearDamping(1000) -- Make it so it doesn't "move" from spot
   --self.collider:setAngle(math.rad(-45))
@@ -53,9 +53,9 @@ function Wall:draw(inEditMode)
   -- end  
 end
 
-function Wall:hover()
-  log("WALL hover!")
-end
+-- function Wall:hover()
+--   log("WALL hover!")
+-- end
 
 --
 -- render object's own properties
