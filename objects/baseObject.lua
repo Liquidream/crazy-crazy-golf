@@ -18,4 +18,9 @@ function BaseObject:update(dt)
 end
 
 
+function BaseObject:moveTo(x, y)
+  self.x = x
+  self.y = y
+end
+
 -- draw?

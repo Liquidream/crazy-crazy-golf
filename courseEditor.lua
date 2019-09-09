@@ -21,9 +21,6 @@ function initEditor()
     [1] = 7,
   }
   log("terrainLayerCols >> "..terrainLayerCols[3])
-
-  -- create cursor collisions
-  cursorCollider = bf.Collider.new(world, "Circle", 0, 0, 1)
 end
 
 function updateEditor(dt)
@@ -31,6 +28,28 @@ function updateEditor(dt)
   if btnv(6) or btnv(7) then
     mx, my = btnv(6), btnv(7)
   end
+  -- --------------------------------------
+  -- mouse clicked/down/dragged states
+  -- --------------------------------------
+  lmbDown = false
+  lmbClicked = false
+  lmbDragging = false
+  -- left clicked down since last frame?
+  if btnv(8)>0 and last_mDown~=true then    
+    lmbDown = true
+    lmbClicked = true
+  end
+  -- left released since last frame?
+  if btnv(8)==0 then    
+    lmbDown = false
+  end
+  -- mouse dragged (while holding down button)?
+  if last_mDown and (mx~=last_mx or my~=last_my) then
+    lmbDragging = true
+  end
+  -- remember
+  last_mDown = lmbDown
+  --last_mClicked = lmbClicked
 
   -- ----------------------------------------
   -- terrain "paint" mode
@@ -95,19 +114,19 @@ function updateEditor(dt)
   -- ----------------------------------------
   -- object/obstacle mode
   -- ----------------------------------------
-  -- update physics objects
-  world:update(dt)
   
   -- update objects (Q: which needs to be called first?)
   wall:update(dt)
 
   if currTool == 2 then
-    -- move the "cursor" object
-    cursorCollider:setPosition(mx, my)
-    -- local colls = world:queryCircleArea(mx, my, 5)
-    -- for _, collider in ipairs(colls) do
-    --   log("collider == block1? "..tostring(collider == block1))
-    -- end
+    local colls = world:queryCircleArea(mx, my, 5)
+    for _, collider in ipairs(colls) do
+      log("collider == wall? "..tostring(collider == wall.collider))
+      log("lmbDragging = "..tostring(lmbDragging))
+      if lmbDragging then
+        collider.parent:moveTo(mx,my)
+      end
+    end
   end
 end
 

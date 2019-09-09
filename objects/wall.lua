@@ -15,7 +15,7 @@ function Wall:new(x,y)
                50, -2.5,
                50,  2.5, 
               -50,  2.5})
-             --{0, 100, 150, 100 , 150, 105, 0, 105})
+  self.collider.parent = self
   self.collider:setPosition(self.x, self.y)
   self.collider:setLinearDamping(1000) -- Make it so it doesn't "move" from spot
   --self.collider:setAngle(math.rad(-45))
