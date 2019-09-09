@@ -46,7 +46,7 @@ The craziest crazy golf! 🤪
 
       --ui.scrollBox("editScroll", {}, function() 
         local inOpen = 1 == currTool
-        local outOpen = ui.section("Terrain Landscape", { open = inOpen  }, function()
+        local outOpen = ui.section("🌄 Terrain Landscape", { open = inOpen  }, function()
           ui.markdown([[Choose Terrain to paint:]])
           
           --ui.box("terrain2Box", { border=currTerrainLayer==3 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
@@ -79,7 +79,7 @@ The craziest crazy golf! 🤪
         end
         
         local inOpen = 2 == currTool
-        local outOpen = ui.section("Objects / Obstacles", {open = inOpen  }, function()
+        local outOpen = ui.section("🧱 Objects / Obstacles", {open = inOpen  }, function()
           ui.markdown([[Select objects/obstacles to create:]])
           
         if ui.button('Tee/Start', { icon = 'assets/ico-start.png', iconOnly = false }) then

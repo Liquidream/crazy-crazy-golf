@@ -22,11 +22,11 @@ function Wall:new(x,y)
   
   -- define collision callbacks
   function self.collider:enter(other)
-    log("enter!!!!")
+    log("enter!!!! "..tostring(other == cursorCollider))
     return
   end
   function self.collider:exit(other)
-    log("exit!!!!")
+    log("exit!!!!"..tostring(other == cursorCollider))
     return
   end
 

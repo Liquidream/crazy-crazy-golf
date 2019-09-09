@@ -21,6 +21,9 @@ function initEditor()
     [1] = 7,
   }
   log("terrainLayerCols >> "..terrainLayerCols[3])
+
+  -- create cursor collisions
+  cursorCollider = bf.Collider.new(world, "Circle", 0, 0, 1)
 end
 
 function updateEditor(dt)
@@ -92,16 +95,19 @@ function updateEditor(dt)
   -- ----------------------------------------
   -- object/obstacle mode
   -- ----------------------------------------
+  -- update physics objects
+  world:update(dt)
   
-  -- update objects (which needs to be called first?)
+  -- update objects (Q: which needs to be called first?)
   wall:update(dt)
 
   if currTool == 2 then
-    local colls = world:queryCircleArea(mx, my, 5)
-    for _, collider in ipairs(colls) do
-      log("collider == block1? "..tostring(collider == block1))
-      --collider.hover
-    end
+    -- move the "cursor" object
+    cursorCollider:setPosition(mx, my)
+    -- local colls = world:queryCircleArea(mx, my, 5)
+    -- for _, collider in ipairs(colls) do
+    --   log("collider == block1? "..tostring(collider == block1))
+    -- end
   end
 end
 
