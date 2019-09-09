@@ -34,14 +34,20 @@ function updateEditor(dt)
   lmbDown = false
   lmbClicked = false
   lmbDragging = false
+  lmbReleased = false
   -- left clicked down since last frame?
-  if btnv(8)>0 and last_mDown~=true then    
+  if btnv(8)>0 then    
     lmbDown = true
-    lmbClicked = true
+    if last_mDown~=true  then
+      lmbClicked = true
+    end
   end
   -- left released since last frame?
   if btnv(8)==0 then    
     lmbDown = false
+    if last_mDown then
+      lmbReleased = true
+    end
   end
   -- mouse dragged (while holding down button)?
   if last_mDown and (mx~=last_mx or my~=last_my) then
@@ -49,7 +55,8 @@ function updateEditor(dt)
   end
   -- remember
   last_mDown = lmbDown
-  --last_mClicked = lmbClicked
+  last_mx = mx
+  last_my = my
 
   -- ----------------------------------------
   -- terrain "paint" mode
@@ -119,16 +126,30 @@ function updateEditor(dt)
   wall:update(dt)
 
   if currTool == 2 then
+    -- check for hover/selection
+    hoverObj = nil
     local colls = world:queryCircleArea(mx, my, 5)
     for _, collider in ipairs(colls) do
-      log("collider == wall? "..tostring(collider == wall.collider))
-      log("lmbDragging = "..tostring(lmbDragging))
-      if lmbDragging then
-        collider.parent:moveTo(mx,my)
-      end
+      --log("collider == wall? "..tostring(collider == wall.collider))
+      hoverObj = collider.parent
+      -- do manual hovering 
+      -- (can't use onEnter/Exit as not updating World in edit mode)
+      hoverObj:hover()
     end
-  end
-end
+    
+    -- check for dragging
+    if lmbDown and hoverObj then
+      -- "move/dragging" mode
+      draggingObj = hoverObj
+    end
+    if lmbDown and draggingObj then
+      draggingObj:moveTo(mx,my)
+    else
+      draggingObj = nil
+    end
+  end -- object mode
+
+end --update
 
 
 function drawEditor()

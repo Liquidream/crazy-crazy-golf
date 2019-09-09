@@ -34,6 +34,9 @@ end
 
 
 function Wall:update(dt)
+  -- reset states for this frame
+  self.hovered = false
+
   -- anything here?
   self.collider:setPosition(self.x, self.y)
 
@@ -48,6 +51,10 @@ function Wall:draw(inEditMode)
   -- block1.draw = function(alpha)
   --   -- do nothing - draw done elsewhere
   -- end  
+end
+
+function Wall:hover()
+  log("WALL hover!")
 end
 
 --

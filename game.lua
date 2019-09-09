@@ -45,7 +45,7 @@ function initGame(levelData)
   -- ground:setType("static")
 
 
-  -- DEBUG: Test!!!
+  -- DEBUG: Test!!!  
   selectedObj = wall
 end
 
