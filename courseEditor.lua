@@ -293,7 +293,10 @@ end
 function importCourse()
   log("importCourse()...")
 
+  loadingProgress = true
+  
   network.async(function()
+
     log("loading images...")        
 
     load_png("importedCourse", "assets/exported_course.png")
@@ -310,6 +313,7 @@ function importCourse()
 
     target()
 
+    loadingProgress = false
   end)
 
 end

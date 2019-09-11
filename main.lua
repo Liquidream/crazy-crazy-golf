@@ -9,6 +9,8 @@
 if CASTLE_PREFETCH then
   CASTLE_PREFETCH({
     "assets/Awesome.ttf",
+    -- "assets/course1.png",
+    -- "assets/exported_course.png",
     "assets/ico-start.png",
     "assets/ico-hole.png",
     "assets/ico-wall.png",
@@ -16,6 +18,10 @@ if CASTLE_PREFETCH then
   })
 end
 
+require("common")
+
+-- global vars
+gameMode = GAME_MODE.GAME
 
 require("sugarcoat/sugarcoat")
 sugar.utility.using_package(sugar.S, true)
@@ -24,14 +30,11 @@ require("objects/baseObject")
 require("objects/playerStart")
 require("objects/hole")
 require("objects/wall")
-require("common")
 require("game")
 require("courseEditor")
 require("ui_input")
 bf = require("breezefield")
 
--- global vars
-gameMode = GAME_MODE.GAME
 
 -- UI-bound/global vars
 uiEditorMode = false
@@ -137,12 +140,12 @@ end
 
 
 function preloadImages()
-  network.async(function()
+  --network.async(function()
     log("loading images...")    
     
     --TODO: Finish this
 
     load_png("defaultCourse", "assets/course1.png")
 
-  end)
+  --end)
 end

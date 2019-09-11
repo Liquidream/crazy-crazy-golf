@@ -30,12 +30,20 @@ function castle.uiupdate()
 The craziest crazy golf! 🤪
   ]])
 
-  ui.tabs('main', { selected = 2 }, function()
+
+  --log("in gameMode = "..gameMode)
+
+  ui.tabs('main', { selected = gameMode }, function()
     uiPlayMode = ui.tab('⛳ Play Mode', function()
       -- ================================================
       -- ==  PLAY MODE
       -- ================================================
 
+      if ui.button('Restart Hole', {  }) then
+          -- reset/restart hole 
+          -- TODO: Disable in multiplayer?          
+          initGame()
+      end
 
     end)
     uiEditorMode = ui.tab('🎨 Editor Mode', function()
@@ -180,8 +188,13 @@ The craziest crazy golf! 🤪
   --   end
   -- end})
 
+  --log("out gameMode1 = "..gameMode)
+  --log("out uiEditorMode = "..tostring(uiEditorMode))
+
   -- set the game mode
   gameMode = uiEditorMode and GAME_MODE.EDITOR or GAME_MODE.GAME
+
+  --log("out gameMode3 = "..gameMode)
 
   -- changed since last frame
   if gameMode == GAME_MODE.GAME 
