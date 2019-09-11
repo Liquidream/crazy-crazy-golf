@@ -30,7 +30,7 @@ function initGame(levelData)
   -- capture course image data (cols for terrain types)
   
   -- Player related
-  player = Player(PLAYER_STARTX, PLAYER_STARTY)
+  --player = Player(PLAYER_STARTX, PLAYER_STARTY)
   playerStart = PlayerStart(PLAYER_STARTX, PLAYER_STARTY)
   
   -- Hole related
@@ -44,9 +44,17 @@ function initGame(levelData)
   --               {0, 150, 250, 150 , 250, 250, 0, 250})
   -- ground:setType("static")
 
+  -- Now reset all the states + player pos
+  restartHole()
 
   -- DEBUG: Test!!!  
   selectedObj = wall
+
+end
+
+function restartHole()
+  player = Player(playerStart.x, playerStart.y)
+  player.r = playerStart.r
 end
 
 

@@ -9,7 +9,7 @@ function Player:new(x,y)
   Player.super.new(self, x, y)
   self.name = "Player"
 
-  self.aim = 0; -- aim (in turns-based angles)
+  self.r = 0; -- aim (in turns-based angles)
   self.dx = 0;
   self.dy = 0;
 
@@ -50,15 +50,15 @@ function Player:update(dt)
   -- ---------------------------------------
   -- aiming
   local rotateSpeed = 0.01
-  if btn(0) then self.aim = self.aim - rotateSpeed end
-  if btn(1) then self.aim = self.aim + rotateSpeed end
+  if btn(0) then self.r = self.r - rotateSpeed end
+  if btn(1) then self.r = self.r + rotateSpeed end
 
   -- taking a shot
   local speed = 5
   if btnp(4) and not self.isMoving then 
     self.collider:applyLinearImpulse(
-      cos(self.aim) * speed,
-      sin(self.aim) * speed)     
+      cos(self.r) * speed,
+      sin(self.r) * speed)     
     -- self.dx = cos(self.aim) * speed
     -- self.dy = sin(self.aim) * speed
   end
@@ -111,8 +111,8 @@ function Player:draw()
   if not self.isMoving then 
     -- draw aiming dir
     local length = 30
-    local aim_dx = cos(self.aim) * length
-    local aim_dy = sin(self.aim) * length
+    local aim_dx = cos(self.r) * length
+    local aim_dy = sin(self.r) * length
     line(self.x, self.y,
           self.x + aim_dx,
           self.y + aim_dy,

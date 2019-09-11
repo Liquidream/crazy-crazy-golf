@@ -42,7 +42,7 @@ The craziest crazy golf! 🤪
       if ui.button('Restart Hole', {  }) then
           -- reset/restart hole 
           -- TODO: Disable in multiplayer?          
-          initGame()
+          restartHole()
       end
 
     end)
@@ -92,10 +92,11 @@ The craziest crazy golf! 🤪
         
         local inOpen = 2 == currTool
         local outOpen = ui.section("🧱 Objects / Obstacles", {open = inOpen }, function()
-          ui.markdown([[Select objects/obstacles to create:]])
+          ui.markdown([[Select objects to create/edit:]])
           
         if ui.button('Tee/Start', { icon = 'assets/ico-start.png', iconOnly = false }) then
           log('set tool to PLAYER START')
+          selectedObj = playerStart
         end
         
         if ui.button('Hole', { icon = 'assets/ico-hole.png', iconOnly = false }) then
@@ -104,6 +105,7 @@ The craziest crazy golf! 🤪
         
         if ui.button('Wall', { icon = 'assets/ico-wall.png', iconOnly = false }) then
           log('set tool to WALL')
+          selectedObj = wall
         end
         
         if ui.button('Bridge', { icon = 'assets/ico-bridge.png', iconOnly = false }) then
