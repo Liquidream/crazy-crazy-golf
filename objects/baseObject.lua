@@ -11,6 +11,7 @@ function BaseObject:new(x, y,
     self.w = w or 20  -- width
     self.h = h or 20  -- height
     self.name = ""
+    self.collider = nil
 end
 
 function BaseObject:update(dt)
@@ -24,8 +25,13 @@ function BaseObject:hover()
 end
 
 function BaseObject:moveTo(x, y)
+  -- move object
   self.x = x
   self.y = y
+  -- move collision obj (if present)
+  if self.collider then
+    self.collider:setPosition(self.x, self.y)
+  end
 end
 
 -- draw?

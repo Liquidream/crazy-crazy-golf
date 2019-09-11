@@ -8,6 +8,13 @@ function PlayerStart:new(x,y)
   -- initialise base class/values
   PlayerStart.super.new(self, x, y)
   self.name = "Player Start"
+
+
+  -- define collision object(s)
+  self.collider = bf.Collider.new(world, 
+          "Rectangle", self.x,self.y, 16, 36  )
+  self.collider.parent = self -- important for UI collisions
+  self.collider:setCategory(1)
 end
 
 
@@ -41,5 +48,6 @@ function PlayerStart:uiProperties()
   end) --row
   uiRow('position', function()  
     self.r = ui.slider('rot', self.r, 0, 1, { step=0.025 })
+    self.collider:setAngle(self.r * (2*math.pi))
   end) --row
 end

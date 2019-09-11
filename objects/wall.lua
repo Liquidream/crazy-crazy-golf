@@ -18,7 +18,7 @@ function Wall:new(x,y)
   self.collider.parent = self -- important for UI collisions
   self.collider:setPosition(self.x, self.y)
   self.collider:setLinearDamping(1000) -- Make it so it doesn't "move" from spot
-  --self.collider:setAngle(math.rad(-45))
+  self.collider:setCategory(2)
   
   -- define collision callbacks
   function self.collider:enter(other)
@@ -36,9 +36,6 @@ end
 function Wall:update(dt)
   -- reset states for this frame
   self.hovered = false
-
-  -- anything here?
-  self.collider:setPosition(self.x, self.y)
 
   -- TEST: Make block spin!
   self.collider:setAngularVelocity(-2) 
@@ -61,13 +58,16 @@ end
 -- render object's own properties
 --
 function Wall:uiProperties()
-  -- TODO: Draw this object's property section
-  uiRow('position', function()
-    self.x = ui.numberInput('x-pos', self.x)
-  end, function()
-    self.y = ui.numberInput('y-pos', self.y)
-  end) --row
-  uiRow('position', function()  
-    self.r = ui.slider('rot', self.r, 0, 1, { step=0.025 })
-  end) --row
+  if uiEditorMode then
+    -- TODO: Draw this object's property section
+    uiRow('position', function()
+      self.x = ui.numberInput('x-pos', self.x)
+    end, function()
+      self.y = ui.numberInput('y-pos', self.y)
+    end) --row
+    uiRow('position', function()  
+      self.r = ui.slider('rot', self.r, 0, 1, { step=0.025 })
+      self.collider:setAngle(self.r * (2*math.pi))
+    end) --row
+  end
 end
