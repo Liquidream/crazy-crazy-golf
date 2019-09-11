@@ -9,9 +9,9 @@ function Player:new(x,y)
   Player.super.new(self, x, y)
   self.name = "Player"
 
-  self.r = 0; -- aim (in turns-based angles)
-  self.dx = 0;
-  self.dy = 0;
+  self.dx = 0
+  self.dy = 0
+  self:Reset()
 
   -- physics related
   self.collider = bf.Collider.new(world, "Circle", x, y, 2)
@@ -21,25 +21,6 @@ function Player:new(x,y)
     -- do nothing - draw done elsewhere
   end
   self.collider:setRestitution(0.8) -- make bounce? (any function of shape/body/fixture works)
-
-  -- local o = {};
-  -- o.x = x;
-  -- o.y = y;
-  -- o.aim = 0; -- aim (in turns-based angles)
-  -- o.dx = 0;
-  -- o.dy = 0;
-
-  -- -- physics related
-  -- o.collider = bf.Collider.new(world, "Circle", x, y, 2)
-  -- o.collider.draw = function(alpha)
-  --   -- do nothing - draw done elsewhere
-  -- end
-  -- o.collider:setRestitution(0.8) -- make bounce? (any function of shape/body/fixture works)
-
-  -- -- object related
-  -- self.__index = self;
-  -- setmetatable(o, self);
-  -- return o;
 end
 
 
@@ -50,19 +31,37 @@ function Player:update(dt)
   -- Input handling
   -- ---------------------------------------
   -- aiming
-  local rotateSpeed = 0.01
-  if btn(0) then self.r = self.r - rotateSpeed end
-  if btn(1) then self.r = self.r + rotateSpeed end
+  local rotateSpeed = 0.005
+  if btn(0) and not self.shooting then self.r = self.r - rotateSpeed end
+  if btn(1) and not self.shooting then self.r = self.r + rotateSpeed end
 
   -- taking a shot
-  local speed = 5
-  if btnp(4) and not self.isMoving then 
+  local speed = 10
+  local shootBtn = btn(4)
+  if shootBtn
+   and not self.isMoving then 
+    -- swinging/shooting
+    log("shooting")
+    self.shooting = true
+    self.power = min(self.power + (speed/50), speed)
+    log("self.power = "..self.power)
+
+  elseif self.shooting 
+   and not shootBtn then
+    -- released button
     self.collider:applyLinearImpulse(
-      cos(self.r) * speed,
-      sin(self.r) * speed)     
-    -- self.dx = cos(self.aim) * speed
-    -- self.dy = sin(self.aim) * speed
+          cos(self.r) * self.power,
+          sin(self.r) * self.power)
+    self.shooting = false
+    self.power = 0
   end
+
+  -- if btnp(4) and not self.isMoving then 
+  --   self.collider:applyLinearImpulse(
+  --     cos(self.r) * speed,
+  --     sin(self.r) * speed)
+  -- end
+  lastShootBtn = shootBtn
 
   -- ---------------------------------------
   -- Physics updates
@@ -102,6 +101,7 @@ function Player:update(dt)
     else
       -- restart level
       self:setPos(PLAYER_STARTX, PLAYER_STARTY)
+      self:Reset()
     end
   end
 end
@@ -111,7 +111,7 @@ function Player:draw()
   
   if not self.isMoving then 
     -- draw aiming dir
-    local length = 30
+    local length = self.shooting and self.power*3 or 30
     local aim_dx = cos(self.r) * length
     local aim_dy = sin(self.r) * length
     line(self.x, self.y,
@@ -126,6 +126,11 @@ function Player:draw()
   spr(3, self.x-2, self.y-2)
 end
 
+function Player:Reset()
+  log("reset!")  
+  self.power = 0
+  self.shooting = false
+end
 
 function Player:setPos(x,y)
   self.collider:setPosition(PLAYER_STARTX, PLAYER_STARTY)
