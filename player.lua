@@ -27,6 +27,7 @@ end
 function Player:update(dt)
   self.x = self.collider:getX()
   self.y = self.collider:getY()
+  
   -- ---------------------------------------
   -- Input handling
   -- ---------------------------------------
@@ -56,12 +57,8 @@ function Player:update(dt)
     self.power = 0
   end
 
-  -- if btnp(4) and not self.isMoving then 
-  --   self.collider:applyLinearImpulse(
-  --     cos(self.r) * speed,
-  --     sin(self.r) * speed)
-  -- end
   lastShootBtn = shootBtn
+
 
   -- ---------------------------------------
   -- Physics updates

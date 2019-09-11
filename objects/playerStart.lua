@@ -13,8 +13,11 @@ function PlayerStart:new(x,y)
   -- define collision object(s)
   self.collider = bf.Collider.new(world, 
           "Rectangle", self.x,self.y, 16, 36  )
-  self.collider.parent = self -- important for UI collisions
+  self.collider.parent = self -- important for UI collisions  
   self.collider:setCategory(1)
+  self.collider.draw = function(alpha)
+    -- do nothing - draw done elsewhere
+  end
 end
 
 
@@ -34,6 +37,10 @@ function PlayerStart:draw(inEditMode)
     2, 3)
 
     pal()
+end
+
+function PlayerStart:hover()
+  log("PlayerStart  hover!")
 end
 
 --

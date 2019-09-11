@@ -43,6 +43,7 @@ function updateEditor(dt)
     lmbDown = true
     if last_mDown~=true  then
       lmbClicked = true
+      log("lmbClicked")
     end
   end
   -- left released since last frame?
@@ -131,7 +132,7 @@ function updateEditor(dt)
   if currTool == 2 then
     -- check for hover/selection
     hoverObj = nil
-    local colls = world:queryCircleArea(mx, my, 5)
+    local colls = world:queryCircleArea(mx, my, 2)
     for _, collider in ipairs(colls) do
       --log("collider == wall? "..tostring(collider == wall.collider))
       hoverObj = collider.parent
@@ -140,9 +141,18 @@ function updateEditor(dt)
       hoverObj:hover()
     end
     
+    -- check for select
+    if lmbClicked and hoverObj then
+      -- update selected object (for UI)
+      log("#1")
+      selectedObj = hoverObj
+    end
     -- check for dragging
-    if lmbDown and hoverObj and not draggingObj then
+    if lmbDown and hoverObj 
+     and not draggingObj 
+     and not lmbClicked then
       -- "move/dragging" mode
+      log("#2")
       draggingObj = hoverObj
     end
     if lmbDown and draggingObj then
@@ -294,7 +304,7 @@ function importCourse()
   log("importCourse()...")
 
   loadingProgress = true
-  
+
   network.async(function()
 
     log("loading images...")        
