@@ -120,11 +120,9 @@ function Player:draw()
   end
 
   -- TODO: Needs to be a sprite!
-  circfill(self.x, self.y+1, 2, 0)
-  circfill(self.x, self.y,   2, 46)
-  -- circfill(self.x, self.y+1,2, 0)
-  -- circfill(self.x, self.y,2, 46)
-  
+  circfill(self.x, self.y+1, 2, 21)
+  --circfill(self.x, self.y,   2, 46)
+  spr(3, self.x-2, self.y-2)
 end
 
 
