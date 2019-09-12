@@ -57,10 +57,6 @@ function updateEditor(dt)
   if last_mDown and (mx~=last_mx or my~=last_my) then
     lmbDragging = true
   end
-  -- remember
-  last_mDown = lmbDown
-  last_mx = mx
-  last_my = my
 
   -- ----------------------------------------
   -- terrain "paint" mode
@@ -132,7 +128,9 @@ function updateEditor(dt)
   if currTool == 2 then
     -- check for hover/selection
     hoverObj = nil
-    local colls = world:queryCircleArea(mx, my, 2)
+    -- TODO: This doesn't report collision if cursor INSIDE area (so made circle temp "larger")
+    local colls = world:queryCircleArea(mx, my, 5) -- 
+    --
     for _, collider in ipairs(colls) do
       --log("collider == wall? "..tostring(collider == wall.collider))
       hoverObj = collider.parent
@@ -148,9 +146,11 @@ function updateEditor(dt)
       selectedObj = hoverObj
     end
     -- check for dragging
-    if lmbDown and hoverObj 
+    if lmbDown 
+     and hoverObj 
      and not draggingObj 
-     and not lmbClicked then
+     and not lmbClicked
+     and (mx~=last_mx or my~=last_my) then
       -- "move/dragging" mode
       log("#2")
       draggingObj = hoverObj
@@ -162,6 +162,12 @@ function updateEditor(dt)
     end
   end -- object mode
 
+
+  
+  -- remember
+  last_mDown = lmbDown
+  last_mx = mx
+  last_my = my
 end --update
 
 
