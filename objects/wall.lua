@@ -12,50 +12,68 @@ function Wall:new(x,y)
   self.h = 100
 
   -- define collision object(s)
-  self.collider = bf.Collider.new(world, "Polygon", 
-             {-50, -2.5, 
-               50, -2.5,
-               50,  2.5, 
-              -50,  2.5})
-  self.collider.parent = self -- important for UI collisions
-  self.collider:setPosition(self.x, self.y)
-  self.collider:setLinearDamping(1000) -- Make it so it doesn't "move" from spot
-  self.collider:setCategory(2)
-  self.collider.draw = function(alpha)
-      -- TODO: draw the tee "block" sprite(s)
-      aspr(4, 
-      self.x, 
-      self.y, 
-      self.r-0.25,
-      1, 3,
-      0.5,0.5,
-      5/16, 100/48)
-    --pal()
+  self:rebuildCollisions()
+end
 
-    -- draw collision bounds    
-    if uiEditorMode then      
-      local mode = 'line'
-      -- if self == selectedObj then
-      --   love.graphics.setColor(1, 1, 1) 
-      -- elseif self.hovered then 
-     if self.hovered then 
-        love.graphics.setColor(1, 0, 0) 
-      else
-        love.graphics.setColor(0, 0, 0) 
+function Wall:rebuildCollisions()
+  -- define collision object(s)
+  local half_w = self.w/2
+  local half_h = self.h/2
+
+  if self.collider then
+    --world:remove(self.collider)
+    self.collider:destroy()
+  end
+
+  --if self.collider == nil then
+    self.collider = bf.Collider.new(world, "Polygon", 
+              {-half_h, -half_w, 
+                half_h, -half_w,
+                half_h,  half_w, 
+                -half_h,  half_w})
+    self.collider.parent = self -- important for UI collisions
+    self.collider:setPosition(self.x, self.y)
+    self.collider:setLinearDamping(1000) -- Make it so it doesn't "move" from spot
+    self.collider:setCategory(2)
+    self.collider.draw = function(alpha)
+        -- TODO: draw the tee "block" sprite(s)
+        aspr(4, 
+        self.x, 
+        self.y, 
+        self.r-0.25,
+        1, 3,
+        0.5,0.5,
+        self.w/16, self.h/48)
+      --pal()
+
+      -- draw collision bounds    
+      if uiEditorMode then      
+        local mode = 'line'
+        -- if self == selectedObj then
+        --   love.graphics.setColor(1, 1, 1) 
+        -- elseif self.hovered then 
+      if self.hovered then 
+          love.graphics.setColor(1, 0, 0) 
+        else
+          love.graphics.setColor(0, 0, 0) 
+        end
+        love.graphics[self.collider.collider_type:lower()](mode, self.collider:getSpatialIdentity())
       end
-      love.graphics[self.collider.collider_type:lower()](mode, self.collider:getSpatialIdentity())
     end
-  end
-  -- define collision callbacks
-  function self.collider:enter(other)
-    log("enter!!!! "..tostring(other == cursorCollider))
-    return
-  end
-  function self.collider:exit(other)
-    log("exit!!!!"..tostring(other == cursorCollider))
-    return
-  end
+    -- define collision callbacks
+    function self.collider:enter(other)
+      log("enter!!!! "..tostring(other == cursorCollider))
+      return
+    end
+    function self.collider:exit(other)
+      log("exit!!!!"..tostring(other == cursorCollider))
+      return
+    end
 
+  -- else
+  --   -- just refresh dimensions
+  --   self.collider
+  -- end
 end
 
 
@@ -69,33 +87,31 @@ function Wall:update(dt)
   self.r = self.collider:getAngle()/(2*math.pi)
 end
 
--- function Wall:draw(inEditMode)
-  
---   -- TODO: draw the tee "block" sprite(s)
---   aspr(4, 
---     self.x, 
---     self.y, 
---     0,
---     1, 3)
-
---   --pal()
--- end
-
--- function Wall:hover()
---   log("WALL hover!")
--- end
 
 --
 -- render object's own properties
 --
 function Wall:uiProperties()
   if uiEditorMode then
-    -- TODO: Draw this object's property section
+    -- Draw this object's property section
     uiRow('position', function()
       self.x = ui.numberInput('x-pos', self.x)
     end, function()
       self.y = ui.numberInput('y-pos', self.y)
     end) --row
+
+    uiRow('position', function()
+      self.w = ui.numberInput('width', self.w, { onChange=function(value)
+        -- rebuild collision object(s)
+        self:rebuildCollisions()
+      end })
+    end, function()
+      self.h = ui.numberInput('height', self.h, { onChange=function(value)
+        -- rebuild collision object(s)
+        self:rebuildCollisions()
+      end })
+    end) --row
+
     uiRow('position', function()  
       self.r = ui.slider('rot', self.r, 0, 1, { step=0.025 })
       self.collider:setAngle(self.r * (2*math.pi))
