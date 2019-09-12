@@ -2,6 +2,9 @@
 -- CRAZY CRAZY GOLF
 --
 
+-- IDEAS:
+--  - "Invisible walls - is fun... especially rotating ones!"
+
 -- Credits:
 --  "Awesome" font (@somepx)
 

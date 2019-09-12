@@ -13,9 +13,9 @@ function Hole:new(x,y)
   self.collider.parent = self -- important for UI collisions  
   self.collider:setType("static")
   self.collider:setCategory(2)
-  -- self.collider.draw = function(alpha)
-  --   -- do nothing - draw done elsewhere
-  -- end   
+  self.collider.draw = function(alpha)
+    -- do nothing - draw done elsewhere
+  end   
   -- define collision callbacks
   function self.collider:preSolve(other)
     log("preSolve hole!!!! "..tostring(other == cursorCollider))
@@ -47,7 +47,7 @@ function Hole:draw()
   -- TODO: draw the tee "block" sprite(s)  
   aspr(2, 
     self.x+1, 
-    self.y-12, 
+    self.y-13, 
     self.r,
     1, 2)
 

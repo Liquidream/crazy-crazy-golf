@@ -8,6 +8,8 @@ function Wall:new(x,y)
   -- initialise base class/values
   Wall.super.new(self, x, y)
   self.name = "Wall"
+  self.w = 5
+  self.h = 100
 
   -- define collision object(s)
   self.collider = bf.Collider.new(world, "Polygon", 
@@ -20,8 +22,18 @@ function Wall:new(x,y)
   self.collider:setLinearDamping(1000) -- Make it so it doesn't "move" from spot
   self.collider:setCategory(2)
   self.collider.draw = function(alpha)
-    -- draw collision bounds
-    if uiEditorMode then
+      -- TODO: draw the tee "block" sprite(s)
+      aspr(4, 
+      self.x, 
+      self.y, 
+      self.r-0.25,
+      1, 3,
+      0.5,0.5,
+      5/16, 100/48)
+    --pal()
+
+    -- draw collision bounds    
+    if uiEditorMode then      
       local mode = 'line'
       -- if self == selectedObj then
       --   love.graphics.setColor(1, 1, 1) 
@@ -52,17 +64,22 @@ function Wall:update(dt)
   Wall.super.update(self, dt)
 
   -- TEST: Make block spin!
-  self.collider:setAngularVelocity(-2) 
+  self.collider:setAngularVelocity(-2)
+  -- sync rotation
+  self.r = self.collider:getAngle()/(2*math.pi)
 end
 
-function Wall:draw(inEditMode)
-  -- todo: overwrite default physics draw code
-
+-- function Wall:draw(inEditMode)
   
-  -- block1.draw = function(alpha)
-  --   -- do nothing - draw done elsewhere
-  -- end  
-end
+--   -- TODO: draw the tee "block" sprite(s)
+--   aspr(4, 
+--     self.x, 
+--     self.y, 
+--     0,
+--     1, 3)
+
+--   --pal()
+-- end
 
 -- function Wall:hover()
 --   log("WALL hover!")
