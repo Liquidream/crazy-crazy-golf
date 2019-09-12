@@ -25,9 +25,12 @@ end
 
 
 function Player:update(dt)
+  -- update base class/values
+  Player.super.update(self, dt)
+
   self.x = self.collider:getX()
   self.y = self.collider:getY()
-  
+
   -- ---------------------------------------
   -- Input handling
   -- ---------------------------------------

@@ -19,7 +19,15 @@ function Wall:new(x,y)
   self.collider:setPosition(self.x, self.y)
   self.collider:setLinearDamping(1000) -- Make it so it doesn't "move" from spot
   self.collider:setCategory(2)
-  
+  self.collider.draw = function(alpha)
+    local mode = 'line'
+    if self.hovered then 
+      love.graphics.setColor(1, 0, 0) 
+    else
+      love.graphics.setColor(0, 0, 0) 
+    end
+    love.graphics[self.collider.collider_type:lower()](mode, self.collider:getSpatialIdentity())
+  end
   -- define collision callbacks
   function self.collider:enter(other)
     log("enter!!!! "..tostring(other == cursorCollider))
@@ -34,8 +42,8 @@ end
 
 
 function Wall:update(dt)
-  -- reset states for this frame
-  self.hovered = false
+  -- update base class/values
+  Wall.super.update(self, dt)
 
   -- TEST: Make block spin!
   self.collider:setAngularVelocity(-2) 

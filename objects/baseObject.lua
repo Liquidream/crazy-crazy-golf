@@ -15,10 +15,12 @@ function BaseObject:new(x, y,
 end
 
 function BaseObject:update(dt)
-    --self.x = self.x + self.speed * dt
+  -- reset states for this frame
+  self.hovered = false
 end
 
 function BaseObject:hover()
+  self.hovered = true
   if DEBUG_MODE then
     --log(self.name.." hovered!")
   end

@@ -21,7 +21,10 @@ function PlayerStart:new(x,y)
 end
 
 
-function PlayerStart:update(dt)
+function PlayerStart:update(dt)  
+  -- update base class/values
+  PlayerStart.super.update(self, dt)
+
   -- anything here?
 end
 
