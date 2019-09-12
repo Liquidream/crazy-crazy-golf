@@ -16,7 +16,16 @@ function PlayerStart:new(x,y)
   self.collider.parent = self -- important for UI collisions  
   self.collider:setCategory(1)
   self.collider.draw = function(alpha)
-    -- do nothing - draw done elsewhere
+    -- draw collision bounds
+    if uiEditorMode then
+      local mode = 'line'
+      if self.hovered then 
+        love.graphics.setColor(1, 0, 0) 
+      else
+        love.graphics.setColor(0, 0, 0) 
+      end
+      love.graphics[self.collider.collider_type:lower()](mode, self.collider:getSpatialIdentity())
+    end
   end
 end
 
@@ -40,10 +49,6 @@ function PlayerStart:draw(inEditMode)
     2, 3)
 
     pal()
-end
-
-function PlayerStart:hover()
-  log("PlayerStart  hover!")
 end
 
 --

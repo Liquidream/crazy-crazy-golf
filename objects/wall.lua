@@ -20,13 +20,18 @@ function Wall:new(x,y)
   self.collider:setLinearDamping(1000) -- Make it so it doesn't "move" from spot
   self.collider:setCategory(2)
   self.collider.draw = function(alpha)
-    local mode = 'line'
-    if self.hovered then 
-      love.graphics.setColor(1, 0, 0) 
-    else
-      love.graphics.setColor(0, 0, 0) 
+    -- draw collision bounds
+    if uiEditorMode then
+      local mode = 'line'
+      if self == selectedObj then
+        love.graphics.setColor(1, 1, 1) 
+      elseif self.hovered then 
+        love.graphics.setColor(1, 0, 0) 
+      else
+        love.graphics.setColor(0, 0, 0) 
+      end
+      love.graphics[self.collider.collider_type:lower()](mode, self.collider:getSpatialIdentity())
     end
-    love.graphics[self.collider.collider_type:lower()](mode, self.collider:getSpatialIdentity())
   end
   -- define collision callbacks
   function self.collider:enter(other)

@@ -123,7 +123,9 @@ function updateEditor(dt)
   -- ----------------------------------------
   
   -- update objects (Q: which needs to be called first?)
+  playerStart:update(dt)
   wall:update(dt)
+
 
   if currTool == 2 then
     -- check for hover/selection
