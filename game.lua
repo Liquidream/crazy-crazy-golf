@@ -6,8 +6,8 @@ require "Player"
 
 
 function initGame(levelData)  
-  player={}
-  hole={}
+  --player={}
+  --hole={}
   obstacles={}    -- walls, bumpers, etc.
   coursePixels={} -- used to determine greens, rough, water, etc.
   terrain={}      -- slopes?
@@ -34,7 +34,8 @@ function initGame(levelData)
   playerStart = PlayerStart(PLAYER_STARTX, PLAYER_STARTY)
   
   -- Hole related
-  hole = Hole(445,55)
+  --hole = Hole(445,55)
+  hole = Hole(PLAYER_STARTX+50,PLAYER_STARTY)
 
   -- Wall temporary test
   wall = Wall(304,164)
@@ -53,8 +54,14 @@ function initGame(levelData)
 end
 
 function restartHole()
-  player = Player(playerStart.x, playerStart.y)
-  player.r = playerStart.r
+  if player then 
+    player:setPos(PLAYER_STARTX, PLAYER_STARTY)
+    player:Reset()
+  else
+    player = Player(playerStart.x, playerStart.y)
+  end
+  -- player = Player(playerStart.x, playerStart.y)
+  -- player.r = playerStart.r
 end
 
 

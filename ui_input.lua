@@ -94,14 +94,14 @@ The craziest crazy golf! 🤪
         local outOpen = ui.section("🧱 Objects / Obstacles", {open = inOpen }, function()
           ui.markdown([[Select objects to create/edit:]])
           
-        if ui.button('Tee/Start', { icon = 'assets/ico-start.png', iconOnly = false }) then
-          log('set tool to PLAYER START')
-          selectedObj = playerStart
-        end
+        -- if ui.button('Tee/Start', { icon = 'assets/ico-start.png', iconOnly = false }) then
+        --   log('set tool to PLAYER START')
+        --   selectedObj = playerStart
+        -- end
         
-        if ui.button('Hole', { icon = 'assets/ico-hole.png', iconOnly = false }) then
-          log('set tool to HOLE')
-        end
+        -- if ui.button('Hole', { icon = 'assets/ico-hole.png', iconOnly = false }) then
+        --   log('set tool to HOLE')
+        -- end
         
         if ui.button('Wall', { icon = 'assets/ico-wall.png', iconOnly = false }) then
           log('set tool to WALL')

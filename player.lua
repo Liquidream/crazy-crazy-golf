@@ -100,8 +100,7 @@ function Player:update(dt)
       self.collider:applyForce(dx, dy)
     else
       -- restart level
-      self:setPos(PLAYER_STARTX, PLAYER_STARTY)
-      self:Reset()
+      restartHole()
     end
   end
 end
@@ -128,6 +127,8 @@ end
 
 function Player:Reset()
   log("reset!")  
+  self.r = playerStart.r
+  --self.r = 0
   self.power = 0
   self.shooting = false
 end

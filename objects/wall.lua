@@ -23,9 +23,10 @@ function Wall:new(x,y)
     -- draw collision bounds
     if uiEditorMode then
       local mode = 'line'
-      if self == selectedObj then
-        love.graphics.setColor(1, 1, 1) 
-      elseif self.hovered then 
+      -- if self == selectedObj then
+      --   love.graphics.setColor(1, 1, 1) 
+      -- elseif self.hovered then 
+     if self.hovered then 
         love.graphics.setColor(1, 0, 0) 
       else
         love.graphics.setColor(0, 0, 0) 
