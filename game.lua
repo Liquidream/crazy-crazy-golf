@@ -34,11 +34,12 @@ function initGame(levelData)
   playerStart = PlayerStart(PLAYER_STARTX, PLAYER_STARTY)
   
   -- Hole related
-  --hole = Hole(445,55)
-  hole = Hole(PLAYER_STARTX+50,PLAYER_STARTY)
+  hole = Hole(445,55)
+  --hole = Hole(PLAYER_STARTX+50,PLAYER_STARTY)
 
   -- Wall temporary test
   wall = Wall(304,164)
+  wall.spin = -2
   table.insert(obstacles, wall)
                  
   -- ground = bf.Collider.new(world, "Polygon",
@@ -49,7 +50,7 @@ function initGame(levelData)
   restartHole()
 
   -- DEBUG: Test!!!  
-  selectedObj = wall
+  --selectedObj = wall
 
 end
 
@@ -75,9 +76,10 @@ function updateGame(dt)
   world:update(dt)
   
   -- update objects (which needs to be called first?)
-  wall:update(dt)
-  -- block1:setAngularVelocity(-2) 
-  -- update player (controls, movement/pos, state, etc.)
+  -- TODO: review this!!!
+  for k,obj in pairs(obstacles) do
+    obj:update(dt)
+  end
   
   player:update(dt)
 end

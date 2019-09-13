@@ -108,7 +108,9 @@ The craziest crazy golf! 🤪
         -- end
         
         if ui.button('Wall', { icon = 'assets/ico-wall.png', iconOnly = false }) then
-          log('set tool to WALL')
+          log('create new WALL')
+          local wall = Wall(GAME_WIDTH/2, GAME_HEIGHT/2)
+          table.insert(obstacles, wall)
           selectedObj = wall
         end
         
@@ -167,9 +169,9 @@ The craziest crazy golf! 🤪
             loadCourse()
           end
           
-          if ui.button('Reset Course') then
+          if ui.button('Clear Course') then
               -- TODO: reset current course data
-              resetCourse()
+              clearCourse()
           end
           
         end) -- obstacles/objects section

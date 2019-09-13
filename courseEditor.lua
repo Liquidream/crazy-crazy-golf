@@ -124,7 +124,13 @@ function updateEditor(dt)
   
   -- update objects (Q: which needs to be called first?)
   playerStart:update(dt)
-  wall:update(dt)
+  
+  -- update objects?
+  -- TODO: review this!!!
+  for k,obj in pairs(obstacles) do
+    obj:update(dt)
+  end
+  --if wall then wall:update(dt) end
 
 
   if currTool == 2 then
@@ -288,22 +294,31 @@ function loadCourse()
 
 end
 
--- restore pixel data to pre-made level
--- (e.g. default course)
-function resetCourse()
-  log("resetCourse()...")
-
-  target("courseCanvas")
-  cls()
-  -- todo: draw default course here!
-  spr_sheet("defaultCourse")
-
-  target()
+-- clear all pixel + course data and start from scratch
+function clearCourse()
+  log("clearCourse()...")
 
   -- clear pixel data
-  -- target("courseCanvas")
-  -- cls()
-  -- target()
+  target("courseCanvas")
+  cls()
+  target()
+  -- update latest course data
+  scan_surface("courseCanvas")
+
+  -- clear objects and reset defaults
+  for k,obj in pairs(obstacles) do
+    obj.collider:destroy()
+  end
+  obstacles={} 
+  wall=nil
+  -- reset player start
+  playerStart:moveTo(GAME_WIDTH/3, GAME_HEIGHT/2)
+  playerStart.r=0
+  -- reset player
+  restartHole()
+  -- reset hole
+  hole:moveTo((GAME_WIDTH/3)*2, GAME_HEIGHT/2)
+
 end
 
 

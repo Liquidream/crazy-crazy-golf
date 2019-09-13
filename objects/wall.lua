@@ -10,6 +10,7 @@ function Wall:new(x,y)
   self.name = "Wall"
   self.w = 5
   self.h = 100
+  self.spin = 0
 
   -- define collision object(s)
   self:rebuildCollisions()
@@ -47,7 +48,7 @@ function Wall:rebuildCollisions()
       --pal()
 
       -- draw collision bounds    
-      if uiEditorMode then      
+      --if uiEditorMode then      
         local mode = 'line'
         -- if self == selectedObj then
         --   love.graphics.setColor(1, 1, 1) 
@@ -58,7 +59,7 @@ function Wall:rebuildCollisions()
           love.graphics.setColor(0, 0, 0) 
         end
         love.graphics[self.collider.collider_type:lower()](mode, self.collider:getSpatialIdentity())
-      end
+     -- end
     end
     -- define collision callbacks
     function self.collider:enter(other)
@@ -81,10 +82,11 @@ function Wall:update(dt)
   -- update base class/values
   Wall.super.update(self, dt)
 
-  -- TEST: Make block spin!
-  self.collider:setAngularVelocity(-2)
+  -- Keep block spinning (or not)  
+  self.collider:setAngularVelocity(self.spin)
   -- sync rotation
   self.r = self.collider:getAngle()/(2*math.pi)
+
 end
 
 
@@ -115,6 +117,9 @@ function Wall:uiProperties()
     uiRow('position', function()  
       self.r = ui.slider('rot', self.r, 0, 1, { step=0.025 })
       self.collider:setAngle(self.r * (2*math.pi))
+    end) --row
+    uiRow('position', function()
+      self.spin = ui.slider('spin', self.spin, -3, 3, { step=0.25 })
     end) --row
   end
 end
