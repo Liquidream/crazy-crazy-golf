@@ -130,17 +130,43 @@ function updateEditor(dt)
   if currTool == 2 then
     -- check for hover/selection
     hoverObj = nil
-    -- TODO: This doesn't report collision if cursor INSIDE area (so made circle temp "larger")
-    local colls = world:queryCircleArea(mx, my, 5) -- 
-    --
-    for _, collider in ipairs(colls) do
-      --log("collider == wall? "..tostring(collider == wall.collider))
-      hoverObj = collider.parent
-      -- do manual hovering 
-      -- (can't use onEnter/Exit as not updating World in edit mode)
-      hoverObj:hover()
+
+    -- v2
+    -- https://love2d.org/wiki/Fixture:testPoint
+    if player.collider.fixture:testPoint( mx, my ) then
+      hoverObj = player
+      player:hover()
+    elseif playerStart.collider.fixture:testPoint( mx, my ) then
+      hoverObj = playerStart
+      playerStart:hover()
+    elseif hole.collider.fixture:testPoint( mx, my ) then
+      hoverObj = hole
+      hole:hover()
+    else
+      -- check all objects for collisions
+      for k,obj in pairs(obstacles) do
+        if obj.collider.fixture:testPoint( mx, my ) then
+          hoverObj = obj
+          obj:hover()
+        end
+      end
     end
+
+
+    -- v1 ------
+    -- -- TODO: This doesn't report collision if cursor INSIDE area (so made circle temp "larger")
+    -- local colls = world:queryCircleArea(mx, my, 5) -- 
+    -- --
+    -- for _, collider in ipairs(colls) do
+    --   --log("collider == wall? "..tostring(collider == wall.collider))
+    --   hoverObj = collider.parent
+    --   -- do manual hovering 
+    --   -- (can't use onEnter/Exit as not updating World in edit mode)
+    --   hoverObj:hover()
+    -- end
     
+
+
     -- check for select
     if lmbClicked and hoverObj then
       -- update selected object (for UI)
