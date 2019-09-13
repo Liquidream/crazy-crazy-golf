@@ -84,6 +84,11 @@ function Wall:update(dt)
 
   -- Keep block spinning (or not)  
   self.collider:setAngularVelocity(self.spin)
+  if self.spin == 0 then
+    self.collider:setType("static")
+  else
+    self.collider:setType("dynamic")
+  end
   -- sync rotation
   self.r = self.collider:getAngle()/(2*math.pi)
 
