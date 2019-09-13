@@ -39,14 +39,6 @@ require("ui_input")
 bf = require("breezefield")
 
 
--- UI-bound/global vars
-uiEditorMode = false
-
--- local vars
-local mx = 0
-local my = 0
-
-
 function love.load()
   -- init Sugarcoat engine
   initSugarcoat()

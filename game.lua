@@ -64,6 +64,10 @@ function restartHole()
   -- player.r = playerStart.r
 end
 
+function winHole()
+  -- TODO: Set gameState to "win", display message, score, etc.
+end
+
 
 function updateGame(dt)
   

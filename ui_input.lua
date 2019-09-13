@@ -21,6 +21,10 @@ end
 
 -- All the UI-related code is just in this function. Everything below it is normal game code!
 
+-- UI-bound/global vars
+uiEditorMode = false
+
+
 function castle.uiupdate()
 
   
