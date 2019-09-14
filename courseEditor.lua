@@ -58,13 +58,14 @@ function updateEditor(dt)
     lmbDragging = true
   end
 
+
   -- ----------------------------------------
   -- terrain "paint" mode
   -- ----------------------------------------
   if currTool == 1 then
     -- mouse clicked? paint at current position
     if btnv(8) > 0 
-    or btnv(9) > 0 then
+     or btnv(9) > 0 then
 
       -- clear the temp canvas (once!)
       target("courseCanvasTemp")
@@ -116,6 +117,9 @@ function updateEditor(dt)
       pal()
       palt()
     end -- if clicked
+
+    -- scroll wheel for brush size
+    terrainBrushSize = mid(1, terrainBrushSize + btnv(10), 50)
   end -- if paint mode
 
   -- ----------------------------------------
