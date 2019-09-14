@@ -17,6 +17,10 @@ end
 function BaseObject:update(dt)
   -- reset states for this frame
   self.hovered = false
+  -- update position based on collisions
+  if self.collider then
+    self.x, self.y = self.collider:getPosition()
+  end
 end
 
 function BaseObject:hover()
