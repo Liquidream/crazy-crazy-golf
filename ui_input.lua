@@ -65,36 +65,26 @@ The craziest crazy golf! 🤪
           ui.markdown([[Choose Terrain to paint:]])
           
           --ui.box("terrain2Box", { border=currTerrainLayer==3 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
+          local label = 'Sand Trap'
+          if currTerrainLayer==3 then label = "▶ "..label end          
+          if ui.button(label, { icon = 'assets/ico-terrain-sand.png', iconOnly = false }) then
+            log('set tool to sand')
+            currTerrainLayer = 3
+          end
+            
+          local label = 'Fairway/Green'
+          if currTerrainLayer==2 then label = "▶ "..label end          
+          if ui.button(label, { icon = 'assets/ico-terrain-green.png', iconOnly = false }) then
+            log('set tool to grass')
+            currTerrainLayer = 2
+          end
 
-          uiRow('position', function()
-            if ui.button('Sand Trap', { icon = 'assets/ico-terrain-sand.png', iconOnly = false }) then
-              log('set tool to sand')
-              currTerrainLayer = 3
-            end
-          end, 
-          function()
-            if currTerrainLayer==3 then ui.markdown("◀") end
-          end) --row
-          
-          uiRow('position', function()            
-            if ui.button('Fairway/Green', { icon = 'assets/ico-terrain-green.png', iconOnly = false }) then
-              log('set tool to grass')
-              currTerrainLayer = 2
-            end
-          end, 
-          function()
-            if currTerrainLayer==2 then ui.markdown("◀") end
-          end) --row
-
-          uiRow('position', function()            
-            if ui.button('Rough', { icon = 'assets/ico-terrain-rough.png', iconOnly = false }) then
-              log('set tool to rough')
-              currTerrainLayer = 1
-            end
-          end, 
-          function()
-            if currTerrainLayer==1 then ui.markdown("◀") end
-          end) --row
+          local label = 'Rough'
+          if currTerrainLayer==1 then label = "▶ "..label end        
+          if ui.button(label, { icon = 'assets/ico-terrain-rough.png', iconOnly = false }) then
+            log('set tool to rough')
+            currTerrainLayer = 1
+          end
           
           -- Size
           terrainBrushSize = ui.slider("Size", terrainBrushSize, 1, 50, { })
