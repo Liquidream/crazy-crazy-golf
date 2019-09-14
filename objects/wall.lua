@@ -8,7 +8,7 @@ function Wall:new(x,y)
   -- initialise base class/values
   Wall.super.new(self, x, y)
   self.name = "Wall"
-  self.w = 5
+  self.w = 7
   self.h = 100
   self.spin = 0
 

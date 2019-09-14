@@ -19,7 +19,11 @@ function BaseObject:update(dt)
   self.hovered = false
   -- update position based on collisions
   if self.collider then
+   if not uiEditorMode then
     self.x, self.y = self.collider:getPosition()
+   else
+    self.collider:setPosition(self.x, self.y)
+   end
   end
 end
 
