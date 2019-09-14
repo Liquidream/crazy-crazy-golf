@@ -16,6 +16,18 @@ function PlayerStart:new(x,y)
   self.collider.parent = self -- important for UI collisions  
   self.collider:setCategory(1)
   self.collider.draw = function(alpha)
+    -- draw sprite
+    if not uiEditorMode then
+      pal(46,10)
+    end
+    -- TODO: draw the tee "block" sprite(s)
+    aspr(0, 
+      self.x, 
+      self.y, 
+      self.r,
+      2, 3)
+  
+      pal()
     -- draw collision bounds
     if uiEditorMode then
       local mode = 'line'
@@ -35,20 +47,6 @@ function PlayerStart:update(dt)
   PlayerStart.super.update(self, dt)
 
   -- anything here?
-end
-
-function PlayerStart:draw(inEditMode)
-  if not inEditMode then
-    pal(46,10)
-  end
-  -- TODO: draw the tee "block" sprite(s)
-  aspr(0, 
-    self.x, 
-    self.y, 
-    self.r,
-    2, 3)
-
-    pal()
 end
 
 --

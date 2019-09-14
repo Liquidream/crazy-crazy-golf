@@ -37,18 +37,26 @@ function Wall:rebuildCollisions()
     self.collider:setLinearDamping(1000) -- Make it so it doesn't "move" from spot
     self.collider:setCategory(2)
     self.collider.draw = function(alpha)
-        -- TODO: draw the tee "block" sprite(s)
+        -- draw shadow
+        -- TODO: Pal switch based on orientation
+        aspr(5, 
+          self.x, 
+          self.y+2, 
+          self.r-0.25,
+          1, 3,
+          0.5,0.5,
+          self.w/16, self.h/48)      
+        --pal()
         aspr(4, 
-        self.x, 
-        self.y, 
-        self.r-0.25,
-        1, 3,
-        0.5,0.5,
-        self.w/16, self.h/48)
-      --pal()
+          self.x, 
+          self.y, 
+          self.r-0.25,
+          1, 3,
+          0.5,0.5,
+          self.w/16, self.h/48)
 
       -- draw collision bounds    
-      --if uiEditorMode then      
+      if uiEditorMode then      
         local mode = 'line'
         -- if self == selectedObj then
         --   love.graphics.setColor(1, 1, 1) 
@@ -59,7 +67,7 @@ function Wall:rebuildCollisions()
           love.graphics.setColor(0, 0, 0) 
         end
         love.graphics[self.collider.collider_type:lower()](mode, self.collider:getSpatialIdentity())
-     -- end
+      end
     end
     -- define collision callbacks
     function self.collider:enter(other)

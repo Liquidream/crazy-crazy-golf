@@ -31,7 +31,7 @@ function BaseObject:hover()
 end
 
 function BaseObject:moveTo(x, y)
-  -- move object
+  -- move object  
   self.x = x
   self.y = y
   -- move collision obj (if present)

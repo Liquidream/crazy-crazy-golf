@@ -218,8 +218,6 @@ function drawEditor()
   -- -------------------------------
   -- draw objects, etc
   -- -------------------------------
-  -- draw player start tee
-  playerStart:draw(true)
   -- draw the hole
   hole:draw(true)
   -- draw all physics objects

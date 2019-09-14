@@ -55,12 +55,13 @@ function initGame(levelData)
 end
 
 function restartHole()
-  if player then 
-    player:setPos(PLAYER_STARTX, PLAYER_STARTY)
+  if player then
+    player:setPos(playerStart.x, playerStart.y)
     player:Reset()
   else
-    player = Player(playerStart.x, playerStart.y)
+    player =  Player(playerStart.x, playerStart.y)
   end
+  player.r = playerStart.r
   -- player = Player(playerStart.x, playerStart.y)
   -- player.r = playerStart.r
 end
@@ -96,8 +97,6 @@ function drawGame()
   if not loadingProgress then
     -- draw current course data
     spr_sheet("courseCanvas", 0, 0)
-    -- draw player start tee
-    playerStart:draw()
     -- draw the hole
     hole:draw()
     -- draw all physics objects

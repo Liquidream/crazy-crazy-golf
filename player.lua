@@ -30,7 +30,6 @@ function Player:update(dt)
 
   self.x = self.collider:getX()
   self.y = self.collider:getY()
-
   -- ---------------------------------------
   -- Input handling
   -- ---------------------------------------
@@ -45,10 +44,8 @@ function Player:update(dt)
   if shootBtn
    and not self.isMoving then 
     -- swinging/shooting
-    log("shooting")
     self.shooting = true
-    self.power = min(self.power + (speed/50), speed)
-    log("self.power = "..self.power)
+    self.power = min(self.power + (speed/50), speed)    
 
   elseif self.shooting 
    and not shootBtn then
@@ -126,14 +123,11 @@ function Player:draw()
 end
 
 function Player:Reset()
-  log("reset!")  
-  self.r = playerStart.r
-  --self.r = 0
   self.power = 0
   self.shooting = false
 end
 
 function Player:setPos(x,y)
-  self.collider:setPosition(PLAYER_STARTX, PLAYER_STARTY)
+  Player.super.moveTo(self, x, y)
   self.collider:setLinearVelocity(0,0)
 end
