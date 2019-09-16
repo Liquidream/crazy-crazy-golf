@@ -257,6 +257,7 @@ function saveCourse()
   network.async(function()
     log("before storage set")
     castle.storage.set("courseData", coursePixels)
+    castle.storage.set("courseDataTest", wall:getData())
     log("after storage set")
   end)
 end

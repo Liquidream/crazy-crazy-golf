@@ -4,14 +4,25 @@
 BaseObject = Object:extend()
 
 function BaseObject:new(x, y,   
-                        r, w, h)
-    self.x = x        -- x position in the game
-    self.y = y        -- y pos    
-    self.r = r or 0   -- rotation angle (turn-based, 0=right, 0.25=top, etc.)
-    self.w = w or 20  -- width
-    self.h = h or 20  -- height
-    self.name = ""
+                        w, h, r, data)
+    data = data or {}           -- default to empty obj if no data passed
+    self.x = data.x or x        -- x position in the game
+    self.y = data.y or y        -- y pos    
+    self.w = data.w or w        -- width
+    self.h = data.h or h        -- height
+    self.r = data.r or r or 0   -- rotation angle (turn-based, 0=right, 0.25=top, etc.)
     self.collider = nil
+end
+
+-- serialise for storage
+function BaseObject:getData()
+  local data = {}
+  data.x = self.x
+  data.y = self.y
+  data.r = self.r
+  data.w = self.w
+  data.h = self.h
+  return data
 end
 
 function BaseObject:update(dt)
@@ -43,5 +54,3 @@ function BaseObject:moveTo(x, y)
     self.collider:setPosition(self.x, self.y)
   end
 end
-
--- draw?

@@ -38,9 +38,18 @@ function initGame(levelData)
   --hole = Hole(PLAYER_STARTX+50,PLAYER_STARTY)
 
   -- Wall temporary test
-  wall = Wall(304,164)
-  wall.spin = -2
-  table.insert(obstacles, wall)
+  --wall = Wall(304,164)
+  --wall.spin = -2
+  --table.insert(obstacles, wall)
+
+  -- Wall serialization test
+  network.async(function()
+    log("before storage get")
+    local data = castle.storage.get("courseDataTest")
+    log("after storage get")
+    wall = Wall(nil,nil,data)
+    table.insert(obstacles, wall)
+  end)  
                  
   -- ground = bf.Collider.new(world, "Polygon",
   --               {0, 150, 250, 150 , 250, 250, 0, 250})

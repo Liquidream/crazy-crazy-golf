@@ -4,16 +4,25 @@
 
 Wall = BaseObject:extend()
 
-function Wall:new(x,y)
+function Wall:new(x, y, data)
   -- initialise base class/values
-  Wall.super.new(self, x, y)
+  data = data or {} -- default to empty obj if no data passed
+  Wall.super.new(self, x, y, 7, 100, 0, data)
+  log("self.y = "..self.y)
   self.name = "Wall"
-  self.w = 7
-  self.h = 100
-  self.spin = 0
+  -- self.w = self.w or 7
+  -- self.h = self.h or 100
+  self.spin = data.spin or 0
 
   -- define collision object(s)
   self:rebuildCollisions()
+end
+
+-- serialise for storage
+function Wall:getData()
+  local data = Wall.super.getData(self)
+  data.spin = self.spin
+  return data
 end
 
 function Wall:rebuildCollisions()
