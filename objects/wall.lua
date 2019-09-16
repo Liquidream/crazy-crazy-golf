@@ -38,7 +38,6 @@ function Wall:rebuildCollisions()
     self.collider:setCategory(2)
     self.collider.draw = function(alpha)
         -- draw shadow
-        -- TODO: Pal switch based on orientation
         aspr(5, 
           self.x, 
           self.y+2, 

@@ -116,7 +116,7 @@ The craziest crazy golf! 🤪
         end
         
         if ui.button('Bridge', { icon = 'assets/ico-bridge.png', iconOnly = false }) then
-          log('set tool to WALL')
+          log('set tool to BRIDGE')
         end
           
           

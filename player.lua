@@ -116,9 +116,9 @@ function Player:draw()
           37)
   end
 
-  -- TODO: Needs to be a sprite!
+  -- draw shadow
   circfill(self.x, self.y+1, 2, 21)
-  --circfill(self.x, self.y,   2, 46)
+  -- draw player (ball) sprite
   spr(3, self.x-2, self.y-2)
 end
 

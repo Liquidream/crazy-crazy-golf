@@ -20,7 +20,7 @@ function PlayerStart:new(x,y)
     if not uiEditorMode then
       pal(46,10)
     end
-    -- TODO: draw the tee "block" sprite(s)
+    -- draw the tee "block" sprite(s)
     aspr(0, 
       self.x, 
       self.y, 
@@ -53,7 +53,7 @@ end
 -- render object's own properties
 --
 function PlayerStart:uiProperties()
-  -- TODO: Draw this object's property section
+  -- Draw this object's property section
   uiRow('position', function()
     self.x = ui.numberInput('x-pos', self.x)
   end, function()
