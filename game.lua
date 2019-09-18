@@ -7,7 +7,7 @@ require "Player"
 
 function initGame(levelData)  
   --player={}
-  --hole={}
+  --pin={}
   coursePixels={} -- used to determine greens, rough, water, etc.
   obstacles={}    -- walls, bumpers, etc.
   terrain={}      -- slopes?
@@ -33,9 +33,9 @@ function initGame(levelData)
   --player = Player(PLAYER_STARTX, PLAYER_STARTY)
   playerStart = PlayerStart(PLAYER_STARTX, PLAYER_STARTY)
   
-  -- Hole related
-  hole = Hole(445,55)
-  --hole = Hole(PLAYER_STARTX+50,PLAYER_STARTY)
+  -- Pin related
+  pin = Pin(445,55)
+  --pin = Pin(PLAYER_STARTX+50,PLAYER_STARTY)
 
   -- Wall temporary test
   --wall = Wall(304,164)
@@ -107,14 +107,13 @@ function drawGame()
     -- draw current course data
     spr_sheet("courseCanvas", 0, 0)
     -- draw the hole
-    hole:draw()
+    pin:draw()
     -- draw all physics objects
     world:draw()
     -- draw player
     player:draw()
 
   else
-    log("loading...")
     pprintc("Loading...", GAME_HEIGHT/2, 8)
   end
 end

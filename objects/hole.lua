@@ -2,11 +2,11 @@
 -- The player start position (tee-off point)
 --
 
-Hole = BaseObject:extend()
+Pin = BaseObject:extend()
 
-function Hole:new(x,y)
+function Pin:new(x,y)
   -- initialise base class/values
-  Hole.super.new(self, x, y)
+  Pin.super.new(self, x, y)
 
   -- which hole to go onto, after sinking the ball 
   -- (allows for multiple exit holes/paths)
@@ -43,11 +43,11 @@ function Hole:new(x,y)
 end
 
 
-function Hole:update(dt)
+function Pin:update(dt)
   -- anything here?
 end
 
-function Hole:draw()
+function Pin:draw()
   -- TODO: draw the tee "block" sprite(s)  
   aspr(2, 
     self.x+1, 
@@ -61,7 +61,7 @@ end
 --
 -- render object's own properties
 --
-function Hole:uiProperties()
+function Pin:uiProperties()
   -- TODO: Draw this object's property section
   uiRow('position', function()
       self.x = ui.numberInput('x', self.x)

@@ -149,9 +149,9 @@ function updateEditor(dt)
     elseif playerStart.collider.fixture:testPoint( mx, my ) then
       hoverObj = playerStart
       playerStart:hover()
-    elseif hole.collider.fixture:testPoint( mx, my ) then
-      hoverObj = hole
-      hole:hover()
+    elseif pin.collider.fixture:testPoint( mx, my ) then
+      hoverObj = pin
+      pin:hover()
     else
       -- check all objects for collisions
       for k,obj in pairs(obstacles) do
@@ -222,8 +222,8 @@ function drawEditor()
   -- -------------------------------
   -- draw objects, etc
   -- -------------------------------
-  -- draw the hole
-  hole:draw(true)
+  -- draw the pin
+  pin:draw(true)
   -- draw all physics objects
   world:draw()
   -- draw player
@@ -244,7 +244,7 @@ end
     tags={"beginner","premium"},
     coursePixelData={},
     playerStartData={},
-    holePinData={},
+    pinData={},
     obstacles={
       obstacleData={},
       obstacleData={},
@@ -265,7 +265,7 @@ function createHoleData()
     tags={},
     coursePixelData={},
     playerStartData={},
-    holePinData={},
+    pinData={},
     obstacles={},
     dataVersion=1
   }
@@ -346,8 +346,8 @@ function clearCourse()
   playerStart.r=0
   -- reset player
   restartHole()
-  -- reset hole
-  hole:moveTo((GAME_WIDTH/3)*2, GAME_HEIGHT/2)
+  -- reset pin
+  pin:moveTo((GAME_WIDTH/3)*2, GAME_HEIGHT/2)
 
 end
 
