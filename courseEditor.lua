@@ -127,11 +127,11 @@ function updateEditor(dt)
   -- ----------------------------------------
   
   -- update objects (Q: which needs to be called first?)
-  playerStart:update(dt)
+  hole.playerStart:update(dt)
   
   -- update objects?
   -- TODO: review this!!!
-  for k,obj in pairs(obstacles) do
+  for k,obj in pairs(hole.obstacles) do
     obj:update(dt)
   end
   --if wall then wall:update(dt) end
@@ -146,15 +146,15 @@ function updateEditor(dt)
     if player.collider.fixture:testPoint( mx, my ) then
       hoverObj = player
       player:hover()
-    elseif playerStart.collider.fixture:testPoint( mx, my ) then
-      hoverObj = playerStart
-      playerStart:hover()
-    elseif pin.collider.fixture:testPoint( mx, my ) then
-      hoverObj = pin
-      pin:hover()
+    elseif hole.playerStart.collider.fixture:testPoint( mx, my ) then
+      hoverObj = hole.playerStart
+      hole.playerStart:hover()
+    elseif hole.pin.collider.fixture:testPoint( mx, my ) then
+      hoverObj = hole.pin
+      hole.pin:hover()
     else
       -- check all objects for collisions
-      for k,obj in pairs(obstacles) do
+      for k,obj in pairs(hole.obstacles) do
         if obj.collider.fixture:testPoint( mx, my ) then
           hoverObj = obj
           obj:hover()
@@ -223,7 +223,7 @@ function drawEditor()
   -- draw objects, etc
   -- -------------------------------
   -- draw the pin
-  pin:draw(true)
+  hole.pin:draw(true)
   -- draw all physics objects
   world:draw()
   -- draw player
@@ -336,18 +336,18 @@ function clearCourse()
   scan_surface("courseCanvas")
 
   -- clear objects and reset defaults
-  for k,obj in pairs(obstacles) do
+  for k,obj in pairs(hole.obstacles) do
     obj.collider:destroy()
   end
-  obstacles={} 
-  wall=nil
+  hole.obstacles={} 
+  --wall=nil
   -- reset player start
-  playerStart:moveTo(GAME_WIDTH/3, GAME_HEIGHT/2)
-  playerStart.r=0
+  hole.playerStart:moveTo(GAME_WIDTH/3, GAME_HEIGHT/2)
+  hole.playerStart.r=0
   -- reset player
   restartHole()
   -- reset pin
-  pin:moveTo((GAME_WIDTH/3)*2, GAME_HEIGHT/2)
+  hole.pin:moveTo((GAME_WIDTH/3)*2, GAME_HEIGHT/2)
 
 end
 

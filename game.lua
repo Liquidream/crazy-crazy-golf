@@ -5,18 +5,7 @@
 require "Player"
 
 
-function initGame(levelData)  
-  --player={}
-  --pin={}
-  coursePixels={} -- used to determine greens, rough, water, etc.
-  obstacles={}    -- walls, bumpers, etc.
-  terrain={}      -- slopes?
-  
-  
-  -- todo: construct level objects from data passed
-
-
-
+function initGame(levelData)
   -- -------------------------------------------------------
   -- init physics
   -- -------------------------------------------------------
@@ -24,53 +13,70 @@ function initGame(levelData)
   -- bf.World:new also works
   -- any function of love.physics.world should work on World
   local gx,gy = world:getGravity()
-  log("gravity = "..gx..","..gy)
+
+  -- -------------------------------------------------------
+  -- init hole
+  -- -------------------------------------------------------
+  -- create base hole structure
+  -- (will populate from "data" later)
+  hole = 
+  {
+    title="",
+    description="",
+    par=0,
+    difficulty=0,
+    tags={},
+    coursePixels={},
+    playerStart={},
+    pin={},
+    obstacles={}
+  }
+  
+  -- todo: construct level objects from data passed
+  if levelData then
+    -- TODO: restore the hole from data passed
+
+  else
+    -- load the default hole data?
+    hole.playerStart = PlayerStart(PLAYER_STARTX, PLAYER_STARTY)
+    hole.pin = Pin(445,55)
+    local wall = Wall(304,164)
+    wall.spin = -2
+    table.insert(hole.obstacles, wall)
+  end
+
+
+
+
+
+  
 
 
   -- capture course image data (cols for terrain types)
-  
-  -- Player related
-  --player = Player(PLAYER_STARTX, PLAYER_STARTY)
-  playerStart = PlayerStart(PLAYER_STARTX, PLAYER_STARTY)
-  
-  -- Pin related
-  pin = Pin(445,55)
-  --pin = Pin(PLAYER_STARTX+50,PLAYER_STARTY)
-
-  -- Wall temporary test
-  --wall = Wall(304,164)
-  --wall.spin = -2
-  --table.insert(obstacles, wall)
+    
 
   -- Wall serialization test
-  network.async(function()
-    log("before storage get")
-    local data = castle.storage.get("courseDataTest")
-    log("after storage get")
-    wall = Wall(nil,nil,data)
-    table.insert(obstacles, wall)
-  end)  
-                 
-  -- ground = bf.Collider.new(world, "Polygon",
-  --               {0, 150, 250, 150 , 250, 250, 0, 250})
-  -- ground:setType("static")
+  -- network.async(function()
+  --   log("before storage get")
+  --   local data = castle.storage.get("courseDataTest")
+  --   log("after storage get")
+  --   wall = Wall(nil,nil,data)
+  --   table.insert(obstacles, wall)
+  -- end)
 
   -- Now reset all the states + player pos
   restartHole()
-
-  -- DEBUG: Test!!!  
-  --selectedObj = wall
-
 end
+
 
 function restartHole()
   if player then
-    player:setPos(playerStart.x, playerStart.y)
+    player:setPos(hole.playerStart.x, hole.playerStart.y)
     player:Reset()
   else
-    player =  Player(playerStart.x, playerStart.y)
+    player =  Player(hole.playerStart.x, hole.playerStart.y)
   end
-  player.r = playerStart.r
+  player.r = hole.playerStart.r
   -- player = Player(playerStart.x, playerStart.y)
   -- player.r = playerStart.r
 end
@@ -87,7 +93,7 @@ function updateGame(dt)
   
   -- update objects (which needs to be called first?)
   -- TODO: review this!!!
-  for k,obj in pairs(obstacles) do
+  for k,obj in pairs(hole.obstacles) do
     obj:update(dt)
   end
   
@@ -107,7 +113,7 @@ function drawGame()
     -- draw current course data
     spr_sheet("courseCanvas", 0, 0)
     -- draw the hole
-    pin:draw()
+    hole.pin:draw()
     -- draw all physics objects
     world:draw()
     -- draw player

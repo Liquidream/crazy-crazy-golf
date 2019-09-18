@@ -7,6 +7,7 @@ Pin = BaseObject:extend()
 function Pin:new(x,y)
   -- initialise base class/values
   Pin.super.new(self, x, y)
+  Pin.name = "Pin"
 
   -- which hole to go onto, after sinking the ball 
   -- (allows for multiple exit holes/paths)
@@ -62,7 +63,7 @@ end
 -- render object's own properties
 --
 function Pin:uiProperties()
-  -- TODO: Draw this object's property section
+  -- Draw this object's property section
   uiRow('position', function()
       self.x = ui.numberInput('x', self.x)
     end, function()

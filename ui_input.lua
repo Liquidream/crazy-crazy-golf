@@ -141,6 +141,19 @@ The craziest crazy golf! 🤪
       end
 
 
+      local inOpen = 3 == currTool
+        local outOpen = ui.section("⚙ General Options", { open = inOpen  }, function()
+          ui.markdown([[Other general settings]])
+          
+          hole.title = ui.textInput("Title", hole.title, {})
+          hole.description = ui.textArea("Description", hole.description, {})
+          
+        end) -- terrain painter section
+        --log("Terrain: > inOpen = "..tostring(inOpen).." | outOpen = "..tostring(outOpen))
+        if outOpen and not inOpen then
+          currTool = 3  -- General Options mode?
+        end
+
       
       ui.section("Main Menu", { defaultOpen = true }, function()
           
