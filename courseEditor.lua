@@ -231,20 +231,46 @@ function drawEditor()
 end
 
 
+--[[
 
--- take the source course data (single image)
--- and split it up into separate canvas layers
--- (so user can "paint" on each layer independently)
--- function createTerrainLayers()
+  Data structure:
 
--- end
+  holeData = 
+  {
+    title="",
+    description="",
+    par=1-5,
+    difficulty=1-3,
+    tags={"beginner","premium"},
+    coursePixelData={},
+    playerStartData={},
+    holePinData={},
+    obstacles={
+      obstacleData={},
+      obstacleData={},
+      ...
+    },
+    dataVersion=1
+  }
 
--- -- combine all the separate terrain canvas layers
--- -- into one final data layer (for gameplay/saving)
--- function mergeTerrainLayers()
+]]
 
--- end
-
+function createHoleData()
+  local holeData = 
+  {
+    title="",
+    description="",
+    par=0,
+    difficulty=0,
+    tags={},
+    coursePixelData={},
+    playerStartData={},
+    holePinData={},
+    obstacles={},
+    dataVersion=1
+  }
+  return holeData
+end
 
 -- save course to user's castle storage
 function saveCourse()
@@ -257,7 +283,8 @@ function saveCourse()
   network.async(function()
     log("before storage set")
     castle.storage.set("courseData", coursePixels)
-    castle.storage.set("courseDataTest", wall:getData())
+    --castle.storage.set("courseDataTest", wall:getData())
+    castle.storage.set("holeData", createHoleData())
     log("after storage set")
   end)
 end

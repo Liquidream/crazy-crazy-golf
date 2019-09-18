@@ -8,8 +8,8 @@ require "Player"
 function initGame(levelData)  
   --player={}
   --hole={}
-  obstacles={}    -- walls, bumpers, etc.
   coursePixels={} -- used to determine greens, rough, water, etc.
+  obstacles={}    -- walls, bumpers, etc.
   terrain={}      -- slopes?
   
   

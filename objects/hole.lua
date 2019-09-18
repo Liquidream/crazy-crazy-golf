@@ -6,7 +6,11 @@ Hole = BaseObject:extend()
 
 function Hole:new(x,y)
   -- initialise base class/values
-  PlayerStart.super.new(self, x, y)
+  Hole.super.new(self, x, y)
+
+  -- which hole to go onto, after sinking the ball 
+  -- (allows for multiple exit holes/paths)
+  self.nextHole = nil 
 
    -- physics related
   self.collider = bf.Collider.new(world, "Circle", x, y, 2)
