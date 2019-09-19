@@ -11,7 +11,7 @@ function Pin:new(x,y)
 
   -- which hole to go onto, after sinking the ball 
   -- (allows for multiple exit holes/paths)
-  self.nextHole = nil 
+  self.nextHoleId = nil 
 
    -- physics related
   self.collider = bf.Collider.new(world, "Circle", x, y, 2)
@@ -39,10 +39,15 @@ function Pin:new(x,y)
   -- end
   -- function self.collider:exit(other)
   --   log("exit hole!!!!"..tostring(other == cursorCollider))
-  --   return
-  
+  --   return  
 end
 
+-- serialise for storage
+function Pin:getData()
+  local data = Pin.super.getData(self)
+  data.nextHoleId = self.nextHoleId
+  return data
+end
 
 function Pin:update(dt)
   -- anything here?

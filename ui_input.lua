@@ -62,6 +62,12 @@ The craziest crazy golf! 🤪
         
         hole.title = ui.textInput("Title", hole.title, {})
         hole.description = ui.textArea("Description", hole.description, {})
+        uiRow('position', function()
+          hole.par = ui.numberInput("Par", hole.par, { min = 1, max = 5 })
+        end, function()
+          --
+        end) --row
+        
         
       end) -- general options section      
       if outOpen and not inOpen then
@@ -72,7 +78,6 @@ The craziest crazy golf! 🤪
       local outOpen = ui.section("🌄 Terrain Landscape", { open = inOpen  }, function()
         ui.markdown([[Choose Terrain to paint:]])
         
-        --ui.box("terrain2Box", { border=currTerrainLayer==3 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
         local label = 'Sand Trap'
         if currTerrainLayer==3 then label = "▶ "..label end          
         if ui.button(label, { icon = 'assets/ico-terrain-sand.png', iconOnly = false }) then
@@ -149,25 +154,25 @@ The craziest crazy golf! 🤪
             saveCourse()
           end
           
+          if ui.button('Load Course') then
+            -- TODO: load course to Castle storage
+            loadCourse()
+          end
+          
           if DEBUG_MODE then
             if ui.button('Export Course') then
               -- TODO: export course to local storage (disk)
               exportCourse()
             end
-              if ui.button('Import Course') then
-                -- TODO: export course to local storage (disk)
-                importCourse()
-              end
+            if ui.button('Import Course') then
+              -- TODO: export course to local storage (disk)
+              importCourse()
             end
+          end
             
           if ui.button('Share Course') then
             -- TODO: share course to via Castle post
             --shareCourse()
-          end
-          
-          if ui.button('Load Course') then
-            -- TODO: load course to Castle storage
-            loadCourse()
           end
           
           if ui.button('Clear Course') then

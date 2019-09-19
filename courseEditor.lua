@@ -43,7 +43,6 @@ function updateEditor(dt)
     lmbDown = true
     if last_mDown~=true  then
       lmbClicked = true
-      log("lmbClicked")
     end
   end
   -- left released since last frame?
@@ -163,24 +162,9 @@ function updateEditor(dt)
     end
 
 
-    -- v1 ------
-    -- -- TODO: This doesn't report collision if cursor INSIDE area (so made circle temp "larger")
-    -- local colls = world:queryCircleArea(mx, my, 5) -- 
-    -- --
-    -- for _, collider in ipairs(colls) do
-    --   --log("collider == wall? "..tostring(collider == wall.collider))
-    --   hoverObj = collider.parent
-    --   -- do manual hovering 
-    --   -- (can't use onEnter/Exit as not updating World in edit mode)
-    --   hoverObj:hover()
-    -- end
-    
-
-
     -- check for select
     if lmbClicked and hoverObj then
       -- update selected object (for UI)
-      log("#1")
       selectedObj = hoverObj
     end
     -- check for dragging
@@ -190,7 +174,6 @@ function updateEditor(dt)
      and not lmbClicked
      and (mx~=last_mx or my~=last_my) then
       -- "move/dragging" mode
-      log("#2")
       draggingObj = hoverObj
     end
     if lmbDown and draggingObj then
@@ -199,7 +182,6 @@ function updateEditor(dt)
       draggingObj = nil
     end
   end -- object mode
-
 
   
   -- remember
@@ -255,7 +237,68 @@ end
 
 ]]
 
-function createHoleData()
+function createHoleFromData(holeData)
+  local hole = 
+  {
+    title="",
+    description="",
+    par=0,
+    difficulty=0,
+    tags={},
+    coursePixels={},
+    playerStart={},
+    pin={},
+    obstacles={}
+  }
+  
+  -- TODO: construct level objects from data passed
+  if holeData then
+    -- ------------------------------------------
+    -- TODO: restore the hole from data passed
+    -- ------------------------------------------
+    hole.title = holeData.title
+    hole.description = holeData.description
+    hole.par = holeData.par
+    --holeData.difficulty = hole.difficulty
+    hole.coursePixelData = hole.coursePixelData
+    --holeData.tags = {}
+    
+    hole.coursePixels = holeData.coursePixelData
+    local coursePixels = castle.storage.get("courseData")
+    if coursePixels then
+      -- switch to "paint" canvas
+      target("courseCanvas")
+      -- data stored as 1-index (so shift by 1 pixel)
+      for x=1,GAME_WIDTH+1 do      
+        for y=1,GAME_HEIGHT+1 do
+          pset(x-1, y-1, coursePixels[x][y])
+        end
+      end
+      target()
+    end
+    hole.playerStart = PlayerStart(nil, nil, holeData.playerStartData)
+    hole.pin =  Pin(nil, nil, holeData.pinData)
+    for k,objData in pairs(holeData.obstacles) do
+      -- TODO: handle different object "types"
+      local wall = Wall(nil, nil, objData)
+      table.insert(hole.obstacles, wall)
+    end
+
+  else
+    -- ------------------------------------
+    -- load the default hole data?
+    -- ------------------------------------
+    hole.playerStart = PlayerStart(PLAYER_STARTX, PLAYER_STARTY)
+    hole.pin = Pin(445,55)
+    local wall = Wall(304,164)
+    wall.spin = -2
+    table.insert(hole.obstacles, wall)
+  end
+
+  return hole
+end
+
+function createHoleData(hole)
   local holeData = 
   {
     title="",
@@ -269,22 +312,42 @@ function createHoleData()
     obstacles={},
     dataVersion=1
   }
+
+  -- create data structure for storage
+  holeData.title = hole.title
+  holeData.description = hole.description
+  holeData.par = hole.par
+  --holeData.difficulty = hole.difficulty
+  holeData.coursePixelData = getCoursePixelData()
+  --holeData.tags = {}
+  holeData.coursePixels = getCoursePixelData()
+  holeData.playerStartData = hole.playerStart:getData()
+  holeData.pinData = hole.pin:getData()
+  for k,obj in pairs(hole.obstacles) do
+    table.insert(holeData.obstacles, obj:getData())
+  end
+
   return holeData
 end
 
 -- save course to user's castle storage
 function saveCourse()
   log("saveCourse()...")  
+  
+  -- create data structure for storage
+  local holeData = createHoleData(hole)
+
   --  > grab pixels for each layer
   --  > store them in tables of Castle user storage (for now)
-  local coursePixels = getCourseDataTable()
-
+  --local coursePixels = getCoursePixelData()
+  
   -- now store it
   network.async(function()
     log("before storage set")
-    castle.storage.set("courseData", coursePixels)
+    
+    --castle.storage.set("courseData", coursePixels)
     --castle.storage.set("courseDataTest", wall:getData())
-    castle.storage.set("holeData", createHoleData())
+    castle.storage.set("holeData", holeData)
     log("after storage set")
   end)
 end
@@ -296,29 +359,32 @@ function loadCourse()
   -- get saved pixel data
   network.async(function()
 
+    local holeData = castle.storage.get("holeData")
+    hole = createHoleFromData(holeData)
+    
+    -- (Version 1)---------------------------
+    -- read table of color info and draw a pixel at a time
+    -- local coursePixels = {}
+    -- local testTable = {}
+    -- local coursePixels = castle.storage.get("courseData")
+    -- if coursePixels then
+    --   -- switch to "paint" canvas
+    --   target("courseCanvas")
+    --   -- data stored as 1-index (so shift by 1 pixel)
+    --   for x=1,GAME_WIDTH+1 do      
+    --     for y=1,GAME_HEIGHT+1 do
+    --       pset(x-1, y-1, coursePixels[x][y])
+    --     end
+    --   end
+    --   target()
+    -- end
+    
     -- (Version 2 - Saved ok, but couldn't restore & took WAY more data!)
     -- local coursePixels = castle.storage.get("courseData-v2")
     -- log("#coursePixels = "..#coursePixels)
     -- local imgData = love.image.newImageData(GAME_WIDTH, GAME_HEIGHT, "rgba8", coursePixels)
     -- load_png("courseCanvas", imgData) -- palette, use_as_spritesheet)
     -- target()
-
-    -- (Version 1)---------------------------
-    -- read table of color info and draw a pixel at a time
-    local coursePixels = {}
-    local testTable = {}
-    local coursePixels = castle.storage.get("courseData")
-    if coursePixels then
-      -- switch to "paint" canvas
-      target("courseCanvas")
-      -- data stored as 1-index (so shift by 1 pixel)
-      for x=1,GAME_WIDTH+1 do      
-        for y=1,GAME_HEIGHT+1 do
-          pset(x-1, y-1, coursePixels[x][y])
-        end
-      end
-      target()
-    end
 
   end)
 
@@ -355,7 +421,7 @@ end
 -- function copyCourse()
 --   log("copyCourse()...")
 
---   local data = getCourseDataTable()
+--   local data = getCoursePixelData()
 
 --   -- todo: dump course data to clipboard 
 --   -- (so can be hard-coded as default course to play/edit)
@@ -409,8 +475,8 @@ end
 
 
 -- helper function to convert course layered pixel data to table(s)
-function getCourseDataTable()
-  log("getCourseDataTable()...")
+function getCoursePixelData()
+  log("getCoursePixelData()...")
   
   -- (Version 2 - Saved ok, but couldn't restore & took WAY more data!)
   -- local holeData = surfshot_data("courseCanvas", 1)

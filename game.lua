@@ -5,7 +5,7 @@
 require "Player"
 
 
-function initGame(levelData)
+function initGame(holeData)
   -- -------------------------------------------------------
   -- init physics
   -- -------------------------------------------------------
@@ -19,32 +19,7 @@ function initGame(levelData)
   -- -------------------------------------------------------
   -- create base hole structure
   -- (will populate from "data" later)
-  hole = 
-  {
-    title="",
-    description="",
-    par=0,
-    difficulty=0,
-    tags={},
-    coursePixels={},
-    playerStart={},
-    pin={},
-    obstacles={}
-  }
-  
-  -- todo: construct level objects from data passed
-  if levelData then
-    -- TODO: restore the hole from data passed
-
-  else
-    -- load the default hole data?
-    hole.playerStart = PlayerStart(PLAYER_STARTX, PLAYER_STARTY)
-    hole.pin = Pin(445,55)
-    local wall = Wall(304,164)
-    wall.spin = -2
-    table.insert(hole.obstacles, wall)
-  end
-
+  hole = createHoleFromData(holeData)
 
 
 

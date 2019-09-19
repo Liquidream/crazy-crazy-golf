@@ -40,9 +40,9 @@ end
 
 function BaseObject:hover()
   self.hovered = true
-  if DEBUG_MODE then
-    --log(self.name.." hovered!")
-  end
+  -- if DEBUG_MODE then
+  --   log(self.name.." hovered!")
+  -- end
 end
 
 function BaseObject:moveTo(x, y)

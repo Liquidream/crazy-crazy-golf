@@ -41,6 +41,12 @@ function PlayerStart:new(x,y)
   end
 end
 
+-- serialise for storage
+-- function PlayerStart:getData()
+--   local data = PlayerStart.super.getData(self)
+--   return data
+-- end
+
 
 function PlayerStart:update(dt)  
   -- update base class/values
