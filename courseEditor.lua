@@ -279,7 +279,7 @@ function createHoleFromData(holeData)
     --holeData.tags = {}
     
     hole.coursePixels = holeData.coursePixelData
-    --local coursePixels = castle.storage.get("courseData")
+    local coursePixels = castle.storage.get("courseData")
     if coursePixels then
       -- switch to "paint" canvas
       target("courseCanvas")
@@ -380,16 +380,12 @@ function loadCourse()
   -- get saved pixel data
   network.async(function()
 
-    if holeData == nil then
-      log("doing get")
-      holeData = castle.storage.get("holeData")
-      coursePixels = castle.storage.get("courseData")
-
-      
-      log("holeData.playerStartData.x = "..tostring(holeData.playerStartData.x))
-    end
-    --hole = createHoleFromData(holeData)
-    
+    holeData = castle.storage.get("holeData")
+    --coursePixels = castle.storage.get("courseData")
+    --log("holeData.playerStartData.x = "..tostring(holeData.playerStartData.x))
+  
+    hole = createHoleFromData(holeData)
+  
     -- (Version 1)---------------------------
     -- read table of color info and draw a pixel at a time
     -- local coursePixels = {}
@@ -415,10 +411,6 @@ function loadCourse()
     -- target()
 
   end)
-
-  if holeData then
-    hole = createHoleFromData(holeData)
-  end
 
 end
 
