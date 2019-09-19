@@ -124,7 +124,7 @@ The craziest crazy golf! 🤪
         -- PROPERTIES?
         -- 
         if selectedObj then
-          ui.section(selectedObj.name.." Properties", { defaultOpen = true }, function()          
+          ui.section((selectedObj.name and (selectedObj.name.." ") or "").."Properties", { defaultOpen = true }, function()          
             if selectedObj.uiProperties then
               -- draw this object's properties
               selectedObj:uiProperties()
