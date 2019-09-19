@@ -19,6 +19,7 @@ function Pin:new(x,y, data)
   self.collider.parent = self -- important for UI collisions  
   self.collider:setType("static")
   self.collider:setCategory(2)
+  
   self.collider.draw = function(alpha)
     -- TODO: draw the tee "block" sprite(s)  
     aspr(2, 

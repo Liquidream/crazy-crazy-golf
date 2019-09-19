@@ -10,16 +10,15 @@ function PlayerStart:new(x,y, data)
   PlayerStart.super.new(self, x, y, 0,0,0, data)
   self.name = "Player Start"
 
-
   -- define collision object(s)
-  log("b4")
   log("self.x ="..tostring(self.x))
   log("self.y ="..tostring(self.y))
   self.collider = bf.Collider.new(world, 
           "Rectangle", self.x, self.y, 16, 36 )
-  log("after")
+  self.collider:setAngle(self.r * (2*math.pi))
   self.collider.parent = self -- important for UI collisions  
   self.collider:setCategory(1)
+  
   self.collider.draw = function(alpha)
     -- draw sprite
     if not uiEditorMode then

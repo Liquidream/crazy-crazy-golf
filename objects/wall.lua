@@ -45,6 +45,7 @@ function Wall:rebuildCollisions()
     self.collider:setPosition(self.x, self.y)
     self.collider:setLinearDamping(1000) -- Make it so it doesn't "move" from spot
     self.collider:setCategory(2)
+    
     self.collider.draw = function(alpha)
         -- draw shadow
         aspr(5, 
