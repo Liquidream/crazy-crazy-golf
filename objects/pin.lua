@@ -4,9 +4,10 @@
 
 Pin = BaseObject:extend()
 
-function Pin:new(x,y)
+function Pin:new(x,y, data)
   -- initialise base class/values
-  Pin.super.new(self, x, y)
+  data = data or {} -- default to empty obj if no data passed
+  Pin.super.new(self, x, y, 0,0,0, data)
   Pin.name = "Pin"
 
   -- which hole to go onto, after sinking the ball 
@@ -14,12 +15,19 @@ function Pin:new(x,y)
   self.nextHoleId = nil 
 
    -- physics related
-  self.collider = bf.Collider.new(world, "Circle", x, y, 2)
+  self.collider = bf.Collider.new(world, "Circle", self.x, self.y, 2)
   self.collider.parent = self -- important for UI collisions  
   self.collider:setType("static")
   self.collider:setCategory(2)
   self.collider.draw = function(alpha)
-    -- do nothing - draw done elsewhere
+    -- TODO: draw the tee "block" sprite(s)  
+    aspr(2, 
+    self.x+1, 
+    self.y-13, 
+    self.r,
+    1, 2)
+
+    --circfill(self.x, self.y, 3, 20)
   end   
   -- define collision callbacks
   function self.collider:preSolve(other)
@@ -53,16 +61,16 @@ function Pin:update(dt)
   -- anything here?
 end
 
-function Pin:draw()
-  -- TODO: draw the tee "block" sprite(s)  
-  aspr(2, 
-    self.x+1, 
-    self.y-13, 
-    self.r,
-    1, 2)
+-- function Pin:draw()
+--   -- TODO: draw the tee "block" sprite(s)  
+--   aspr(2, 
+--     self.x+1, 
+--     self.y-13, 
+--     self.r,
+--     1, 2)
 
-  --circfill(self.x, self.y, 3, 20)
-end
+--   --circfill(self.x, self.y, 3, 20)
+-- end
 
 --
 -- render object's own properties

@@ -87,8 +87,6 @@ function drawGame()
   if not loadingProgress then
     -- draw current course data
     spr_sheet("courseCanvas", 0, 0)
-    -- draw the hole
-    hole.pin:draw()
     -- draw all physics objects
     world:draw()
     -- draw player

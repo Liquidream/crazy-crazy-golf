@@ -126,15 +126,17 @@ function updateEditor(dt)
   -- ----------------------------------------
   
   -- update objects (Q: which needs to be called first?)
-  hole.playerStart:update(dt)
+  --hole.playerStart:update(dt)
   
+  -- bail out now, if no hole data
+  if hole == nil then
+    return
+  end
+
   -- update objects?
-  -- TODO: review this!!!
   for k,obj in pairs(hole.obstacles) do
     obj:update(dt)
   end
-  --if wall then wall:update(dt) end
-
 
   if currTool == 2 then
     -- check for hover/selection
@@ -203,9 +205,7 @@ function drawEditor()
 
   -- -------------------------------
   -- draw objects, etc
-  -- -------------------------------
-  -- draw the pin
-  hole.pin:draw(true)
+  -- -------------------------------  
   -- draw all physics objects
   world:draw()
   -- draw player
@@ -237,6 +237,21 @@ end
 
 ]]
 
+
+function clearHoleData()
+  -- destroy all collider objects
+  hole.playerStart.collider:destroy()
+  hole.pin.collider:destroy()
+  for k,obj in pairs(hole.obstacles) do
+    if obj.collider then
+      obj.collider:destroy()
+    end
+  end
+  -- now remove main table
+  hole = nil
+end
+
+
 function createHoleFromData(holeData)
   local hole = 
   {
@@ -264,7 +279,7 @@ function createHoleFromData(holeData)
     --holeData.tags = {}
     
     hole.coursePixels = holeData.coursePixelData
-    local coursePixels = castle.storage.get("courseData")
+    --local coursePixels = castle.storage.get("courseData")
     if coursePixels then
       -- switch to "paint" canvas
       target("courseCanvas")
@@ -322,6 +337,7 @@ function createHoleData(hole)
   --holeData.tags = {}
   holeData.coursePixels = getCoursePixelData()
   holeData.playerStartData = hole.playerStart:getData()
+  log("holeData.playerStartData.x = "..tostring(holeData.playerStartData.x))
   holeData.pinData = hole.pin:getData()
   for k,obj in pairs(hole.obstacles) do
     table.insert(holeData.obstacles, obj:getData())
@@ -355,12 +371,24 @@ end
 function loadCourse()
   log("loadCourse()...")
   -- TODO: get data from tables of Castle user storage (for now)
-    
+  
+  -- destroy/release any current hole data (collisions, etc.)
+  if hole then
+    clearHoleData()
+  end
+
   -- get saved pixel data
   network.async(function()
 
-    local holeData = castle.storage.get("holeData")
-    hole = createHoleFromData(holeData)
+    if holeData == nil then
+      log("doing get")
+      holeData = castle.storage.get("holeData")
+      coursePixels = castle.storage.get("courseData")
+
+      
+      log("holeData.playerStartData.x = "..tostring(holeData.playerStartData.x))
+    end
+    --hole = createHoleFromData(holeData)
     
     -- (Version 1)---------------------------
     -- read table of color info and draw a pixel at a time
@@ -387,6 +415,10 @@ function loadCourse()
     -- target()
 
   end)
+
+  if holeData then
+    hole = createHoleFromData(holeData)
+  end
 
 end
 

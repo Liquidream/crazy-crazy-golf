@@ -4,15 +4,20 @@
 
 PlayerStart = BaseObject:extend()
 
-function PlayerStart:new(x,y)
+function PlayerStart:new(x,y, data)
   -- initialise base class/values
-  PlayerStart.super.new(self, x, y)
+  data = data or {} -- default to empty obj if no data passed
+  PlayerStart.super.new(self, x, y, 0,0,0, data)
   self.name = "Player Start"
 
 
   -- define collision object(s)
+  log("b4")
+  log("self.x ="..tostring(self.x))
+  log("self.y ="..tostring(self.y))
   self.collider = bf.Collider.new(world, 
-          "Rectangle", self.x,self.y, 16, 36  )
+          "Rectangle", self.x, self.y, 16, 36 )
+  log("after")
   self.collider.parent = self -- important for UI collisions  
   self.collider:setCategory(1)
   self.collider.draw = function(alpha)
