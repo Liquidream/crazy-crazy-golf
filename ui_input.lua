@@ -56,57 +56,57 @@ The craziest crazy golf! 🤪
       -- ================================================
       ui.markdown([[### Course Editor]])
 
-      
-      --log("currTool = "..currTool)
+      local inOpen = 3 == currTool
+      local outOpen = ui.section("⚙ General Options", { open = inOpen  }, function()
+        ui.markdown([[Other general settings]])
+        
+        hole.title = ui.textInput("Title", hole.title, {})
+        hole.description = ui.textArea("Description", hole.description, {})
+        
+      end) -- general options section      
+      if outOpen and not inOpen then
+        currTool = 3  -- General Options mode?
+      end
 
-      --ui.scrollBox("editScroll", {}, function() 
-        local inOpen = 1 == currTool
-        local outOpen = ui.section("🌄 Terrain Landscape", { open = inOpen  }, function()
-          ui.markdown([[Choose Terrain to paint:]])
+      local inOpen = 1 == currTool
+      local outOpen = ui.section("🌄 Terrain Landscape", { open = inOpen  }, function()
+        ui.markdown([[Choose Terrain to paint:]])
+        
+        --ui.box("terrain2Box", { border=currTerrainLayer==3 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
+        local label = 'Sand Trap'
+        if currTerrainLayer==3 then label = "▶ "..label end          
+        if ui.button(label, { icon = 'assets/ico-terrain-sand.png', iconOnly = false }) then
+          log('set tool to sand')
+          currTerrainLayer = 3
+        end
           
-          --ui.box("terrain2Box", { border=currTerrainLayer==3 and "5px solid #ff00fd" or "", flexGrow=1 }, function()
-          local label = 'Sand Trap'
-          if currTerrainLayer==3 then label = "▶ "..label end          
-          if ui.button(label, { icon = 'assets/ico-terrain-sand.png', iconOnly = false }) then
-            log('set tool to sand')
-            currTerrainLayer = 3
-          end
-            
-          local label = 'Fairway/Green'
-          if currTerrainLayer==2 then label = "▶ "..label end          
-          if ui.button(label, { icon = 'assets/ico-terrain-green.png', iconOnly = false }) then
-            log('set tool to grass')
-            currTerrainLayer = 2
-          end
+        local label = 'Fairway/Green'
+        if currTerrainLayer==2 then label = "▶ "..label end          
+        if ui.button(label, { icon = 'assets/ico-terrain-green.png', iconOnly = false }) then
+          log('set tool to grass')
+          currTerrainLayer = 2
+        end
 
-          local label = 'Rough'
-          if currTerrainLayer==1 then label = "▶ "..label end        
-          if ui.button(label, { icon = 'assets/ico-terrain-rough.png', iconOnly = false }) then
-            log('set tool to rough')
-            currTerrainLayer = 1
-          end
-          
-          -- Size
-          terrainBrushSize = ui.slider("Size", terrainBrushSize, 1, 50, { })
-          
-        end) -- terrain painter section
-        --log("Terrain: > inOpen = "..tostring(inOpen).." | outOpen = "..tostring(outOpen))
-        if outOpen and not inOpen then
-          currTool = 1  -- Terrain "painting" mode
+        local label = 'Rough'
+        if currTerrainLayer==1 then label = "▶ "..label end        
+        if ui.button(label, { icon = 'assets/ico-terrain-rough.png', iconOnly = false }) then
+          log('set tool to rough')
+          currTerrainLayer = 1
         end
         
-        local inOpen = 2 == currTool
-        local outOpen = ui.section("🧱 Objects / Obstacles", {open = inOpen }, function()
-          ui.markdown([[Select objects to create/edit:]])
-          
-        -- if ui.button('Tee/Start', { icon = 'assets/ico-start.png', iconOnly = false }) then
-        --   log('set tool to PLAYER START')
-        --   selectedObj = playerStart
-        -- end
+        -- Size
+        terrainBrushSize = ui.slider("Size", terrainBrushSize, 1, 50, { })
         
-        -- if ui.button('Hole', { icon = 'assets/ico-hole.png', iconOnly = false }) then
-        --   log('set tool to HOLE')
-        -- end
+      end) -- terrain painter section
+      --log("Terrain: > inOpen = "..tostring(inOpen).." | outOpen = "..tostring(outOpen))
+      if outOpen and not inOpen then
+        currTool = 1  -- Terrain "painting" mode
+      end
+        
+      local inOpen = 2 == currTool
+      local outOpen = ui.section("🧱 Objects / Obstacles", {open = inOpen }, function()
+        ui.markdown([[Select objects to create/edit:]])
+        
         
         if ui.button('Wall', { icon = 'assets/ico-wall.png', iconOnly = false }) then
           log('create new WALL')
@@ -140,19 +140,6 @@ The craziest crazy golf! 🤪
         currTool = 2 -- Object mode (cursor/select objects)
       end
 
-
-      local inOpen = 3 == currTool
-        local outOpen = ui.section("⚙ General Options", { open = inOpen  }, function()
-          ui.markdown([[Other general settings]])
-          
-          hole.title = ui.textInput("Title", hole.title, {})
-          hole.description = ui.textArea("Description", hole.description, {})
-          
-        end) -- terrain painter section
-        --log("Terrain: > inOpen = "..tostring(inOpen).." | outOpen = "..tostring(outOpen))
-        if outOpen and not inOpen then
-          currTool = 3  -- General Options mode?
-        end
 
       
       ui.section("Main Menu", { defaultOpen = true }, function()
