@@ -19,7 +19,7 @@ function Pin:new(x,y, data)
   self.collider.parent = self -- important for UI collisions  
   self.collider:setType("static")
   self.collider:setCategory(2)
-  
+
   self.collider.draw = function(alpha)
     -- TODO: draw the tee "block" sprite(s)  
     aspr(2, 
@@ -28,7 +28,16 @@ function Pin:new(x,y, data)
     self.r,
     1, 2)
 
-    --circfill(self.x, self.y, 3, 20)
+    -- draw collision bounds
+    if uiEditorMode then
+      local mode = 'line'
+      if self.hovered then 
+        love.graphics.setColor(1, 0, 0) 
+      else
+        love.graphics.setColor(0, 0, 0) 
+      end
+      love.graphics[self.collider.collider_type:lower()](mode, self.collider:getSpatialIdentity())
+    end
   end   
   -- define collision callbacks
   function self.collider:preSolve(other)
@@ -59,6 +68,9 @@ function Pin:getData()
 end
 
 function Pin:update(dt)
+  -- update base class/values
+  Pin.super.update(self, dt)
+  
   -- anything here?
 end
 

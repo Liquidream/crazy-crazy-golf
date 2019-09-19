@@ -125,13 +125,15 @@ function updateEditor(dt)
   -- object/obstacle mode
   -- ----------------------------------------
   
-  -- update objects (Q: which needs to be called first?)
-  --hole.playerStart:update(dt)
   
   -- bail out now, if no hole data
   if hole == nil then
     return
   end
+  
+  -- update objects (Q: which needs to be called first?)
+  hole.playerStart:update(dt)
+  hole.pin:update(dt)
 
   -- update objects?
   for k,obj in pairs(hole.obstacles) do
@@ -249,6 +251,7 @@ function clearHoleData()
   end
   -- now remove main table
   hole = nil
+  selectedObj = nil
 end
 
 

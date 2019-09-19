@@ -8,10 +8,7 @@ function Wall:new(x, y, data)
   -- initialise base class/values
   data = data or {} -- default to empty obj if no data passed
   Wall.super.new(self, x, y, 7, 100, 0, data)
-  log("self.y = "..self.y)
   self.name = "Wall"
-  -- self.w = self.w or 7
-  -- self.h = self.h or 100
   self.spin = data.spin or 0
 
   -- define collision object(s)
@@ -45,7 +42,7 @@ function Wall:rebuildCollisions()
     self.collider:setPosition(self.x, self.y)
     self.collider:setLinearDamping(1000) -- Make it so it doesn't "move" from spot
     self.collider:setCategory(2)
-    
+
     self.collider.draw = function(alpha)
         -- draw shadow
         aspr(5, 

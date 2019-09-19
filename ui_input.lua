@@ -55,6 +55,11 @@ The craziest crazy golf! 🤪
       -- ==  EDITOR MODE
       -- ================================================
       ui.markdown([[### Course Editor]])
+    
+      -- bail out now, if no hole data
+      if hole == nil then
+        return
+      end
 
       local inOpen = 3 == currTool
       local outOpen = ui.section("⚙ General Options", { open = inOpen  }, function()
