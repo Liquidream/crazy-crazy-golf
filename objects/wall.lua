@@ -76,14 +76,14 @@ function Wall:rebuildCollisions()
       end
     end
     -- define collision callbacks
-    function self.collider:enter(other)
-      log("enter!!!! "..tostring(other == cursorCollider))
-      return
-    end
-    function self.collider:exit(other)
-      log("exit!!!!"..tostring(other == cursorCollider))
-      return
-    end
+    -- function self.collider:enter(other)
+    --   log("enter!!!! "..tostring(other == cursorCollider))
+    --   return
+    -- end
+    -- function self.collider:exit(other)
+    --   log("exit!!!!"..tostring(other == cursorCollider))
+    --   return
+    -- end
 
   -- else
   --   -- just refresh dimensions
