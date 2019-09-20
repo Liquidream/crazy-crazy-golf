@@ -432,11 +432,11 @@ function clearCourse()
   for k,obj in pairs(hole.obstacles) do
     obj.collider:destroy()
   end
-  hole.obstacles={} 
-  --wall=nil
+  hole.obstacles={}
+  selectedObj = nil
   -- reset player start
   hole.playerStart:moveTo(GAME_WIDTH/3, GAME_HEIGHT/2)
-  hole.playerStart.r=0
+  hole.playerStart:setRotation(0)
   -- reset player
   restartHole()
   -- reset pin

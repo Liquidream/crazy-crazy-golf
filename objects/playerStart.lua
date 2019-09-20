@@ -13,7 +13,7 @@ function PlayerStart:new(x,y, data)
   -- define collision object(s)
   self.collider = bf.Collider.new(world, 
           "Rectangle", self.x, self.y, 16, 36 )
-  self.collider:setAngle(self.r * (2*math.pi))
+  self:setRotation(self.r)
   self.collider.parent = self -- important for UI collisions  
   self.collider:setCategory(1)
 
@@ -45,8 +45,7 @@ end
 
 -- serialise for storage
 -- function PlayerStart:getData()
---   local data = PlayerStart.super.getData(self)
---   return data
+--   ### uses baseObject implementation
 -- end
 
 
@@ -55,6 +54,12 @@ function PlayerStart:update(dt)
   PlayerStart.super.update(self, dt)
 
   -- anything here?
+end
+
+-- rotate (using turn-based angles)
+function PlayerStart:setRotation(angle)
+  self.r = angle
+  self.collider:setAngle(self.r * (2*math.pi))
 end
 
 --
@@ -68,7 +73,8 @@ function PlayerStart:uiProperties()
     self.y = ui.numberInput('y-pos', self.y)
   end) --row
   uiRow('position', function()  
-    self.r = ui.slider('rot', self.r, 0, 1, { step=0.025 })
-    self.collider:setAngle(self.r * (2*math.pi))
+    self:setRotation(
+      ui.slider('rot', self.r, 0, 1, { step=0.025 })
+    )
   end) --row
 end
