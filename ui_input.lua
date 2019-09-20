@@ -121,7 +121,7 @@ The craziest crazy golf! 🤪
         if ui.button('Wall', { icon = 'assets/ico-wall.png', iconOnly = false }) then
           log('create new WALL')
           local wall = Wall(GAME_WIDTH/2, GAME_HEIGHT/2)
-          table.insert(obstacles, wall)
+          table.insert(hole.obstacles, wall)
           selectedObj = wall
         end
         

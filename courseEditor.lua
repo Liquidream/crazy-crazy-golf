@@ -29,7 +29,7 @@ end
 function updateEditor(dt)
   -- mouse moved?
   if btnv(6) or btnv(7) then
-    mx, my = btnv(6), btnv(7)
+    mx, my = flr(btnv(6)), flr(btnv(7))
   end
   -- --------------------------------------
   -- mouse clicked/down/dragged states
