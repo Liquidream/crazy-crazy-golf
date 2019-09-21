@@ -108,7 +108,6 @@ The craziest crazy golf! 🤪
         terrainBrushSize = ui.slider("Size", terrainBrushSize, 1, 50, { })
         
       end) -- terrain painter section
-      --log("Terrain: > inOpen = "..tostring(inOpen).." | outOpen = "..tostring(outOpen))
       if outOpen and not inOpen then
         currTool = 1  -- Terrain "painting" mode
       end
@@ -138,6 +137,19 @@ The craziest crazy golf! 🤪
             if selectedObj.uiProperties then
               -- draw this object's properties
               selectedObj:uiProperties()
+              -- deleteable?
+              if selectedObj.can_delete then
+                if ui.button('Delete'..(selectedObj.name and (" "..selectedObj.name) or ""),{ kind='danger'}) then
+                  -- delete obj
+                  selectedObj.collider:destroy()
+                  ArrayRemove(hole.obstacles, function(t, i, j)
+                      -- Return true to keep the value, or false to discard it.
+                      return (t[i] ~= selectedObj)
+                  end)
+                  --table.remove(hole.obstacles, selectedObj)
+                  selectedObj = nil
+                end
+              end
             else
               ui.markdown([[#### No properties]])
             end
@@ -145,7 +157,6 @@ The craziest crazy golf! 🤪
         end
         
       end) -- obstacles/objects section
-      --log("Object: > inOpen = "..tostring(inOpen).." | outOpen = "..tostring(outOpen))
       if outOpen and not inOpen then
         currTool = 2 -- Object mode (cursor/select objects)
       end
@@ -155,65 +166,48 @@ The craziest crazy golf! 🤪
       ui.section("Main Menu", { defaultOpen = true }, function()
           
         if ui.button('Save Course') then
-          -- TODO: save course to Castle storage
-            saveCourse()
+        -- TODO: save course to Castle storage
+          saveCourse()
+        end
+        
+        if ui.button('Load Course') then
+          -- TODO: load course to Castle storage
+          loadCourse()
+        end
+        
+        if DEBUG_MODE then
+          if ui.button('Export Course') then
+            -- TODO: export course to local storage (disk)
+            exportCourse()
           end
+          if ui.button('Import Course') then
+            -- TODO: export course to local storage (disk)
+            importCourse()
+          end
+        end
           
-          if ui.button('Load Course') then
-            -- TODO: load course to Castle storage
-            loadCourse()
-          end
-          
-          if DEBUG_MODE then
-            if ui.button('Export Course') then
-              -- TODO: export course to local storage (disk)
-              exportCourse()
-            end
-            if ui.button('Import Course') then
-              -- TODO: export course to local storage (disk)
-              importCourse()
-            end
-          end
-            
-          if ui.button('Share Course') then
-            -- TODO: share course to via Castle post
-            --shareCourse()
-          end
-          
-          if ui.button('Clear Course') then
-              -- TODO: reset current course data
-              clearCourse()
-          end
-          
-        end) -- obstacles/objects section
+        if ui.button('Share Course') then
+          -- TODO: share course to via Castle post
+          --shareCourse()
+        end
+        
+        if ui.button('Clear Course') then
+            -- TODO: reset current course data
+            clearCourse()
+        end
+        
+      end) -- obstacles/objects section
         
 
         lastTool = currTool
-
-    --  end) --scrollbox
 
     end)  -- editor tab
     
   end) -- tab control
 
 
-
-  -- uiEditorMode = ui.toggle("Editor OFF", "Editor ON", uiEditorMode, {onToggle = function(value)
-  --   log("uiEditorMode = "..tostring(value))
-  --   if value then
-  --     -- todo: init editor?
-  --   else
-      
-  --   end
-  -- end})
-
-  --log("out gameMode1 = "..gameMode)
-  --log("out uiEditorMode = "..tostring(uiEditorMode))
-
   -- set the game mode
   gameMode = uiEditorMode and GAME_MODE.EDITOR or GAME_MODE.GAME
-
-  --log("out gameMode3 = "..gameMode)
 
   -- changed since last frame
   if gameMode == GAME_MODE.GAME 

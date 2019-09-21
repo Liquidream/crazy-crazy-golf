@@ -9,6 +9,7 @@ function Wall:new(x, y, data)
   data = data or {} -- default to empty obj if no data passed
   Wall.super.new(self, x, y, 7, 100, 0, data)
   self.name = "Wall"
+  self.can_delete = true
   self.spin = data.spin or 0
 
   -- define collision object(s)
@@ -85,10 +86,6 @@ function Wall:rebuildCollisions()
     --   return
     -- end
 
-  -- else
-  --   -- just refresh dimensions
-  --   self.collider
-  -- end
 end
 
 

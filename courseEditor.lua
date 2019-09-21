@@ -277,8 +277,8 @@ function createHoleFromData(holeData)
     hole.title = holeData.title
     hole.description = holeData.description
     hole.par = holeData.par
-    --holeData.difficulty = hole.difficulty
     hole.coursePixelData = hole.coursePixelData
+    --holeData.difficulty = hole.difficulty
     --holeData.tags = {}
     
     hole.coursePixels = holeData.coursePixelData
@@ -330,14 +330,11 @@ function createHoleData(hole)
     obstacles={},
     dataVersion=1
   }
-
   -- create data structure for storage
   holeData.title = hole.title
   holeData.description = hole.description
   holeData.par = hole.par
-  --holeData.difficulty = hole.difficulty
   holeData.coursePixelData = getCoursePixelData()
-  --holeData.tags = {}
   holeData.coursePixels = getCoursePixelData()
   holeData.playerStartData = hole.playerStart:getData()
   log("holeData.playerStartData.x = "..tostring(holeData.playerStartData.x))
@@ -345,27 +342,20 @@ function createHoleData(hole)
   for k,obj in pairs(hole.obstacles) do
     table.insert(holeData.obstacles, obj:getData())
   end
+  --holeData.difficulty = hole.difficulty
+  --holeData.tags = {}
 
   return holeData
 end
 
 -- save course to user's castle storage
 function saveCourse()
-  log("saveCourse()...")  
-  
+  log("saveCourse()...")    
   -- create data structure for storage
-  local holeData = createHoleData(hole)
-
-  --  > grab pixels for each layer
-  --  > store them in tables of Castle user storage (for now)
-  --local coursePixels = getCoursePixelData()
-  
+  local holeData = createHoleData(hole)  
   -- now store it
   network.async(function()
     log("before storage set")
-    
-    --castle.storage.set("courseData", coursePixels)
-    --castle.storage.set("courseDataTest", wall:getData())
     castle.storage.set("holeData", holeData)
     log("after storage set")
   end)
@@ -383,35 +373,8 @@ function loadCourse()
   -- get saved pixel data
   network.async(function()
 
-    holeData = castle.storage.get("holeData")
-    --coursePixels = castle.storage.get("courseData")
-    --log("holeData.playerStartData.x = "..tostring(holeData.playerStartData.x))
-  
+    holeData = castle.storage.get("holeData")  
     hole = createHoleFromData(holeData)
-  
-    -- (Version 1)---------------------------
-    -- read table of color info and draw a pixel at a time
-    -- local coursePixels = {}
-    -- local testTable = {}
-    -- local coursePixels = castle.storage.get("courseData")
-    -- if coursePixels then
-    --   -- switch to "paint" canvas
-    --   target("courseCanvas")
-    --   -- data stored as 1-index (so shift by 1 pixel)
-    --   for x=1,GAME_WIDTH+1 do      
-    --     for y=1,GAME_HEIGHT+1 do
-    --       pset(x-1, y-1, coursePixels[x][y])
-    --     end
-    --   end
-    --   target()
-    -- end
-    
-    -- (Version 2 - Saved ok, but couldn't restore & took WAY more data!)
-    -- local coursePixels = castle.storage.get("courseData-v2")
-    -- log("#coursePixels = "..#coursePixels)
-    -- local imgData = love.image.newImageData(GAME_WIDTH, GAME_HEIGHT, "rgba8", coursePixels)
-    -- load_png("courseCanvas", imgData) -- palette, use_as_spritesheet)
-    -- target()
 
   end)
 
@@ -444,31 +407,10 @@ function clearCourse()
 
 end
 
-
--- function copyCourse()
---   log("copyCourse()...")
-
---   local data = getCoursePixelData()
-
---   -- todo: dump course data to clipboard 
---   -- (so can be hard-coded as default course to play/edit)
---   local text = "defaultCourse = {\n"
---   for k, col in pairs(data) do
---     text = text + "  {"
---   end
---   text = text + "}"
-
---   love.system.setClipboardText( text )
---end
-
 -- export current course to local image file
 function exportCourse()
   log("exportCourse()...")
-
-  --target("courseCanvas")
   surfshot("courseCanvas", 1, "exported_course.png")
-  --surfshot("courseCanvas", 1, "exported_course_"..love.timer.getTime()..".png")
-
 end
 
 -- export current course to local image file
@@ -507,14 +449,7 @@ function getCoursePixelData()
   
   -- (Version 2 - Saved ok, but couldn't restore & took WAY more data!)
   -- local holeData = surfshot_data("courseCanvas", 1)
-  -- log("img format = "..holeData:getFormat())
-  -- log("img width = "..holeData:getWidth())
-  -- log("img height = "..holeData:getHeight())
-  -- log("game width = "..GAME_WIDTH)
-  -- log("game height = "..GAME_HEIGHT)
   -- local strData = holeData:getString()
-
-  -- log("#strData = "..#strData)
   -- return strData
 
   -- (Version 1) ----------------------------
@@ -532,7 +467,6 @@ function getCoursePixelData()
     end
   end
   target()
-
-  --todo: return all layers as multiple values?
+  
   return coursePixels
 end
