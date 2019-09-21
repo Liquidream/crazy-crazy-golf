@@ -10,6 +10,7 @@ function Wall:new(x, y, data)
   Wall.super.new(self, x, y, 7, 100, 0, data)
   self.name = "Wall"
   self.can_delete = true
+  self.can_copy = true
   self.spin = data.spin or 0
 
   -- define collision object(s)

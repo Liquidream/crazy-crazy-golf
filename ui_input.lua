@@ -137,7 +137,22 @@ The craziest crazy golf! 🤪
             if selectedObj.uiProperties then
               -- draw this object's properties
               selectedObj:uiProperties()
+              -- --------------- 
+              -- copy?
+              -- ---------------
+              if selectedObj.can_delete then
+                if ui.button('Duplicate'..(selectedObj.name and (" "..selectedObj.name) or ""),{ kind='primary'}) then
+                  -- which object type??
+                  local dupeObj = Wall(nil, nil, selectedObj:getData())
+                  dupeObj.x = dupeObj.x + 50
+                  dupeObj.y = dupeObj.y + 50
+                  table.insert(hole.obstacles, dupeObj)
+                  selectedObj = dupeObj
+                end
+              end
+              -- --------------- 
               -- deleteable?
+              -- ---------------
               if selectedObj.can_delete then
                 if ui.button('Delete'..(selectedObj.name and (" "..selectedObj.name) or ""),{ kind='danger'}) then
                   -- delete obj
