@@ -2,7 +2,7 @@
 -- Core golf game class (movement, collision, etc.)
 --
 
-require "Player"
+require "player"
 
 
 function initGame(holeData)
