@@ -53,9 +53,9 @@ function love.load()
 
 
 
-  -- todo: load course data
-  -- (TEMP - just import first level)  
-  importCourse()
+  -- todo: load hole data
+  -- (TEMP - just import first hole)  
+  importHole()
 
   -- init game
   initGame()

@@ -68,7 +68,7 @@ The craziest crazy golf! 🤪
       local outOpen = ui.section("⚙ General Options", { open = inOpen  }, function()
         ui.markdown([[Other general settings]])
         
-        hole.title = ui.textInput("Title", hole.title, {})
+        hole.name = ui.textInput("Hole Name", hole.name, {})
         hole.description = ui.textArea("Description", hole.description, {})
         uiRow('position', function()
           hole.par = ui.numberInput("Par", hole.par, { min = 1, max = 5 })
@@ -197,37 +197,37 @@ The craziest crazy golf! 🤪
 
 
       
-      ui.section("Main Menu", { defaultOpen = true }, function()
+      ui.section("📚 Main Menu", { defaultOpen = true }, function()
           
         if ui.button('💾 Save Hole') then
-        -- TODO: save course to Castle storage
-          saveCourse()
+        -- TODO: save hole to Castle storage
+          saveHole()
         end
         
         if ui.button('📂 Load Hole') then
-          -- TODO: load course to Castle storage
-          loadCourse()
+          -- TODO: load hole to Castle storage
+          loadHole()
         end
         
         -- if DEBUG_MODE then
         --   if ui.button('Export Hole') then
-        --     -- TODO: export course to local storage (disk)
-        --     exportCourse()
+        --     -- export course to local storage (disk)
+        --     exportHole()
         --   end
         --   if ui.button('Import Hole') then
-        --     -- TODO: export course to local storage (disk)
-        --     importCourse()
+        --     -- export course to local storage (disk)
+        --     importHole()
         --   end
         -- end
           
         if ui.button('📤 Share Hole') then
-          -- TODO: share course to via Castle post
-          --shareCourse()
+          -- share course to via Castle post
+          shareHole()
         end
         
         if ui.button('❌ Clear Hole') then
-            -- TODO: reset current course data
-            clearCourse()
+            -- reset current course data
+            clearHole()
         end
         
       end) -- obstacles/objects section

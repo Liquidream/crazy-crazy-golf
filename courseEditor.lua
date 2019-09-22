@@ -258,7 +258,7 @@ end
 function createHoleFromData(holeData)
   local hole = 
   {
-    title="",
+    name="",
     description="",
     par=0,
     difficulty=0,
@@ -274,7 +274,7 @@ function createHoleFromData(holeData)
     -- ------------------------------------------
     -- TODO: restore the hole from data passed
     -- ------------------------------------------
-    hole.title = holeData.title
+    hole.name = holeData.name
     hole.description = holeData.description
     hole.par = holeData.par
     hole.coursePixelData = hole.coursePixelData
@@ -319,7 +319,7 @@ end
 function createHoleData(hole)
   local holeData = 
   {
-    title="",
+    name="",
     description="",
     par=0,
     difficulty=0,
@@ -331,7 +331,7 @@ function createHoleData(hole)
     dataVersion=1
   }
   -- create data structure for storage
-  holeData.title = hole.title
+  holeData.name = hole.name
   holeData.description = hole.description
   holeData.par = hole.par
   holeData.coursePixelData = getCoursePixelData()
@@ -348,9 +348,28 @@ function createHoleData(hole)
   return holeData
 end
 
+-- share course to castle
+function shareHole()
+  log("shareHole()...")    
+  -- create data structure for storage
+  local holeData = createHoleData(hole)  
+  -- now store it
+  network.async(function()
+    log("before share")
+
+    castle.post.create( {
+      message = "I just created a hole"..((hole.name ~= "") and "called \""..hole.name.."\"" or "").."for Crazy Crazy Golf! ⛳",
+      media = 'capture',
+      data = holeData
+  } )    
+    
+    log("after share")
+  end)
+end
+
 -- save course to user's castle storage
-function saveCourse()
-  log("saveCourse()...")    
+function saveHole()
+  log("saveHole()...")    
   -- create data structure for storage
   local holeData = createHoleData(hole)  
   -- now store it
@@ -361,8 +380,8 @@ function saveCourse()
   end)
 end
 
-function loadCourse()
-  log("loadCourse()...")
+function loadHole()
+  log("loadHole()...")
   -- TODO: get data from tables of Castle user storage (for now)
   
   -- destroy/release any current hole data (collisions, etc.)
@@ -381,8 +400,8 @@ function loadCourse()
 end
 
 -- clear all pixel + course data and start from scratch
-function clearCourse()
-  log("clearCourse()...")
+function clearHole()
+  log("clearHole()...")
 
   -- clear pixel data
   target("courseCanvas")
@@ -408,14 +427,14 @@ function clearCourse()
 end
 
 -- export current course to local image file
-function exportCourse()
-  log("exportCourse()...")
+function exportHole()
+  log("exportHole()...")
   surfshot("courseCanvas", 1, "exported_course.png")
 end
 
 -- export current course to local image file
-function importCourse()
-  log("importCourse()...")
+function importHole()
+  log("importHole()...")
 
   loadingProgress = true
 
