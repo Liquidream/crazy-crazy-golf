@@ -358,7 +358,7 @@ function shareHole()
     log("before share")
 
     castle.post.create( {
-      message = "I just created a hole"..((hole.name ~= "") and "called \""..hole.name.."\"" or "").."for Crazy Crazy Golf! ⛳",
+      message = "I just created a hole "..((hole.name ~= "") and "called \""..hole.name.." \"" or "").."for Crazy Crazy Golf! ⛳",
       media = 'capture',
       data = holeData
   } )    
