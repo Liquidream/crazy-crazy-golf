@@ -65,8 +65,8 @@ The craziest crazy golf! 🤪
       -- General Options
       -- ---------------------------------
       local inOpen = 3 == currTool
-      local outOpen = ui.section("⚙ Hole Options", { open = inOpen  }, function()
-        ui.markdown([[Other general settings]])
+      local outOpen = ui.section("⚙ Hole Settings", { open = inOpen  }, function()
+        ui.markdown([[General settings]])
         
         hole.name = ui.textInput("Hole Name", hole.name, {})
         hole.description = ui.textArea("Description", hole.description, {})
