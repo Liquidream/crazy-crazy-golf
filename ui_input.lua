@@ -137,7 +137,7 @@ The craziest crazy golf! 🤪
             log('create new BRIDGE')
             local bridge = Bridge(GAME_WIDTH/2, GAME_HEIGHT/2)
             table.insert(hole.obstacles, bridge)
-            selectedObj = wall
+            selectedObj = bridge
           end
         end) --row
 
