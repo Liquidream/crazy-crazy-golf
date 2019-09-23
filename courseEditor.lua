@@ -327,6 +327,7 @@ function createObjFromData(objData)
   elseif objData.type == OBJ_TYPE.BRIDGE then 
     newObj = Bridge(nil, nil, objData) 
   end
+  return newObj
 end
 
 
