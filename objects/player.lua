@@ -67,7 +67,7 @@ function Player:update(dt)
   -- determine drag surface
   local drag = 2
   -- (check terrain)
-  local col = sget(self.x,self.y,"courseCanvas")
+  local col = sget(self.x, self.y, "courseCanvasAllData")
   
   if col == 7 then 
     -- rough

@@ -197,6 +197,16 @@ end --update
 
 function drawEditor()
   
+  if hole == nil then
+    -- abort now, as nothing to draw!
+    log("hole = nil, abort drawEditor()")
+    return
+  end
+
+  -- draw all bridge "shadows"
+  for k,obj in pairs(hole.obstacles) do
+    if obj.type == OBJ_TYPE.BRIDGE then obj:draw(1) end
+  end
   -- draw current course data
   spr_sheet("courseCanvas", 0, 0)
 
@@ -208,6 +218,11 @@ function drawEditor()
   -- -------------------------------
   -- draw objects, etc
   -- -------------------------------  
+  -- draw all bridges "sprites"
+  for k,obj in pairs(hole.obstacles) do
+    if obj.type == OBJ_TYPE.BRIDGE then obj:draw(3) end
+  end
+
   -- draw all physics objects
   world:draw()
   -- draw player
@@ -281,8 +296,6 @@ function createHoleFromData(holeData)
     --holeData.difficulty = hole.difficulty
     --holeData.tags = {}
     
-    -- hole.coursePixels = holeData.coursePixelData
-    -- local coursePixels = castle.storage.get("courseData")
     if hole.coursePixels then
       -- switch to "paint" canvas
       target("courseCanvas")
@@ -292,17 +305,19 @@ function createHoleFromData(holeData)
           pset(x-1, y-1, hole.coursePixels[x][y])
         end
       end
-      target()
+
+      target()      
     end
+
     hole.playerStart = PlayerStart(nil, nil, holeData.playerStartData)
     hole.pin =  Pin(nil, nil, holeData.pinData)
     for k,objData in pairs(holeData.obstacles) do
       local newObj = createObjFromData(objData)
       table.insert(hole.obstacles, newObj)
-      -- -- TODO: handle different object "types"
-      -- local wall = Wall(nil, nil, objData)
-      -- table.insert(hole.obstacles, wall)
     end
+   
+    -- now add/refresh the obj collisions
+    refreshPixelCollisions(hole)
 
   else
     -- ------------------------------------
@@ -310,14 +325,30 @@ function createHoleFromData(holeData)
     -- ------------------------------------
     hole.playerStart = PlayerStart(PLAYER_STARTX, PLAYER_STARTY)
     hole.pin = Pin(445,55)
-    local wall = Wall(304,164)
-    wall.spin = -2
-    table.insert(hole.obstacles, wall)
+    -- local wall = Wall(304,164)
+    -- wall.spin = -2
+    -- table.insert(hole.obstacles, wall)
   end
 
   return hole
 end
 
+function refreshPixelCollisions(hole)
+  -- update latest course data
+  scan_surface("courseCanvas")
+  -- now capture with object drag data
+  target("courseCanvasAllData")
+  cls()
+  spr_sheet("courseCanvas", 0, 0)
+  -- bridge "shadows"
+  for k,obj in pairs(hole.obstacles) do
+    if obj.type == OBJ_TYPE.BRIDGE then obj:draw(2) end
+  end
+  -- update latest course data
+  scan_surface("courseCanvasAllData")
+
+  target()
+end
 
 function createObjFromData(objData)
   -- which object type??
@@ -407,7 +438,9 @@ function loadHole()
 
     holeData = castle.storage.get("holeData")  
     hole = createHoleFromData(holeData)
-
+    
+    -- Now reset all the states + player pos
+    restartHole()
   end)
 
 end
@@ -428,6 +461,9 @@ function clearHole()
     obj.collider:destroy()
   end
   hole.obstacles={}
+  -- clear any extra pixel data
+  refreshPixelCollisions(hole)
+
   selectedObj = nil
   -- reset player start
   hole.playerStart:moveTo(GAME_WIDTH/3, GAME_HEIGHT/2)
@@ -440,39 +476,39 @@ function clearHole()
 end
 
 -- export current course to local image file
-function exportHole()
-  log("exportHole()...")
-  surfshot("courseCanvas", 1, "exported_course.png")
-end
+-- function exportHole()
+--   log("exportHole()...")
+--   surfshot("courseCanvas", 1, "exported_course.png")
+-- end
 
 -- export current course to local image file
-function importHole()
-  log("importHole()...")
+-- function importHole()
+--   log("importHole()...")
 
-  loadingProgress = true
+--   loadingProgress = true
 
-  network.async(function()
+--   network.async(function()
 
-    log("loading images...")        
+--     log("loading images...")        
 
-    load_png("importedCourse", "assets/exported_course.png")
-    --load_png("importedCourse", "/"..love.filesystem.getUserDirectory().."\\exported_course.png")
+--     load_png("importedCourse", "assets/exported_course.png")
+--     --load_png("importedCourse", "/"..love.filesystem.getUserDirectory().."\\exported_course.png")
 
-    target("courseCanvas")
-    cls()
-    -- draw default course here!
-    spr_sheet("importedCourse")    
+--     target("courseCanvas")
+--     cls()
+--     -- draw default course here!
+--     spr_sheet("importedCourse")    
     
-    -- Update pixel data?
-    target("courseCanvas")
-    scan_surface("courseCanvas")
+--     -- Update pixel data?
+--     target("courseCanvas")
+--     scan_surface("courseCanvas")
 
-    target()
+--     target()
 
-    loadingProgress = false
-  end)
+--     loadingProgress = false
+--   end)
 
-end
+-- end
 
 
 -- helper function to convert course layered pixel data to table(s)

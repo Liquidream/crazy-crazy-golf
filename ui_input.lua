@@ -255,10 +255,13 @@ The craziest crazy golf! 🤪
   -- changed since last frame
   if gameMode == GAME_MODE.GAME 
    and gameMode ~= lastGameMode
+   and hole
   then
     -- just switched to game, so refresh level data
     -- TODO: refresh game data?
-    scan_surface("courseCanvas")
+    -- refresh the obj collisions
+    refreshPixelCollisions(hole)
+    --scan_surface("courseCanvas")
   end
 
   lastGameMode = gameMode

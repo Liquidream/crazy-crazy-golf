@@ -21,23 +21,7 @@ function Bridge:new(x, y, data)
   self.collider:setCategory(1)
 
   self.collider.draw = function(alpha)
-    -- draw sprite
-    aspr(6, 
-    self.x, 
-    self.y, 
-    self.r,
-    2, 4)
-
-    -- draw collision bounds
-    if uiEditorMode then
-      local mode = 'line'
-      if self.hovered then 
-        love.graphics.setColor(1, 0, 0) 
-      else
-        love.graphics.setColor(0, 0, 0) 
-      end
-      love.graphics[self.collider.collider_type:lower()](mode, self.collider:getSpatialIdentity())
-    end
+    -- do nothing (all done in draw method)
   end
 end
 
@@ -53,6 +37,39 @@ function Bridge:update(dt)
   -- update base class/values
   Bridge.super.update(self, dt)
 
+end
+
+function Bridge:draw(layerNum)
+  -- draw a specific layer of bridge
+  -- 1 = shadow shape       (on water)
+  -- 2 = terrain pixel data (smooth, like green - no drag)
+  -- 3 = texture sprite     (actual bridge image)
+  if layerNum == 1 then
+    pal(53, 28)  -- draw shape as "green" pixel data
+    pal(52, 28)  --
+    aspr(6, self.x+6, self.y+6, self.r, 2, 4)
+  elseif layerNum == 2 then
+    pal(53, 8)  -- draw shape as "green" pixel data
+    pal(52, 8)  --
+    aspr(6, self.x, self.y, self.r, 2, 4)
+  elseif layerNum == 3 then
+   -- draw sprite
+   pal()
+   aspr(6, self.x, self.y, self.r, 2, 4)
+  end
+  pal()
+
+
+  -- draw collision bounds
+  if uiEditorMode then
+    local mode = 'line'
+    if self.hovered then 
+      love.graphics.setColor(1, 0, 0) 
+    else
+      love.graphics.setColor(0, 0, 0) 
+    end
+    love.graphics[self.collider.collider_type:lower()](mode, self.collider:getSpatialIdentity())
+  end
 end
 
 -- rotate (using turn-based angles)
@@ -74,18 +91,6 @@ function Bridge:uiProperties()
     end, function()
       self.y = ui.numberInput('y-pos', self.y)
     end) --row
-
-    -- uiRow('position', function()
-    --   self.w = ui.numberInput('width', self.w, { onChange=function(value)
-    --     -- rebuild collision object(s)
-    --     self:rebuildCollisions()
-    --   end })
-    -- end, function()
-    --   self.h = ui.numberInput('height', self.h, { onChange=function(value)
-    --     -- rebuild collision object(s)
-    --     self:rebuildCollisions()
-    --   end })
-    -- end) --row
 
     uiRow('position', function()  
       self.r = ui.slider('rot', self.r, 0, 1, { step=0.025 })

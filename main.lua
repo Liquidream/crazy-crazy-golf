@@ -45,8 +45,9 @@ function love.load()
   initSugarcoat()
   
   -- course gfx setup
-  new_surface(GAME_WIDTH, GAME_HEIGHT, "courseCanvas")
-  new_surface(GAME_WIDTH, GAME_HEIGHT, "courseCanvasTemp")
+  new_surface(GAME_WIDTH, GAME_HEIGHT, "courseCanvas")          -- just terrain data  (for saving/loading)
+  new_surface(GAME_WIDTH, GAME_HEIGHT, "courseCanvasAllData")   -- terrain + obj data (for actual collisions)
+  new_surface(GAME_WIDTH, GAME_HEIGHT, "courseCanvasTemp")      
   new_surface(GAME_WIDTH, GAME_HEIGHT, "courseCanvasLayerTemp")
 
   -- preload images
@@ -54,9 +55,9 @@ function love.load()
 
 
 
-  -- todo: load hole data
+
   -- (TEMP - just import first hole)  
-  importHole()
+  --importHole()
 
   -- init game
   initGame()

@@ -17,30 +17,14 @@ function initGame(holeData)
   -- -------------------------------------------------------
   -- init hole
   -- -------------------------------------------------------
+  -- todo: load hole data
+  loadHole()
+
   -- create base hole structure
   -- (will populate from "data" later)
-  hole = createHoleFromData(holeData)
-
-
-
-
-  
-
-
-  -- capture course image data (cols for terrain types)
-    
-
-  -- Wall serialization test
-  -- network.async(function()
-  --   log("before storage get")
-  --   local data = castle.storage.get("courseDataTest")
-  --   log("after storage get")
-  --   wall = Wall(nil,nil,data)
-  --   table.insert(obstacles, wall)
-  -- end)
-
+  --hole = createHoleFromData(holeData)
   -- Now reset all the states + player pos
-  restartHole()
+  --restartHole()
 end
 
 
@@ -62,6 +46,12 @@ end
 
 
 function updateGame(dt)
+
+  if hole == nil then
+    -- abort now, as nothing to update!
+    log("hole = nil, abort updateGame()")
+    return
+  end
   
   -- update physics objects
   world:update(dt)
@@ -85,12 +75,31 @@ function drawGame()
   printp_color(0, 0, 0)
   
   if not loadingProgress then
+
+    if hole == nil then
+      -- abort now, as nothing to draw!
+      log("hole = nil, abort drawGame()")
+      return
+    end
+
+    -- draw all bridge "shadows"
+    for k,obj in pairs(hole.obstacles) do
+      if obj.type == OBJ_TYPE.BRIDGE then obj:draw(1) end
+    end    
     -- draw current course data
-    spr_sheet("courseCanvas", 0, 0)
+    spr_sheet("courseCanvasAllData", 0, 0)
+
+    -- draw all bridges "sprites"
+    for k,obj in pairs(hole.obstacles) do
+      if obj.type == OBJ_TYPE.BRIDGE then obj:draw(3) end
+    end
+    
     -- draw all physics objects
     world:draw()
     -- draw player
-    player:draw()
+    if player then 
+      player:draw()
+    end
 
   else
     pprintc("Loading...", GAME_HEIGHT/2, 8)
