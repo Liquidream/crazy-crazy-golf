@@ -7,7 +7,7 @@ Bridge = BaseObject:extend()
 function Bridge:new(x, y, data)
   -- initialise base class/values
   data = data or {} -- default to empty obj if no data passed
-  Bridge.super.new(self, x, y, 7, 100, 0, data)
+  Bridge.super.new(self, x, y, 7, 100, 0.25, data)  
   self.name = "Bridge"
   self.type = OBJ_TYPE.BRIDGE
   self.can_delete = true

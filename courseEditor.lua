@@ -277,19 +277,19 @@ function createHoleFromData(holeData)
     hole.name = holeData.name
     hole.description = holeData.description
     hole.par = holeData.par
-    hole.coursePixelData = hole.coursePixelData
+    hole.coursePixels = holeData.coursePixelData
     --holeData.difficulty = hole.difficulty
     --holeData.tags = {}
     
-    hole.coursePixels = holeData.coursePixelData
-    local coursePixels = castle.storage.get("courseData")
-    if coursePixels then
+    -- hole.coursePixels = holeData.coursePixelData
+    -- local coursePixels = castle.storage.get("courseData")
+    if hole.coursePixels then
       -- switch to "paint" canvas
       target("courseCanvas")
       -- data stored as 1-index (so shift by 1 pixel)
       for x=1,GAME_WIDTH+1 do      
         for y=1,GAME_HEIGHT+1 do
-          pset(x-1, y-1, coursePixels[x][y])
+          pset(x-1, y-1, hole.coursePixels[x][y])
         end
       end
       target()
@@ -350,9 +350,7 @@ function createHoleData(hole)
   holeData.description = hole.description
   holeData.par = hole.par
   holeData.coursePixelData = getCoursePixelData()
-  holeData.coursePixels = getCoursePixelData()
   holeData.playerStartData = hole.playerStart:getData()
-  log("holeData.playerStartData.x = "..tostring(holeData.playerStartData.x))
   holeData.pinData = hole.pin:getData()
   for k,obj in pairs(hole.obstacles) do
     table.insert(holeData.obstacles, obj:getData())
