@@ -19,9 +19,9 @@ function BaseObject:getData()
   local data = {}
   data.x = self.x
   data.y = self.y
-  data.r = self.r
   data.w = self.w
   data.h = self.h
+  data.r = self.r
   return data
 end
 

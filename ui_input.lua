@@ -134,7 +134,10 @@ The craziest crazy golf! 🤪
 
         end, function()
           if ui.button('Bridge', { icon = 'assets/ico-bridge.png', iconOnly = false }) then
-            log('set tool to BRIDGE')
+            log('create new BRIDGE')
+            local bridge = Bridge(GAME_WIDTH/2, GAME_HEIGHT/2)
+            table.insert(hole.obstacles, bridge)
+            selectedObj = wall
           end
         end) --row
 
@@ -152,12 +155,17 @@ The craziest crazy golf! 🤪
                 -- --------------- 
                 -- copy?
                 -- ---------------
-                if selectedObj.can_delete then
+                if selectedObj.can_copy then
                   if ui.button('Duplicate', { kind='primary'} ) then
                     -- which object type??
-                    local dupeObj = Wall(nil, nil, selectedObj:getData())
-                    dupeObj.x = dupeObj.x + 50
-                    dupeObj.y = dupeObj.y + 50
+                    local dupeObj
+                    if selectedObj.type == OBJ_TYPE.WALL then 
+                      dupeObj = Wall(nil, nil, selectedObj:getData()) 
+                    elseif selectedObj.type == OBJ_TYPE.BRIDGE then 
+                      dupeObj = Bridge(nil, nil, selectedObj:getData()) 
+                    end
+                    dupeObj.x = dupeObj.x + 25
+                    dupeObj.y = dupeObj.y + 25
                     table.insert(hole.obstacles, dupeObj)
                     selectedObj = dupeObj
                   end

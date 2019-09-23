@@ -9,6 +9,7 @@ function Wall:new(x, y, data)
   data = data or {} -- default to empty obj if no data passed
   Wall.super.new(self, x, y, 7, 100, 0, data)
   self.name = "Wall"
+  self.type = OBJ_TYPE.WALL
   self.can_delete = true
   self.can_copy = true
   self.spin = data.spin or 0
@@ -20,6 +21,7 @@ end
 -- serialise for storage
 function Wall:getData()
   local data = Wall.super.getData(self)
+  data.type = self.type
   data.spin = self.spin
   return data
 end
