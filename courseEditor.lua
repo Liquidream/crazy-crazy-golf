@@ -297,9 +297,11 @@ function createHoleFromData(holeData)
     hole.playerStart = PlayerStart(nil, nil, holeData.playerStartData)
     hole.pin =  Pin(nil, nil, holeData.pinData)
     for k,objData in pairs(holeData.obstacles) do
-      -- TODO: handle different object "types"
-      local wall = Wall(nil, nil, objData)
-      table.insert(hole.obstacles, wall)
+      local newObj = createObjFromData(objData)
+      table.insert(hole.obstacles, newObj)
+      -- -- TODO: handle different object "types"
+      -- local wall = Wall(nil, nil, objData)
+      -- table.insert(hole.obstacles, wall)
     end
 
   else
@@ -315,6 +317,18 @@ function createHoleFromData(holeData)
 
   return hole
 end
+
+
+function createObjFromData(objData)
+  -- which object type??
+  local newObj
+  if objData.type == OBJ_TYPE.WALL then 
+    newObj = Wall(nil, nil, objData) 
+  elseif objData.type == OBJ_TYPE.BRIDGE then 
+    newObj = Bridge(nil, nil, objData) 
+  end
+end
+
 
 function createHoleData(hole)
   local holeData = 

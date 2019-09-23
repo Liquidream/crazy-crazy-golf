@@ -157,13 +157,14 @@ The craziest crazy golf! 🤪
                 -- ---------------
                 if selectedObj.can_copy then
                   if ui.button('Duplicate', { kind='primary'} ) then
-                    -- which object type??
-                    local dupeObj
-                    if selectedObj.type == OBJ_TYPE.WALL then 
-                      dupeObj = Wall(nil, nil, selectedObj:getData()) 
-                    elseif selectedObj.type == OBJ_TYPE.BRIDGE then 
-                      dupeObj = Bridge(nil, nil, selectedObj:getData()) 
-                    end
+                    dupeObj = createObjFromData(selectedObj:getData())
+                    -- -- which object type??
+                    -- local dupeObj
+                    -- if selectedObj.type == OBJ_TYPE.WALL then 
+                    --   dupeObj = Wall(nil, nil, selectedObj:getData()) 
+                    -- elseif selectedObj.type == OBJ_TYPE.BRIDGE then 
+                    --   dupeObj = Bridge(nil, nil, selectedObj:getData()) 
+                    -- end
                     dupeObj.x = dupeObj.x + 25
                     dupeObj.y = dupeObj.y + 25
                     table.insert(hole.obstacles, dupeObj)
