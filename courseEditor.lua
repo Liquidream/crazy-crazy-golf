@@ -198,11 +198,6 @@ end --update
 function drawEditor()
   
   if not loadingProgress then
-    --if hole == nil then
-      -- abort now, as nothing to draw!
-    --   log("hole = nil, abort drawEditor()")
-    --   return
-    -- end
 
     -- draw all bridge "shadows"
     for k,obj in pairs(hole.obstacles) do

@@ -96,6 +96,19 @@ function love.draw()
   end
 end
 
+function castle.postopened(post)
+  -- restore the post data
+  log("in castle.postopened(post)...")
+  
+  -- re-init game
+  initGame(post.data)  
+  
+  -- log("post.data.xpos = "..post.data.xpos)
+  -- log("post.data.ypos = "..post.data.ypos)
+  -- log("post.data.spread = "..post.data.spread)
+  --systems[1] = Sprinklez:createSystem(post.data.xpos, post.data.ypos, post.data)
+end
+
 
 
 function initSugarcoat()

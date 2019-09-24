@@ -49,7 +49,7 @@ function updateGame(dt)
 
   if hole == nil then
     -- abort now, as nothing to update!
-    log("hole = nil, abort updateGame()")
+    --log("hole = nil, abort updateGame()")
     return
   end
   
