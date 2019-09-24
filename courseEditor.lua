@@ -335,7 +335,7 @@ end
 
 function refreshPixelCollisions(hole)
   -- update latest course data
-  scan_surface("courseCanvas")
+  --scan_surface("courseCanvas")
   -- now capture with object drag data
   target("courseCanvasAllData")
   cls()

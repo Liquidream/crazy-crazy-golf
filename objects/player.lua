@@ -16,7 +16,13 @@ function Player:new(x,y)
   -- physics related
   self.collider = bf.Collider.new(world, "Circle", x, y, 2)
   self.collider.parent = self -- important for UI collisions  
-  self.collider:setMask(1) -- don't collide with "non-colliding" objects
+  
+  -- "I am..."
+  self.collider:setCategory(OBJ_TYPE.PLAYER)  
+  -- "I do not collide with..."
+  self.collider:setMask(OBJ_TYPE.PLAYER_START, OBJ_TYPE.BRIDGE)
+  --self.collider:setMask(1) -- don't collide with "non-colliding" objects
+
   self.collider.draw = function(alpha)
     -- do nothing - draw done elsewhere
   end

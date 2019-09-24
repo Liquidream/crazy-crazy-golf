@@ -18,7 +18,12 @@ function Pin:new(x,y, data)
   self.collider = bf.Collider.new(world, "Circle", self.x, self.y, 2)
   self.collider.parent = self -- important for UI collisions  
   self.collider:setType("static")
-  self.collider:setCategory(2)
+
+  -- "I am..."
+  self.collider:setCategory(OBJ_TYPE.HOLE)  
+  -- "I do not collide with..."
+  self.collider:setMask(OBJ_TYPE.WALL)
+  --self.collider:setCategory(2)
 
   self.collider.draw = function(alpha)
     -- TODO: draw the tee "block" sprite(s)  

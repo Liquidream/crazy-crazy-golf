@@ -18,7 +18,11 @@ function Bridge:new(x, y, data)
           "Rectangle", self.x, self.y, 32, 64 )
   self:setRotation(self.r)
   self.collider.parent = self -- important for UI collisions  
-  self.collider:setCategory(1)
+  
+  -- "I am..."
+  self.collider:setCategory(OBJ_TYPE.BRIDGE) 
+  -- "I do not collide with..."
+  self.collider:setMask(OBJ_TYPE.PLAYER, OBJ_TYPE.PLAYER_START, OBJ_TYPE.HOLE, OBJ_TYPE.WALL)
 
   self.collider.draw = function(alpha)
     -- do nothing (all done in draw method)

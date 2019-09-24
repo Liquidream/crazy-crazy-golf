@@ -15,7 +15,10 @@ function PlayerStart:new(x,y, data)
           "Rectangle", self.x, self.y, 16, 36 )
   self:setRotation(self.r)
   self.collider.parent = self -- important for UI collisions  
-  self.collider:setCategory(1)
+
+  self.collider:setCategory(OBJ_TYPE.PLAYER_START)  -- "I am..."
+  self.collider:setMask()                           -- "I collide with..."
+  --self.collider:setCategory(1)
 
   self.collider.draw = function(alpha)
     -- draw sprite

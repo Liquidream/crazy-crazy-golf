@@ -45,7 +45,12 @@ function Wall:rebuildCollisions()
     self.collider.parent = self -- important for UI collisions
     self.collider:setPosition(self.x, self.y)
     self.collider:setLinearDamping(1000) -- Make it so it doesn't "move" from spot
-    self.collider:setCategory(2)
+    
+    -- "I am..."
+    self.collider:setCategory(OBJ_TYPE.WALL)  
+    -- "I do not collide with..."
+    self.collider:setMask(OBJ_TYPE.PLAYER_START, OBJ_TYPE.HOLE, OBJ_TYPE.BRIDGE)
+    --self.collider:setCategory(2)
 
     self.collider.draw = function(alpha)
         -- draw shadow
