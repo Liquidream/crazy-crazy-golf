@@ -424,7 +424,7 @@ function saveHole()
   end)
 end
 
-function loadHole()
+function loadHole(holeData)
   log("loadHole()...")
   loadingProgress = true
   -- TODO: get data from tables of Castle user storage (for now)
@@ -437,7 +437,9 @@ function loadHole()
   -- get saved pixel data
   network.async(function()
 
-    holeData = castle.storage.get("holeData")  
+    if holeData == nil then
+      holeData = castle.storage.get("holeData")  
+    end
     hole = createHoleFromData(holeData)
     
     -- Now reset all the states + player pos
