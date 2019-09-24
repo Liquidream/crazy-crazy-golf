@@ -197,36 +197,41 @@ end --update
 
 function drawEditor()
   
-  if hole == nil then
-    -- abort now, as nothing to draw!
-    log("hole = nil, abort drawEditor()")
-    return
-  end
+  if not loadingProgress then
+    --if hole == nil then
+      -- abort now, as nothing to draw!
+    --   log("hole = nil, abort drawEditor()")
+    --   return
+    -- end
 
-  -- draw all bridge "shadows"
-  for k,obj in pairs(hole.obstacles) do
-    if obj.type == OBJ_TYPE.BRIDGE then obj:draw(1) end
-  end
-  -- draw current course data
-  spr_sheet("courseCanvas", 0, 0)
+    -- draw all bridge "shadows"
+    for k,obj in pairs(hole.obstacles) do
+      if obj.type == OBJ_TYPE.BRIDGE then obj:draw(1) end
+    end
+    -- draw current course data
+    spr_sheet("courseCanvas", 0, 0)
 
-  -- draw brush outline (cursor)
-  if currTool==1 then
-    circ(mx, my, terrainBrushSize, 46)
-  end
+    -- draw brush outline (cursor)
+    if currTool==1 then
+      circ(mx, my, terrainBrushSize, 46)
+    end
 
-  -- -------------------------------
-  -- draw objects, etc
-  -- -------------------------------  
-  -- draw all bridges "sprites"
-  for k,obj in pairs(hole.obstacles) do
-    if obj.type == OBJ_TYPE.BRIDGE then obj:draw(3) end
-  end
+    -- -------------------------------
+    -- draw objects, etc
+    -- -------------------------------  
+    -- draw all bridges "sprites"
+    for k,obj in pairs(hole.obstacles) do
+      if obj.type == OBJ_TYPE.BRIDGE then obj:draw(3) end
+    end
 
-  -- draw all physics objects
-  world:draw()
-  -- draw player
-  player:draw(true)
+    -- draw all physics objects
+    world:draw()
+    -- draw player
+    player:draw(true)
+
+  else
+    pprintc("Loading...", GAME_HEIGHT/2, 8)
+  end
 end
 
 
