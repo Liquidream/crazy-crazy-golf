@@ -18,7 +18,7 @@ function initGame(holeData)
   -- init hole
   -- -------------------------------------------------------
   -- todo: load hole data
-  loadHole()
+  loadHole(holeData)
 
   -- create base hole structure
   -- (will populate from "data" later)
