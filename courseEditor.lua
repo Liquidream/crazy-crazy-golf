@@ -426,6 +426,7 @@ end
 
 function loadHole()
   log("loadHole()...")
+  loadingProgress = true
   -- TODO: get data from tables of Castle user storage (for now)
   
   -- destroy/release any current hole data (collisions, etc.)
@@ -441,6 +442,7 @@ function loadHole()
     
     -- Now reset all the states + player pos
     restartHole()
+    loadingProgress = false
   end)
 
 end
