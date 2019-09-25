@@ -43,18 +43,18 @@ The craziest crazy golf! 🤪
       -- ==  PLAY MODE
       -- ================================================
 
-      if post then
-        ui.markdown("## Hole #"..post.postId.."")
+      if initialPost then
+        ui.markdown("## Hole #"..initialPost.postId.."")
 
-        ui.markdown("### \""..post.data.name.."\"")
+        ui.markdown("### \""..initialPost.data.name.."\"")
 
-        ui.markdown("**Par "..post.data.par.."**")
+        ui.markdown("**Par "..initialPost.data.par.."**")
 
         if player then
           ui.markdown("Shots "..player.shots)
         end
 
-        ui.markdown("![]("..post.mediaUrl..")")
+        ui.markdown("![]("..initialPost.mediaUrl..")")
       end
 
       if ui.button('Restart Hole', {  }) then

@@ -19,12 +19,7 @@ function initGame(holeData)
   -- -------------------------------------------------------
   -- todo: load hole data
   loadHole(holeData)
-
-  -- create base hole structure
-  -- (will populate from "data" later)
-  --hole = createHoleFromData(holeData)
-  -- Now reset all the states + player pos
-  --restartHole()
+  
 end
 
 

@@ -54,11 +54,6 @@ function love.load()
   preloadImages()
 
 
-
-
-  -- (TEMP - just import first hole)  
-  --importHole()
-
   -- init game
   initialPost = castle.post.getInitialPost()
   if initialPost then 
@@ -66,7 +61,6 @@ function love.load()
   else
     initGame()
   end
-
 
   -- init editor
   initEditor()
@@ -82,17 +76,6 @@ function love.update(dt)
     -- update game editor
     updateEditor(dt)
   end
-  
-  -- Been a while and STILL no data loaded?
-  --if t()>2 and hole==nil then
-
-  -- initialPost = castle.post.getInitialPost()
-  -- if initialPost then 
-  --   initGame(initialPost.data)
-  -- else
-  --   initGame()
-  -- end
-  --end
 
 end
 
@@ -112,23 +95,6 @@ function love.draw()
     print('FPS: ' .. love.timer.getFPS(), 4, GAME_HEIGHT-24, 16)
   end
 end
-
--- function castle.postopened(inPost)
---   -- restore the post data
---   log("in castle.postopened(post)...")
-  
---   -- keep post around
---   post = inPost
-
---   -- re-init game
---   initGame(post.data)  
-  
---   -- log("post.data.xpos = "..post.data.xpos)
---   -- log("post.data.ypos = "..post.data.ypos)
---   -- log("post.data.spread = "..post.data.spread)
---   --systems[1] = Sprinklez:createSystem(post.data.xpos, post.data.ypos, post.data)
--- end
-
 
 
 function initSugarcoat()
