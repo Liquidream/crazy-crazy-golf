@@ -437,7 +437,7 @@ function loadHole(holeData)
     if holeData == nil then
       holeData = castle.storage.get("holeData")  
     end
-    
+
     -- destroy/release any current hole data (collisions, etc.)
     if hole then
       clearHoleData()
@@ -467,6 +467,10 @@ function clearHole()
     obj.collider:destroy()
   end
   hole.obstacles={}
+  holeData.name = ""
+  holeData.description = ""
+  holeData.par = 3
+
   -- clear any extra pixel data
   refreshPixelCollisions(hole)
 
