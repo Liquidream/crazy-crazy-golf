@@ -44,13 +44,15 @@ The craziest crazy golf! 🤪
       -- ================================================
 
       if post then
-        ui.markdown("Hole #"..post.postId)
+        ui.markdown("##Hole #"..post.postId.."")
 
-        ui.markdown("\""..post.data.name.."\"")
+        ui.markdown("###\""..post.data.name.."\"")
 
-        ui.markdown("Par "..post.data.par)
+        ui.markdown("**Par "..post.data.par.."**")
 
-        ui.markdown("Shots "..(player.shots or 0))
+        if player then
+          ui.markdown("Shots "..player.shots)
+        end
 
         ui.markdown("![]("..post.mediaUrl..")")
       end

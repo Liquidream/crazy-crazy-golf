@@ -8,6 +8,7 @@ Player = BaseObject:extend()
 function Player:new(x,y)
   Player.super.new(self, x, y)
   self.name = "Player"
+  self.shots = 0
 
   self.dx = 0
   self.dy = 0
