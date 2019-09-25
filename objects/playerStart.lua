@@ -59,11 +59,6 @@ function PlayerStart:update(dt)
   -- anything here?
 end
 
--- rotate (using turn-based angles)
-function PlayerStart:setRotation(angle)
-  self.r = angle
-  self.collider:setAngle(self.r * (2*math.pi))
-end
 
 --
 -- render object's own properties

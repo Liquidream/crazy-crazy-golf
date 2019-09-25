@@ -54,3 +54,11 @@ function BaseObject:moveTo(x, y)
     self.collider:setPosition(self.x, self.y)
   end
 end
+
+-- rotate (using turn-based angles)
+function BaseObject:setRotation(angle)
+  self.r = angle
+  if self.collider then
+    self.collider:setAngle(self.r * (2*math.pi))
+  end
+end

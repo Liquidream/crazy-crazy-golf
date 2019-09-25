@@ -42,6 +42,7 @@ function Wall:rebuildCollisions()
                 half_h, -half_w,
                 half_h,  half_w, 
                 -half_h,  half_w})
+    self:setRotation(self.r)
     self.collider.parent = self -- important for UI collisions
     self.collider:setPosition(self.x, self.y)
     self.collider:setLinearDamping(1000) -- Make it so it doesn't "move" from spot
