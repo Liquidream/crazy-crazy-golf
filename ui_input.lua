@@ -50,7 +50,7 @@ The craziest crazy golf! 🤪
 
         ui.markdown("Par "..post.data.par)
 
-        ui.markdown("Shots "..player.shots or 0)
+        ui.markdown("Shots "..(player.shots or 0))
 
         ui.markdown("![]("..post.mediaUrl..")")
       end
