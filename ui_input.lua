@@ -43,6 +43,18 @@ The craziest crazy golf! 🤪
       -- ==  PLAY MODE
       -- ================================================
 
+      if post then
+        ui.markdown("Hole #"..post.postId)
+
+        ui.markdown("\""..post.data.name.."\"")
+
+        ui.markdown("Par "..post.data.par)
+
+        ui.markdown("Shots "..player.shots or 0)
+
+        ui.markdown("![]("..post.mediaUrl..")")
+      end
+
       if ui.button('Restart Hole', {  }) then
           -- reset/restart hole 
           -- TODO: Disable in multiplayer?          

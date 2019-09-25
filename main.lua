@@ -103,10 +103,13 @@ function love.draw()
   end
 end
 
-function castle.postopened(post)
+function castle.postopened(inPost)
   -- restore the post data
   log("in castle.postopened(post)...")
   
+  -- keep post around
+  post = inPost
+
   -- re-init game
   initGame(post.data)  
   
