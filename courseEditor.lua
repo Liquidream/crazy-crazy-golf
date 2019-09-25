@@ -299,9 +299,17 @@ function createHoleFromData(holeData)
     if hole.coursePixels then
       -- switch to "paint" canvas
       target("courseCanvas")
+      cls()
+      
+      -- BUG in Sugarcoat?: 
+      -- add a single pixel top-left or risk black bars until pset calls
+      pset(0,0,27)
+
       -- data stored as 1-index (so shift by 1 pixel)
       for x=1,GAME_WIDTH+1 do      
+        --if x<10 then log("col="..(hole.coursePixels[x][y] or "nil")) end
         for y=1,GAME_HEIGHT+1 do
+          local col = hole.coursePixels[x][y]
           pset(x-1, y-1, hole.coursePixels[x][y])
         end
       end
