@@ -60,7 +60,9 @@ function love.load()
   --importHole()
 
   -- init game
-  initGame()
+  -- (REMOVED: Now being done on a delay in Update
+  --  to allow time for PostOpened to potentially be called)
+  --initGame()
 
   -- init editor
   initEditor()
@@ -76,7 +78,12 @@ function love.update(dt)
     -- update game editor
     updateEditor(dt)
   end
-  -- 
+  
+  -- Been a while and STILL no data loaded?
+  if t()>2 and hole==nil then
+    initGame()
+  end
+
 end
 
 function love.draw()
