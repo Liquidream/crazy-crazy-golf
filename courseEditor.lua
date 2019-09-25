@@ -467,9 +467,9 @@ function clearHole()
     obj.collider:destroy()
   end
   hole.obstacles={}
-  holeData.name = ""
-  holeData.description = ""
-  holeData.par = 3
+  hole.name = ""
+  hole.description = ""
+  hole.par = 3
 
   -- clear any extra pixel data
   refreshPixelCollisions(hole)
