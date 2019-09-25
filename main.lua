@@ -60,9 +60,13 @@ function love.load()
   --importHole()
 
   -- init game
-  -- (REMOVED: Now being done on a delay in Update
-  --  to allow time for PostOpened to potentially be called)
-  --initGame()
+  initialPost = castle.post.getInitialPost()
+  if initialPost then 
+    initGame(initialPost.data)
+  else
+    initGame()
+  end
+
 
   -- init editor
   initEditor()
@@ -82,12 +86,12 @@ function love.update(dt)
   -- Been a while and STILL no data loaded?
   --if t()>2 and hole==nil then
 
-  initialPost = castle.post.getInitialPost()
-  if initialPost then 
-    initGame(initialPost.data)
-  else
-    initGame()
-  end
+  -- initialPost = castle.post.getInitialPost()
+  -- if initialPost then 
+  --   initGame(initialPost.data)
+  -- else
+  --   initGame()
+  -- end
   --end
 
 end
