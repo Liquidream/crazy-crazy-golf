@@ -429,16 +429,18 @@ function loadHole(holeData)
   loadingProgress = true
   -- TODO: get data from tables of Castle user storage (for now)
   
-  -- destroy/release any current hole data (collisions, etc.)
-  if hole then
-    clearHoleData()
-  end
+  
 
   -- get saved pixel data
   network.async(function()
 
     if holeData == nil then
       holeData = castle.storage.get("holeData")  
+    end
+    
+    -- destroy/release any current hole data (collisions, etc.)
+    if hole then
+      clearHoleData()
     end
     hole = createHoleFromData(holeData)
     
