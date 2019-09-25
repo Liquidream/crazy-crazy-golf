@@ -44,9 +44,9 @@ The craziest crazy golf! 🤪
       -- ================================================
 
       if post then
-        ui.markdown("##Hole #"..post.postId.."")
+        ui.markdown("## Hole #"..post.postId.."")
 
-        ui.markdown("###\""..post.data.name.."\"")
+        ui.markdown("### \""..post.data.name.."\"")
 
         ui.markdown("**Par "..post.data.par.."**")
 
