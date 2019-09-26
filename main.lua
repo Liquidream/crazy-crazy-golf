@@ -60,6 +60,7 @@ function love.load()
     -- grab a default post to use for now
     initialPost = castle.post.get({ postId = 510, data = true })
     log("initialPost = "..tostring(initialPost))
+    log("initialPost.data = "..tostring(initialPost.data))
   end    
   initGame(initialPost.data)
   
