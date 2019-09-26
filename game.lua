@@ -19,7 +19,7 @@ function initGame(holeData)
   -- -------------------------------------------------------
   -- todo: load hole data
   loadHole(holeData)
-  
+
 end
 
 
@@ -102,3 +102,24 @@ function drawGame()
 end
 
 
+function drawWater()
+  cls(27)
+
+  srand()
+
+  -- ripples
+  for i=1,25 do
+    local x=rnd(GAME_WIDTH)
+    local y=rnd(GAME_HEIGHT) + sin(t()+10*i)/2
+    local w=rnd(10)+5
+    line(x, y, x+w, y, 12)
+  end
+
+  -- "shimmer"
+  for i=1,750 do
+    local shift=t()*20
+    local x=(rnd(GAME_WIDTH)+shift)%GAME_WIDTH
+    local y=(rnd(GAME_HEIGHT)+shift)%GAME_HEIGHT
+    circfill(x, y, rnd(20)+2, 27)
+  end
+end

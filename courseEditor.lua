@@ -195,8 +195,10 @@ function updateEditor(dt)
 end --update
 
 
-function drawEditor()
-  
+function drawEditor()  
+  -- draw background water effect
+  drawWater()
+
   if not loadingProgress then
 
     -- draw all bridge "shadows"

@@ -96,7 +96,8 @@ function love.update(dt)
 end
 
 function love.draw()
-  cls(27)
+  -- draw background water effect
+  drawWater()
 
   -- are we in editor mode?
   if gameMode == GAME_MODE.GAME then
