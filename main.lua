@@ -63,7 +63,10 @@ function love.load()
   if initialPost == nil then 
     -- grab a default post to use for now
     initialPost = castle.post.get({ postId = 510, data = true })
-    initialPost.data = (require 'cjson').decode(initialPost.data) 
+    -- TEMP fix for Post API...
+    if type(initialPost.data) == 'string' then 
+      initialPost.data = (require 'cjson').decode(initialPost.data) 
+    end
     -- log("initialPost = "..tostring(initialPost))
     -- log("initialPost.data = "..tostring(initialPost.data))
   end    
