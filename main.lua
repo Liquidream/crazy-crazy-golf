@@ -62,8 +62,14 @@ function love.load()
   --   -- log("initialPost = "..tostring(initialPost))
   --   -- log("initialPost.data = "..tostring(initialPost.data))
   -- end    
-  initGame(initialPost.data)
+  --initGame(initialPost.data)
   
+  if initialPost then 
+    initGame(initialPost.data)
+  else
+    initGame()
+  end
+
   -- init editor
   initEditor()
 end
