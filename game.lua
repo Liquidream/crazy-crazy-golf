@@ -105,7 +105,7 @@ end
 function drawWater()
   cls(27)
 
-  srand()
+  srand(7)
 
   -- ripples
   for i=1,50 do
