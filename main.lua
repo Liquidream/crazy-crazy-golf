@@ -58,7 +58,7 @@ function love.load()
   initialPost = castle.post.getInitialPost()
   if initialPost == nil then 
     -- grab a default post to use for now
-    initialPost = castle.post.get({ postId = 510 })
+    initialPost = castle.post.get({ postId = 510, data = true })
     log("initialPost = "..tostring(initialPost))
   end    
   initGame(initialPost.data)
