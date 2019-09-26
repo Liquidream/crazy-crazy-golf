@@ -55,7 +55,19 @@ The craziest crazy golf! 🤪
         end
 
         ui.markdown("![]("..initialPost.mediaUrl..")")
+
+        
       end
+      
+      ui.section("Controls", { defaultOpen = true }, function()        
+        
+        ui.markdown([[
+Aim = **◀ ▶**
+
+Shoot = **SPACE**
+          ]]) 
+          
+        end)
 
       if ui.button('Restart Hole', {  }) then
           -- reset/restart hole 

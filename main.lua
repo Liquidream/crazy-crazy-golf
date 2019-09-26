@@ -54,14 +54,14 @@ function love.load()
   preloadImages()
 
 
-  -- init game
+  -- init game (did user click post? or default?)
   initialPost = castle.post.getInitialPost()
-  if initialPost then 
-    initGame(initialPost.data)
-  else
-    initGame()
-  end
-
+  if initialPost == nil then 
+    -- grab a default post to use for now
+    initialPost = castle.post.get({ postId = 510 })
+  end  
+  initGame(initialPost.data)
+  
   -- init editor
   initEditor()
 end
