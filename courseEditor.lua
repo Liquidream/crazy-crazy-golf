@@ -271,6 +271,7 @@ end
 
 
 function createHoleFromData(holeData)
+  log("createHoleFromData(holeData)...")
   local hole = 
   {
     name="",
@@ -290,6 +291,7 @@ function createHoleFromData(holeData)
     -- TODO: restore the hole from data passed
     -- ------------------------------------------
     hole.name = holeData.name
+    log(" hole.name = ".. hole.name)
     hole.description = holeData.description
     hole.par = holeData.par
     hole.coursePixels = holeData.coursePixelData
