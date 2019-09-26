@@ -59,7 +59,8 @@ function love.load()
   if initialPost == nil then 
     -- grab a default post to use for now
     initialPost = castle.post.get({ postId = 510 })
-  end  
+    log("initialPost = "..tostring(initialPost))
+  end    
   initGame(initialPost.data)
   
   -- init editor
