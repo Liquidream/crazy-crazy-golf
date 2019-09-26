@@ -108,11 +108,11 @@ function drawWater()
   srand()
 
   -- ripples
-  for i=1,25 do
+  for i=1,50 do
     local x=rnd(GAME_WIDTH)
     local y=rnd(GAME_HEIGHT) + sin(t()+10*i)/2
     local w=rnd(10)+5
-    line(x, y, x+w, y, 12)
+    line(x, y, x+w, y, ((rnd(10)<3) and 12 or 20))
   end
 
   -- "shimmer"
