@@ -56,19 +56,24 @@ function love.load()
 
   -- init game (did user click post? or default?)
   initialPost = castle.post.getInitialPost()
-  -- if initialPost == nil then 
-  --   -- grab a default post to use for now
-  --   initialPost = castle.post.get({ postId = 510, data = true })
-  --   -- log("initialPost = "..tostring(initialPost))
-  --   -- log("initialPost.data = "..tostring(initialPost.data))
-  -- end    
-  --initGame(initialPost.data)
+
+  --### Nikki reckons this should work...
+  --   (require 'cjson').decode(data) 
+
+  if initialPost == nil then 
+    -- grab a default post to use for now
+    initialPost = castle.post.get({ postId = 510, data = true })
+    initialPost.data = (require 'cjson').decode(initialPost.data) 
+    -- log("initialPost = "..tostring(initialPost))
+    -- log("initialPost.data = "..tostring(initialPost.data))
+  end    
+  initGame(initialPost.data)
   
-  if initialPost then 
-    initGame(initialPost.data)
-  else
-    initGame()
-  end
+  -- if initialPost then 
+  --   initGame(initialPost.data)
+  -- else
+  --   initGame()
+  -- end
 
   -- init editor
   initEditor()
