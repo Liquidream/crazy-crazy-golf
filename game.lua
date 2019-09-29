@@ -105,20 +105,29 @@ end
 function drawWater()
   cls(27)
 
-  srand(7)
+  -- seed random number generation
+  -- (so that subsequent random numbers are consistent, every frame)
+  srand()
 
-  -- ripples
+  -- draw ripples
   for i=1,50 do
+    -- random x pos
     local x=rnd(GAME_WIDTH)
+    -- random y pos (+ some oscilation)
     local y=rnd(GAME_HEIGHT) + sin(t()+10*i)/2
+    -- random width
     local w=rnd(10)+5
+    -- draw ripple (with a random highlight)
     line(x, y, x+w, y, ((rnd(10)<3) and 12 or 20))
   end
 
-  -- "shimmer"
+  -- "shimmer" movement
+  -- draw a lot of circles, same as water colour
+  -- and scroll them across (and down) the screen
+  -- to give the illusion of movement
   for i=1,750 do
     local shift=t()*20
-    local x=(rnd(GAME_WIDTH)+shift)%GAME_WIDTH
+    local x=(rnd(GAME_WIDTH)+shift*2)%GAME_WIDTH
     local y=(rnd(GAME_HEIGHT)+shift)%GAME_HEIGHT
     circfill(x, y, rnd(20)+2, 27)
   end
